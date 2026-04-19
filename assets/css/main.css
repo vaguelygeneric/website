@@ -16,9 +16,9 @@
   --border:      #d6d0c4;
   --text:        #1a1714;
   --text-muted:  #6b6459;
-  --accent:      #7c3aed;
-  --accent-alt:  #6d28d9;
-  --accent-bg:   #faf5ff;
+  --accent:      #065f46;
+  --accent-alt:  #064e3b;
+  --accent-bg:   #f0fdf4;
   --header-bg:   rgba(245, 242, 235, 0.92);
 
   --shadow-sm:   0 1px 3px rgba(0,0,0,0.08);
@@ -39,11 +39,12 @@
   --border:      #352f27;
   --text:        #f0ece3;
   --text-muted:  #9e9588;
-  --accent:      #a78bfa;
-  --accent-alt:  #c4b5fd;
-  --accent-bg:   #3f2f5f;
+  --accent:      #6ee7b7;
+  --accent-alt:  #a7f3d0;
+  --accent-bg:   #134e4a;
   --header-bg:   rgba(20, 18, 16, 0.92);
 }
+
 
 
 /* ── Reset & Base ── */
