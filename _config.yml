@@ -1,0 +1,66 @@
+title: "Vaguely Generic"
+tagline: "A podcast about nothing specific."
+description: "Vaguely Generic is a presence that exists to do whatever."
+baseurl: ""
+url: "https://yourusername.github.io"
+
+# Podcast Settings
+podcast:
+  name: "The Generic"
+  subtitle: "Discussing Nothing Specific Since Whenever"
+  author: "The Generic Hosts"
+  email: "hello@thegeneric.example.com"
+  language: "en-us"
+  category: "Society & Culture"
+  subcategory: "Personal Journals"
+  explicit: "false"
+  image: "/assets/images/podcast-cover.png"
+  feed_url: "/feed.xml"
+
+
+# YouTube
+youtube_channel: "https://www.youtube.com/@yourchannel"
+
+# Collections
+collections:
+  podcast:
+    output: true
+    permalink: /podcast/:path/
+  posts:
+    output: true
+    permalink: /blog/:year/:month/:day/:title/
+
+shows:
+  - name: "The Generic"
+    slug: generic
+  - name: "Ramblings"
+    slug: ramblings
+  - name: "Readings"
+    slug: readings
+
+defaults:
+  - scope:
+      path: ""
+      type: "podcast"
+    values:
+      layout: "episode"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+permalink: /:categories/:year/:month/:day/:title/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - README.md

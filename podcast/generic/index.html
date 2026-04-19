@@ -1,0 +1,9 @@
+---
+layout: default
+title: "The Generic"
+description: "Freeform conversations about whatever comes up."
+permalink: /podcast/generic/
+show_slug: generic
+---
+{% assign episodes = site.podcast | where: "show", "generic" | sort: "date" | reverse %}
+{% include show-index.html episodes=episodes show_name="The Generic" show_desc="Freeform conversations about whatever comes up. No topic. No agenda." %}

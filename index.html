@@ -1,0 +1,103 @@
+---
+layout: default
+title: Home
+---
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="hero-eyebrow">VaguelyGeneric</span>
+      <h1 class="hero-title">Nothing<br><em>Specific.</em></h1>
+      <p class="hero-desc">
+        Three shows. No unified topic. Conversations, ramblings, and readings from people who have things to say and nowhere better to say them.
+      </p>
+      <div class="hero-actions">
+        <a href="{{ '/podcast/' | relative_url }}" class="btn btn-primary">Browse All Shows</a>
+        <a href="{{ site.youtube_channel }}" class="btn btn-outline" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          YouTube
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-shows">
+        <a href="{{ '/podcast/generic/' | relative_url }}" class="hero-show-pill">
+          <span class="hero-show-pill-bracket">[</span>The Generic<span class="hero-show-pill-bracket">]</span>
+        </a>
+        <a href="{{ '/podcast/ramblings/' | relative_url }}" class="hero-show-pill hero-show-pill--ramblings">
+          <span class="hero-show-pill-bracket">[</span>Ramblings<span class="hero-show-pill-bracket">]</span>
+        </a>
+        <a href="{{ '/podcast/readings/' | relative_url }}" class="hero-show-pill hero-show-pill--readings">
+          <span class="hero-show-pill-bracket">[</span>Readings<span class="hero-show-pill-bracket">]</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LATEST EPISODES -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-title">Latest Episodes</span>
+    <a href="{{ '/podcast/' | relative_url }}" class="section-more">All Shows →</a>
+  </div>
+  <div class="episode-grid">
+    {% assign episodes = site.podcast | sort: 'date' | reverse %}
+    {% for episode in episodes limit:3 %}
+    <a href="{{ episode.url | relative_url }}" class="episode-card">
+      <div class="episode-card-meta">
+        <span class="show-badge show-badge--{{ episode.show }}">{{ episode.show | capitalize }}</span>
+        <span class="episode-num">Ep. {{ episode.episode_number }}</span>
+        <span class="episode-card-duration">{{ episode.duration }}</span>
+      </div>
+      <div class="episode-card-title">{{ episode.title }}</div>
+      <div class="episode-card-desc">{{ episode.description | truncate: 120 }}</div>
+      <span class="episode-card-play">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        Listen
+      </span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- LATEST FROM BLOG -->
+<section class="section section--alt">
+  <div class="section-header">
+    <span class="section-title">From the Blog</span>
+    <a href="{{ '/blog/' | relative_url }}" class="section-more">All Posts →</a>
+  </div>
+  <div class="blog-preview-grid">
+    {% assign posts = site.posts | sort: 'date' | reverse %}
+    {% for post in posts limit:2 %}
+    <a href="{{ post.url | relative_url }}" class="blog-preview-card">
+      <div class="blog-card-meta">
+        <span class="blog-card-date">{{ post.date | date: "%B %-d, %Y" }}</span>
+        {% for tag in post.tags %}<span class="post-tag">{{ tag }}</span>{% endfor %}
+      </div>
+      <h3 class="blog-card-title">{{ post.title }}</h3>
+      {% if post.description %}<p class="blog-card-desc">{{ post.description }}</p>{% endif %}
+      <span class="blog-card-cta">Read →</span>
+    </a>
+    {% else %}
+    <p style="color: var(--text-muted);">Posts coming soon.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- SUBSCRIBE -->
+<section class="section">
+  <div class="subscribe-bar">
+    <div class="subscribe-bar-inner">
+      <div class="subscribe-bar-text">
+        <h2>Never Miss an Episode</h2>
+        <p>Subscribe wherever you listen to podcasts.</p>
+      </div>
+      <div class="subscribe-bar-links">
+        <a href="{{ '/feed.xml' | relative_url }}" class="btn btn-outline">RSS Feed</a>
+        <a href="{{ site.youtube_channel }}" class="btn btn-outline" target="_blank" rel="noopener">YouTube</a>
+        <a href="{{ '/podcast/' | relative_url }}" class="btn btn-primary">All Shows</a>
+      </div>
+    </div>
+  </div>
+</section>

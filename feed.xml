@@ -1,0 +1,139 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ================================================================
+  THE GENERIC — Podcast RSS Feed
+  ================================================================
+  This feed is compatible with:
+    - Apple Podcasts
+    - Google Podcasts
+    - Spotify (via RSS import)
+    - Pocket Casts, Overcast, and all standard podcast apps
+
+  HOW TO EDIT THIS FEED:
+  1. Update <channel> metadata (title, description, image, etc.)
+     to match your actual show details.
+  2. Each <item> block is one episode.
+     Copy an existing <item>...</item> block to add a new episode.
+  3. The <enclosure> tag points to your audio file.
+     Host audio on a service like Buzzsprout, Transistor, Anchor,
+     or any publicly accessible URL (S3, GitHub Releases, etc.).
+  4. Update <pubDate> in RFC-822 format: "Mon, 01 Jan 2024 08:00:00 +0000"
+  5. Run `bundle exec jekyll serve` locally to verify the feed at /feed.xml
+  ================================================================
+-->
+<rss version="2.0"
+  xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:media="http://search.yahoo.com/mrss/">
+
+  <channel>
+
+    <!-- ── REQUIRED CHANNEL METADATA ── -->
+    <title>{{ site.podcast.name }}</title>
+    <link>{{ site.url }}{{ site.baseurl }}</link>
+    <description>{{ site.description }}</description>
+    <language>{{ site.podcast.language }}</language>
+    <copyright>&#169; {{ 'now' | date: "%Y" }} {{ site.podcast.author }}</copyright>
+
+    <!-- Atom self-link (required by some validators) -->
+    <atom:link href="{{ site.url }}{{ site.baseurl }}{{ site.podcast.feed_url }}" rel="self" type="application/rss+xml" />
+
+    <!-- ── ITUNES / APPLE PODCASTS METADATA ── -->
+    <itunes:title>{{ site.podcast.name }}</itunes:title>
+    <itunes:subtitle>{{ site.podcast.subtitle }}</itunes:subtitle>
+    <itunes:summary>{{ site.description }}</itunes:summary>
+    <itunes:author>{{ site.podcast.author }}</itunes:author>
+    <itunes:email>{{ site.podcast.email }}</itunes:email>
+    <itunes:explicit>{{ site.podcast.explicit }}</itunes:explicit>
+    <itunes:type>episodic</itunes:type>
+
+    <itunes:owner>
+      <itunes:name>{{ site.podcast.author }}</itunes:name>
+      <itunes:email>{{ site.podcast.email }}</itunes:email>
+    </itunes:owner>
+
+    <itunes:category text="{{ site.podcast.category }}">
+      <itunes:category text="{{ site.podcast.subcategory }}" />
+    </itunes:category>
+
+    <!--
+      PODCAST COVER ART — IMPORTANT
+      Replace this URL with your actual 3000x3000 (or 1400x1400 minimum) PNG/JPG.
+      Apple Podcasts requires artwork to be square, between 1400x1400 and 3000x3000 px.
+    -->
+    <itunes:image href="{{ site.url }}{{ site.baseurl }}{{ site.podcast.image }}" />
+    <image>
+      <url>{{ site.url }}{{ site.baseurl }}{{ site.podcast.image }}</url>
+      <title>{{ site.podcast.name }}</title>
+      <link>{{ site.url }}{{ site.baseurl }}</link>
+    </image>
+
+    <!-- ════════════════════════════════════════════════
+         EPISODES — Add new episodes by copying an <item> block
+         ════════════════════════════════════════════════ -->
+
+    {% assign episodes = site.podcast | sort: 'date' | reverse %}
+    {% for episode in episodes %}
+    <item>
+      <title>{{ episode.title | xml_escape }}</title>
+      <link>{{ site.url }}{{ site.baseurl }}{{ episode.url }}</link>
+      <guid isPermaLink="true">{{ site.url }}{{ site.baseurl }}{{ episode.url }}</guid>
+      <description><![CDATA[{{ episode.content | strip_html | truncate: 4000 }}]]></description>
+      <content:encoded><![CDATA[{{ episode.content }}]]></content:encoded>
+      <pubDate>{{ episode.date | date_to_rfc822 }}</pubDate>
+
+      {% if episode.audio_url %}
+      <!--
+        ENCLOSURE — Points to the actual audio file.
+        - url: direct link to your .mp3 file (must be publicly accessible)
+        - length: file size in bytes (approximate is fine)
+        - type: audio/mpeg for MP3, audio/x-m4a for M4A/AAC
+      -->
+      <enclosure
+        url="{{ episode.audio_url }}"
+        length="{{ episode.audio_size | default: '0' }}"
+        type="{{ episode.audio_type | default: 'audio/mpeg' }}" />
+      {% endif %}
+
+      <itunes:title>{{ episode.title | xml_escape }}</itunes:title>
+      <itunes:summary><![CDATA[{{ episode.description }}]]></itunes:summary>
+      <itunes:author>{{ site.podcast.author }}</itunes:author>
+      <itunes:duration>{{ episode.duration }}</itunes:duration>
+      <itunes:episode>{{ episode.episode_number }}</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>{{ episode.explicit | default: site.podcast.explicit }}</itunes:explicit>
+    </item>
+    {% endfor %}
+
+    <!-- ════════════════════════════════════════════════
+         MANUAL EPISODE TEMPLATE
+         To add an episode without a markdown file, copy and paste
+         this block above this comment, then fill in the fields:
+
+    <item>
+      <title>Episode Title Goes Here</title>
+      <link>https://yourusername.github.io/podcast/ep-slug/</link>
+      <guid isPermaLink="true">https://yourusername.github.io/podcast/ep-slug/</guid>
+      <description><![CDATA[Your episode description goes here. Can include HTML.]]></description>
+      <pubDate>Mon, 01 Jan 2024 08:00:00 +0000</pubDate>
+      <enclosure
+        url="https://your-audio-host.com/episode-001.mp3"
+        length="45000000"
+        type="audio/mpeg" />
+      <itunes:title>Episode Title Goes Here</itunes:title>
+      <itunes:summary><![CDATA[Your episode description.]]></itunes:summary>
+      <itunes:author>The Generic Hosts</itunes:author>
+      <itunes:duration>45:00</itunes:duration>
+      <itunes:episode>1</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+
+         ════════════════════════════════════════════════ -->
+
+  </channel>
+</rss>

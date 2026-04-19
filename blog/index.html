@@ -1,0 +1,31 @@
+---
+layout: default
+title: Blog
+description: "Updates, thoughts, and behind-the-scenes from VaguelyGeneric."
+permalink: /blog/
+---
+
+<div class="blog-page">
+  <div class="blog-header">
+    <h1>Blog</h1>
+    <p>Updates, behind the scenes, and whatever else needs a home.</p>
+  </div>
+  <div class="blog-list">
+    {% assign posts = site.posts | sort: 'date' | reverse %}
+    {% for post in posts %}
+    <a href="{{ post.url | relative_url }}" class="blog-card">
+      <div class="blog-card-meta">
+        <span class="blog-card-date">{{ post.date | date: "%B %-d, %Y" }}</span>
+        {% if post.tags %}
+          {% for tag in post.tags %}<span class="post-tag">{{ tag }}</span>{% endfor %}
+        {% endif %}
+      </div>
+      <h2 class="blog-card-title">{{ post.title }}</h2>
+      {% if post.description %}<p class="blog-card-desc">{{ post.description }}</p>{% endif %}
+      <span class="blog-card-cta">Read →</span>
+    </a>
+    {% else %}
+    <p style="color: var(--text-muted);">Posts coming soon.</p>
+    {% endfor %}
+  </div>
+</div>

@@ -1,0 +1,9 @@
+---
+layout: default
+title: "Readings"
+description: "Audio readings of things worth reading aloud."
+permalink: /podcast/readings/
+show_slug: readings
+---
+{% assign episodes = site.podcast | where: "show", "readings" | sort: "date" | reverse %}
+{% include show-index.html episodes=episodes show_name="Readings" show_desc="Audio readings of things worth reading aloud — essays, stories, and whatever else." %}

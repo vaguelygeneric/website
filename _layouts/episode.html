@@ -1,0 +1,34 @@
+---
+layout: default
+---
+
+<div class="episode-wrapper">
+  <div class="episode-header">
+    <a href="{{ '/podcast/' | relative_url }}" class="back-link">← All Episodes</a>
+    <div class="episode-meta">
+      <span class="episode-number">Episode {{ page.episode_number }}</span>
+      <span class="episode-date">{{ page.date | date: "%B %-d, %Y" }}</span>
+      <span class="episode-duration">{{ page.duration }}</span>
+    </div>
+    <h1 class="episode-title">{{ page.title }}</h1>
+    {% if page.description %}<p class="episode-description">{{ page.description }}</p>{% endif %}
+  </div>
+
+  {% if page.audio_url %}
+  <div class="episode-player">
+    <audio controls preload="metadata">
+      <source src="{{ page.audio_url }}" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+  {% endif %}
+
+  <div class="episode-body">
+    {{ content }}
+  </div>
+
+  <div class="episode-subscribe">
+    <h3>Subscribe to The Generic</h3>
+    {% include subscribe-links.html %}
+  </div>
+</div>
