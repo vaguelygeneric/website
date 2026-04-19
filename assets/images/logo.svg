@@ -1,0 +1,18 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background -->
+        <!-- <rect width="200" height="200" fill="#f5f2eb"/> -->
+
+        <!-- Outer circle outline -->
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#3730a3" stroke-width="3" />
+
+        <!-- Inner overlapping circles -->
+        <circle cx="75" cy="85" r="35" fill="#6366f1" opacity="0.6" />
+        <circle cx="125" cy="85" r="35" fill="#3730a3" opacity="0.6" />
+        <circle cx="100" cy="125" r="35" fill="#6366f1" opacity="0.5" />
+
+        <!-- Central geometric accent -->
+        <polygon points="100,65 115,100 100,135 85,100" fill="#3730a3" />
+
+        <!-- Subtle line accent -->
+        <line x1="50" y1="100" x2="150" y2="100" stroke="#6366f1" stroke-width="2" opacity="0.7" />
+      </svg>
