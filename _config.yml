@@ -2,7 +2,7 @@ title: "Vaguely Generic"
 tagline: "An online presence about nothing specific."
 description: "Vaguely Generic is a presence that exists to do whatever."
 baseurl: ""
-url: "https://yourusername.github.io"
+url: "https://vaguelygeneric.website"
 
 # Podcast Settings
 podcast:
@@ -19,7 +19,7 @@ podcast:
 
 
 # YouTube
-youtube_channel: "https://www.youtube.com/@yourchannel"
+youtube_channel: "https://www.youtube.com/@VaguelyGeneric"
 
 # Collections
 collections:
