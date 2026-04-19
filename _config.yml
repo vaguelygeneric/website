@@ -1,5 +1,5 @@
 title: "Vaguely Generic"
-tagline: "A podcast about nothing specific."
+tagline: "An online presence about nothing specific."
 description: "Vaguely Generic is a presence that exists to do whatever."
 baseurl: ""
 url: "https://yourusername.github.io"
@@ -30,14 +30,6 @@ collections:
     output: true
     permalink: /blog/:year/:month/:day/:title/
 
-shows:
-  - name: "The Generic"
-    slug: generic
-  - name: "Ramblings"
-    slug: ramblings
-  - name: "Readings"
-    slug: readings
-
 defaults:
   - scope:
       path: ""
@@ -49,6 +41,9 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+
+
+
 # Build settings
 markdown: kramdown
 plugins:
