@@ -1,3 +1,5 @@
 ---
+layout: feed
+permalink: /feed/daily.xml
 show: daily
 ---
