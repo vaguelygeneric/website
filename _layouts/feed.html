@@ -10,7 +10,7 @@ layout: null
   xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
-    <title>{{ show.name | xml_escape }}</title>
+    <title>{{ page.name | xml_escape }}</title>
     <link>{{ site.url }}{{ site.baseurl }}/podcast/{{ show.slug }}/</link>
     <description>{{ show.description | xml_escape }}</description>
     <language>{{ show.language }}</language>
