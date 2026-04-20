@@ -1,0 +1,37 @@
+---
+layout: default
+title: Guests
+description: "People who have appeared on VaguelyGeneric shows."
+permalink: /guests/
+---
+
+<div class="guests-page">
+  <div class="guests-header">
+    <h1>Guests</h1>
+    <p>People who've joined us across all three shows.</p>
+  </div>
+  <div class="guests-grid">
+    {% assign guests = site.guests | sort: "name" %}
+    {% for guest in guests %}
+    <a href="{{ guest.url | relative_url }}" class="guest-card">
+      {% if guest.photo %}
+      <div class="guest-card-photo">
+        <img src="{{ guest.photo | relative_url }}" alt="{{ guest.name }}" />
+      </div>
+      {% else %}
+      <div class="guest-card-photo guest-card-photo--placeholder">
+        <span>{{ guest.name | slice: 0 }}</span>
+      </div>
+      {% endif %}
+      <div class="guest-card-body">
+        <div class="guest-card-name">{{ guest.name }}</div>
+        {% if guest.title %}<div class="guest-card-title">{{ guest.title }}</div>{% endif %}
+        {% assign guest_eps = site.podcast | where_exp: "ep", "ep.guests contains guest.slug" %}
+        <div class="guest-card-count">{{ guest_eps.size }} episode{% if guest_eps.size != 1 %}s{% endif %}</div>
+      </div>
+    </a>
+    {% else %}
+    <p style="color: var(--text-muted);">No guests yet.</p>
+    {% endfor %}
+  </div>
+</div>

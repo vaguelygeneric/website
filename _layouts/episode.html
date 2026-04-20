@@ -4,14 +4,31 @@ layout: default
 
 <div class="episode-wrapper">
   <div class="episode-header">
-    <a href="{{ '/podcast/' | relative_url }}" class="back-link">← All Episodes</a>
+    {% assign show_slug = page.show %}
+    {% assign show_info = site.shows | where: "slug", show_slug | first %}
+    <a href="{{ site.baseurl }}/podcast/{{ page.show }}/" class="back-link">← {{ show_info.name | default: "All Shows" }}</a>
     <div class="episode-meta">
+      <span class="show-badge show-badge--{{ page.show }}">{{ show_info.name | default: page.show }}</span>
       <span class="episode-number">Episode {{ page.episode_number }}</span>
       <span class="episode-date">{{ page.date | date: "%B %-d, %Y" }}</span>
       <span class="episode-duration">{{ page.duration }}</span>
     </div>
     <h1 class="episode-title">{{ page.title }}</h1>
     {% if page.description %}<p class="episode-description">{{ page.description }}</p>{% endif %}
+
+    {% if page.guests %}
+    <div class="episode-guests">
+      <span class="episode-guests-label">Featuring:</span>
+      {% for guest_slug in page.guests %}
+        {% assign guest = site.guests | where: "slug", guest_slug | first %}
+        {% if guest %}
+          <a href="{{ guest.url | relative_url }}" class="episode-guest-link">{{ guest.name }}</a>{% unless forloop.last %}, {% endunless %}
+        {% else %}
+          <span class="episode-guest-link">{{ guest_slug }}</span>{% unless forloop.last %}, {% endunless %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
   </div>
 
   {% if page.audio_url %}
@@ -28,7 +45,7 @@ layout: default
   </div>
 
   <div class="episode-subscribe">
-    <h3>Subscribe to The Generic</h3>
+    <h3>Subscribe to {{ show_info.name | default: "the show" }}</h3>
     {% include subscribe-links.html %}
   </div>
 </div>

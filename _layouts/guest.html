@@ -1,0 +1,49 @@
+---
+layout: default
+---
+
+<div class="guest-wrapper">
+  <div class="guest-header">
+    <a href="{{ '/guests/' | relative_url }}" class="back-link">← All Guests</a>
+    {% if page.photo %}
+    <div class="guest-photo">
+      <img src="{{ page.photo | relative_url }}" alt="{{ page.name }}" />
+    </div>
+    {% endif %}
+    <h1 class="guest-name">{{ page.name }}</h1>
+    {% if page.title %}<p class="guest-title">{{ page.title }}</p>{% endif %}
+    <div class="guest-links">
+      {% if page.website %}<a href="{{ page.website }}" class="guest-link" target="_blank" rel="noopener">Website</a>{% endif %}
+      {% if page.twitter %}<a href="https://twitter.com/{{ page.twitter }}" class="guest-link" target="_blank" rel="noopener">@{{ page.twitter }}</a>{% endif %}
+      {% if page.instagram %}<a href="https://instagram.com/{{ page.instagram }}" class="guest-link" target="_blank" rel="noopener">Instagram</a>{% endif %}
+    </div>
+  </div>
+
+  {% if content != "" %}
+  <div class="guest-bio">
+    {{ content }}
+  </div>
+  {% endif %}
+
+  {% assign guest_episodes = site.podcast | where_exp: "ep", "ep.guests contains page.slug" | sort: "date" | reverse %}
+  {% if guest_episodes.size > 0 %}
+  <div class="guest-episodes">
+    <h2>Episodes with {{ page.name }}</h2>
+    <div class="episodes-list">
+      {% for episode in guest_episodes %}
+      <a href="{{ episode.url | relative_url }}" class="episode-list-item">
+        <div class="episode-list-num">{{ episode.episode_number | prepend: '00' | slice: -2, 2 }}</div>
+        <div class="episode-list-body">
+          <div class="episode-list-title">{{ episode.title }}</div>
+          <div class="episode-list-desc">{{ episode.description }}</div>
+        </div>
+        <div class="episode-list-meta">
+          <span class="show-badge show-badge--{{ episode.show }}">{{ episode.show }}</span>
+          <span class="episode-list-date">{{ episode.date | date: "%b %-d, %Y" }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>

@@ -4,23 +4,47 @@ description: "Vaguely Generic is a presence that exists to do whatever."
 baseurl: ""
 url: "https://vaguelygeneric.website"
 
-# Podcast Settings
-podcast:
-  name: "The Generic"
-  subtitle: "Discussing Nothing Specific Since Whenever"
-  author: "The Generic Hosts"
-  email: "hello@thegeneric.example.com"
-  language: "en-us"
-  category: "Society & Culture"
-  subcategory: "Personal Journals"
-  explicit: "false"
-  image: "/assets/images/podcast-cover.png"
-  feed_url: "/feed.xml"
-
-
-
 # YouTube
 youtube_channel: "https://www.youtube.com/@VaguelyGeneric"
+
+# Shows — used for dynamic nav dropdown and RSS feeds
+shows:
+  - name: "The Generic"
+    slug: generic
+    description: "Freeform conversations about whatever comes up. No topic. No agenda. Just talking."
+    subtitle: "Discussing Nothing Specific Since Whenever"
+    author: "The Generic Hosts"
+    email: "email@vaguelygeneric.website"
+    language: "en-us"
+    category: "Society & Culture"
+    subcategory: "Personal Journals"
+    explicit: "false"
+    image: "/assets/images/podcast-cover.png"
+    feed_url: "/feed/generic.xml"
+  - name: "Ramblings"
+    slug: ramblings
+    description: "Longer, looser, less edited. Thoughts that needed more room."
+    subtitle: "Unedited and Unashamed"
+    author: "The Generic Hosts"
+    email: "hello@vaguelygeneric.website"
+    language: "en-us"
+    category: "Society & Culture"
+    subcategory: "Personal Journals"
+    explicit: "false"
+    image: "/assets/images/podcast-cover-ramblings.png"
+    feed_url: "/feed/ramblings.xml"
+  - name: "Readings"
+    slug: readings
+    description: "Audio readings of things worth reading aloud."
+    subtitle: "Worth Hearing Aloud"
+    author: "The Generic Hosts"
+    email: "hello@vaguelygeneric.website"
+    language: "en-us"
+    category: "Arts"
+    subcategory: "Literature"
+    explicit: "false"
+    image: "/assets/images/podcast-cover-readings.png"
+    feed_url: "/feed/readings.xml"
 
 # Collections
 collections:
@@ -30,6 +54,9 @@ collections:
   posts:
     output: true
     permalink: /blog/:year/:month/:day/:title/
+  guests:
+    output: true
+    permalink: /guests/:slug/
 
 defaults:
   - scope:
@@ -42,8 +69,11 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-
-
+  - scope:
+      path: ""
+      type: "guests"
+    values:
+      layout: "guest"
 
 # Build settings
 markdown: kramdown
@@ -60,3 +90,4 @@ exclude:
   - vendor
   - .git
   - README.md
+  - Dockerfile
