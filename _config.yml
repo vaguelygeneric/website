@@ -8,7 +8,7 @@ url: "https://vaguelygeneric.website"
 youtube_channel: "https://www.youtube.com/@VaguelyGeneric"
 
 # Shows — used for dynamic nav dropdown and RSS feeds
-shows:
+shows-legacy:
   - name: "The Generic"
     slug: generic
     description: "Freeform conversations about whatever comes up. No topic. No agenda. Just talking."
@@ -48,6 +48,9 @@ shows:
 
 # Collections
 collections:
+  shows:
+    output: true
+    permalink: /podcast/:slug/
   podcast:
     output: true
     permalink: /podcast/:path/
