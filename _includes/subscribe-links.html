@@ -2,34 +2,34 @@
 
 <div class="subscribe-links">
 
-  <a href="{{ site.url }}{{ site.baseurl }}/feed/{{ show.slug }}.xml" aria-label="RSS Feed">
+  <a class="subscribe-link" href="{{ site.url }}{{ site.baseurl }}/feed/{{ show.slug }}.xml" aria-label="RSS Feed">
     {% include icon.html name="rss" %}
     <span>RSS</span>
   </a>
 
   {% if show.apple_url %}
-  <a href="{{ show.apple_url }}" target="_blank" rel="noopener" aria-label="Apple Podcasts">
+  <a class="subscribe-link" href="{{ show.apple_url }}" target="_blank" rel="noopener" aria-label="Apple Podcasts">
     {% include icon.html name="apple" %}
     <span>Apple</span>
   </a>
   {% endif %}
 
   {% if show.spotify_url %}
-  <a href="{{ show.spotify_url }}" target="_blank" rel="noopener">
+  <a class="subscribe-link" href="{{ show.spotify_url }}" target="_blank" rel="noopener">
     {% include icon.html name="spotify" %}
     <span>Spotify</span>
   </a>
   {% endif %}
 
   {% if show.ytmusic_url %}
-  <a href="{{ show.ytmusic_url }}" target="_blank" rel="noopener">
-    {% include icon.html name="youtube" %}
-    <span>YouTube</span>
+  <a class="subscribe-link" href="{{ show.ytmusic_url }}" target="_blank" rel="noopener">
+    {% include icon.html name="ytmusic" %}
+    <span>YouTube Music</span>
   </a>
   {% endif %}
 
   {% if show.pocketcast_url %}
-  <a href="{{ show.pocketcast_url }}" target="_blank" rel="noopener">
+  <a class="subscribe-link" href="{{ show.pocketcast_url }}" target="_blank" rel="noopener">
     {% include icon.html name="pocketcasts" %}
     <span>Pocket Casts</span>
   </a>
