@@ -64,6 +64,11 @@ collections:
 defaults:
   - scope:
       path: ""
+      type: "shows"
+    values:
+      layout: "show-index"
+  - scope:
+      path: ""
       type: "podcast"
     values:
       layout: "episode"
