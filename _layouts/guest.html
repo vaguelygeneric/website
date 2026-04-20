@@ -5,17 +5,25 @@ layout: default
 <div class="guest-wrapper">
   <div class="guest-header">
     <a href="{{ '/guests/' | relative_url }}" class="back-link">← All Guests</a>
-    {% if page.photo %}
+    {% assign has_photo = page.photo | strip %}
+    {% if has_photo != "" and has_photo %}
     <div class="guest-photo">
       <img src="{{ page.photo | relative_url }}" alt="{{ page.name }}" />
+    </div>
+    {% else %}
+    <div class="guest-photo guest-photo--placeholder">
+      <img src="{{ '/assets/images/guest-placeholder.svg' | relative_url }}" alt="Guest placeholder" />
     </div>
     {% endif %}
     <h1 class="guest-name">{{ page.name }}</h1>
     {% if page.title %}<p class="guest-title">{{ page.title }}</p>{% endif %}
     <div class="guest-links">
-      {% if page.website %}<a href="{{ page.website }}" class="guest-link" target="_blank" rel="noopener">Website</a>{% endif %}
-      {% if page.twitter %}<a href="https://twitter.com/{{ page.twitter }}" class="guest-link" target="_blank" rel="noopener">@{{ page.twitter }}</a>{% endif %}
-      {% if page.instagram %}<a href="https://instagram.com/{{ page.instagram }}" class="guest-link" target="_blank" rel="noopener">Instagram</a>{% endif %}
+      {% if page.website %}<a href="{{ page.website }}" class="guest-link" target="_blank" rel="noopener">Website</a>{%
+      endif %}
+      {% if page.twitter %}<a href="https://twitter.com/{{ page.twitter }}" class="guest-link" target="_blank"
+        rel="noopener">@{{ page.twitter }}</a>{% endif %}
+      {% if page.instagram %}<a href="https://instagram.com/{{ page.instagram }}" class="guest-link" target="_blank"
+        rel="noopener">Instagram</a>{% endif %}
     </div>
   </div>
 

@@ -14,13 +14,14 @@ permalink: /guests/
     {% assign guests = site.guests | sort: "name" %}
     {% for guest in guests %}
     <a href="{{ guest.url | relative_url }}" class="guest-card">
-      {% if guest.photo %}
+      {% assign has_photo = guest.photo | strip %}
+      {% if has_photo != "" and has_photo %}
       <div class="guest-card-photo">
         <img src="{{ guest.photo | relative_url }}" alt="{{ guest.name }}" />
       </div>
       {% else %}
       <div class="guest-card-photo guest-card-photo--placeholder">
-        <span>{{ guest.name | slice: 0 }}</span>
+        <img src="{{ '/assets/images/guest-placeholder.svg' | relative_url }}" alt="{{ guest.name }}" />
       </div>
       {% endif %}
       <div class="guest-card-body">
