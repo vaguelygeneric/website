@@ -8,49 +8,24 @@ permalink: /podcast/
 <div class="podcast-page">
   <div class="podcast-listing-header">
     <h1>All Shows</h1>
-    <p>Three shows. No specific topic. Make yourself at home.</p>
+    <p>No specific topic. No actual content yet. Make yourself at home.</p>
   </div>
 
   <div class="show-grid">
-
-    <a href="{{ '/podcast/generic/' | relative_url }}" class="show-card">
-      <div class="show-card-art">
+    {% assign shows = site.shows | sort: "name" %}
+    {% for show in shows %}
+    <a href="{{ site.baseurl }}/podcast/{{ show.slug }}/" class="show-card">
+      <div class="show-card-art show-card-art--{{ show.slug }}">
         <span class="logo-bracket">[</span>
-        <span>TG</span>
+        <span>{{ show.name | truncate: 2, "" | upcase }}</span>
         <span class="logo-bracket">]</span>
       </div>
       <div class="show-card-body">
-        <h2 class="show-card-title">The Generic</h2>
-        <p class="show-card-desc">Freeform conversations about whatever comes up. No topic. No agenda. Just talking.</p>
+        <h2 class="show-card-title">{{ show.name }}</h2>
+        <p class="show-card-desc">{{ show.description }}</p>
         <span class="show-card-cta">Browse Episodes →</span>
       </div>
     </a>
-
-    <a href="{{ '/podcast/ramblings/' | relative_url }}" class="show-card">
-      <div class="show-card-art show-card-art--ramblings">
-        <span class="logo-bracket">[</span>
-        <span>R</span>
-        <span class="logo-bracket">]</span>
-      </div>
-      <div class="show-card-body">
-        <h2 class="show-card-title">Ramblings</h2>
-        <p class="show-card-desc">Longer, looser, less edited. Thoughts that needed more room than a normal episode allows.</p>
-        <span class="show-card-cta">Browse Episodes →</span>
-      </div>
-    </a>
-
-    <a href="{{ '/podcast/readings/' | relative_url }}" class="show-card">
-      <div class="show-card-art show-card-art--readings">
-        <span class="logo-bracket">[</span>
-        <span>Rd</span>
-        <span class="logo-bracket">]</span>
-      </div>
-      <div class="show-card-body">
-        <h2 class="show-card-title">Readings</h2>
-        <p class="show-card-desc">Audio readings of things worth reading aloud — essays, stories, whatever we find interesting.</p>
-        <span class="show-card-cta">Browse Episodes →</span>
-      </div>
-    </a>
-
+    {% endfor %}
   </div>
 </div>

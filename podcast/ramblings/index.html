@@ -1,9 +1,0 @@
----
-layout: default
-title: "Ramblings"
-description: "Longer, looser, less edited."
-permalink: /podcast/ramblings/
-show_slug: ramblings
----
-{% assign episodes = site.podcast | where: "show", "ramblings" | sort: "date" | reverse %}
-{% include show-index.html episodes=episodes show_name="Ramblings" show_desc="Longer, looser, less edited. Thoughts that needed more room." %}

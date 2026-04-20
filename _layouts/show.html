@@ -1,27 +1,33 @@
+---
+layout: default
+---
+{% assign episodes = site.podcast | where: "show", page.slug | sort: "date" | reverse %}
+
 <div class="podcast-page">
   <div class="podcast-hero">
     <div class="podcast-cover">
       <div class="podcast-cover-placeholder">
         <span class="logo-bracket">[</span>
-        <span class="logo-text">{{ include.show_name }}</span>
+        <span class="logo-text">{{ page.name }}</span>
         <span class="logo-bracket">]</span>
       </div>
     </div>
     <div class="podcast-info">
-      <p class="podcast-info-eyebrow"><a href="{{ '/podcast/' | relative_url }}"
-          style="color:inherit;text-decoration:none;">Podcasts</a> / {{ include.show_name }}</p>
-      <h1>{{ include.show_name }}</h1>
-      <p class="podcast-info-desc">{{ include.show_desc }}</p>
+      <p class="podcast-info-eyebrow">
+        <a href="{{ '/podcast/' | relative_url }}" style="color:inherit;text-decoration:none;">Podcasts</a> / {{
+        page.name }}
+      </p>
+      <h1>{{ page.name }}</h1>
+      <p class="podcast-info-desc">{{ page.description }}</p>
       <div class="podcast-info-subscribe">
         <h4>Subscribe</h4>
-        {% assign show_info = site.shows | where: "slug", page.show_slug | first %}
-        {% include subscribe-links.html feed_url=show_info.feed_url %}
+        {% include subscribe-links.html show=page %}
       </div>
     </div>
   </div>
 
   <div class="episodes-list">
-    {% for episode in include.episodes %}
+    {% for episode in episodes %}
     <a href="{{ episode.url | relative_url }}" class="episode-list-item">
       <div class="episode-list-num">{{ episode.episode_number | prepend: '00' | slice: -2, 2 }}</div>
       <div class="episode-list-body">

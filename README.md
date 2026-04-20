@@ -1,196 +1,261 @@
-# The Generic — Jekyll Site
+# VaguelyGeneric — Website
 
-A podcast website for *The Generic*, built with Jekyll and designed to deploy on GitHub Pages.
-
----
-
-## Quick Start
-
-### Prerequisites
-- Ruby 3.x
-- Bundler (`gem install bundler`)
-
-### Local Development
-
-```bash
-# Install dependencies
-bundle install
-
-# Serve locally with live reload
-bundle exec jekyll serve --livereload
-
-# Visit http://localhost:4000
-```
+The Jekyll source for [vaguelygeneric.website](https://vaguelygeneric.website) — an umbrella content platform hosting media content.
 
 ---
 
-## Deploying to GitHub Pages
+## What's Here
 
-### Option A: GitHub Actions (Recommended)
-1. Push this repo to GitHub.
-2. Go to **Settings → Pages**.
-3. Under **Source**, select **GitHub Actions**.
-4. The `.github/workflows/deploy.yml` workflow will build and deploy automatically on every push to `main`.
-
-### Option B: Classic gh-pages Branch
-1. Go to **Settings → Pages**.
-2. Under **Source**, select **Deploy from a branch** → `gh-pages` → `/(root)`.
-3. Run `bundle exec jekyll build` and push the `_site/` folder to the `gh-pages` branch (or use the `gh-pages` gem).
+- **Podcast shows** with individual episode pages, show index pages, and per-show RSS feeds
+- **Blog** for updates and behind-the-scenes posts
+- **Guest directory** with individual guest profiles that auto-populate with their episode appearances
+- **Light/dark mode** that follows OS preference by default, overridable per-visitor
+- **Responsive layout** down to mobile
 
 ---
 
-## Configuration
+## Shows
 
-Edit `_config.yml` to update:
+| Show | Slug | Feed |
+|------|------|------|
+| The Generic | `generic` | `/feed/generic.xml` |
+| Ramblings | `ramblings` | `/feed/ramblings.xml` |
+| Readings | `readings` | `/feed/readings.xml` |
 
-| Key | What it does |
-|-----|-------------|
-| `url` | Your GitHub Pages URL, e.g. `https://yourusername.github.io` |
-| `baseurl` | Leave blank `""` for user/org sites; use `/repo-name` for project sites |
-| `youtube_channel` | Your full YouTube channel URL |
-| `podcast.author` | Your name or show host name |
-| `podcast.email` | Contact email (shown in RSS feed) |
-| `podcast.image` | Path to podcast cover art (see below) |
-
----
-
-## Adding Episodes
-
-Create a new Markdown file in `_podcast/` following this naming convention:
-
-```
-_podcast/YYYY-MM-DD-NNN-episode-slug.md
-```
-
-Use this front matter template:
-
-```yaml
----
-layout: episode
-title: "Your Episode Title"
-description: "A one-sentence description for RSS feeds and cards."
-date: 2024-06-01
-episode_number: 4
-duration: "45:30"
-audio_url: "https://your-audio-host.com/episode-004.mp3"
-audio_size: "43700000"      # file size in bytes (du -b yourfile.mp3)
-audio_type: "audio/mpeg"    # audio/mpeg for MP3, audio/x-m4a for AAC
-permalink: /podcast/004-your-slug/
----
-
-Episode show notes go here in Markdown.
-```
-
-### Hosting Audio Files
-
-You need to host audio files separately. Good free/cheap options:
-- **Buzzsprout** / **Transistor** / **Anchor (Spotify)** — dedicated podcast hosts with RSS
-- **GitHub Releases** — free, upload .mp3 as a release asset, grab the direct URL
-- **Amazon S3** / **Backblaze B2** — very cheap storage with direct links
-- **Cloudflare R2** — free tier for small shows
-
----
-
-## Podcast RSS Feed
-
-The RSS feed lives at `/feed.xml` and is fully compatible with:
-- ✅ Apple Podcasts
-- ✅ Google Podcasts  
-- ✅ Spotify (via RSS submission)
-- ✅ Pocket Casts, Overcast, Castro, and all standard apps
-
-The feed is generated from your `_podcast/` files automatically. You can also add episodes manually by editing `feed.xml` directly — see the commented template inside the file.
-
-### Submitting Your Podcast
-
-| Platform | Submission URL |
-|----------|---------------|
-| Apple Podcasts | https://podcastsconnect.apple.com |
-| Spotify | https://podcasters.spotify.com |
-| Google Podcasts | Deprecated — submit via Spotify or Apple |
-| Amazon Music | https://podcasters.amazon.com |
-| iHeart Radio | https://www.iheart.com/content/submit-your-podcast |
-
-Your feed URL to submit: `https://yourusername.github.io/feed.xml`
-
----
-
-## Podcast Cover Art
-
-Replace `assets/images/podcast-cover.png` with your actual cover art.
-
-**Requirements:**
-- Square image (1:1 ratio)
-- Minimum 1400×1400 px, recommended 3000×3000 px
-- PNG or JPG format
-- Under 512KB if possible
-
----
-
-## Customization
-
-### Colors & Theme
-Edit the CSS variables at the top of `assets/css/main.css`:
-```css
-:root {
-  --accent: #c4410c;    /* Change the brand color */
-  --bg:     #f5f2eb;    /* Light mode background */
-  /* ... */
-}
-```
-
-### Fonts
-The site uses **Syne** (headings) and **Lora** (body) from Google Fonts. To change fonts, update the `<link>` in `_layouts/default.html` and the font variables in `assets/css/main.css`.
-
-### Navigation
-Edit `_includes/header.html` to add, remove, or reorder navigation links.
-
-### Subscribe Links
-Edit `_includes/subscribe-links.html` to update your Apple Podcasts, Spotify, and other platform URLs once your show is listed.
+Show metadata (name, description, author, RSS category, cover art path, feed URL) lives in `_config.yml` under `shows:`. Adding or renaming a show means editing that block — the nav dropdown, show index pages, RSS feeds, and episode back-links all pull from it.
 
 ---
 
 ## File Structure
 
 ```
-the-generic-site/
-├── _config.yml              # Site configuration
+vaguelygeneric/
+├── _config.yml                  # Site config, show metadata, collections
 ├── _layouts/
-│   ├── default.html         # Base layout (all pages)
-│   ├── page.html            # Generic page layout
-│   └── episode.html         # Individual episode layout
+│   ├── default.html             # Base layout (all pages)
+│   ├── episode.html             # Individual episode page
+│   ├── guest.html               # Individual guest profile page
+│   ├── page.html                # Generic content page
+│   └── post.html                # Blog post
 ├── _includes/
-│   ├── header.html          # Site header + nav
-│   ├── footer.html          # Site footer
-│   └── subscribe-links.html # Reusable subscribe buttons
-├── _podcast/                # Episode markdown files
-│   ├── 2024-01-15-001-pilot.md
-│   └── ...
-├── assets/
-│   ├── css/main.css         # All styles (light + dark mode)
-│   ├── js/
-│   │   ├── theme.js         # Dark/light mode toggle
-│   │   └── main.js          # Navigation + interactions
-│   └── images/
-│       └── podcast-cover.png  # ← Replace with your art
-├── .github/workflows/
-│   └── deploy.yml           # GitHub Actions auto-deploy
-├── index.html               # Home page
-├── podcast.html             # Episode listing page
-├── about.md                 # About page
-├── feed.xml                 # Podcast RSS feed
-├── 404.html                 # 404 page
-└── Gemfile                  # Ruby dependencies
+│   ├── header.html              # Site header + nav (with dropdown)
+│   ├── footer.html              # Site footer + RSS link
+│   ├── show-index.html          # Reusable show episode listing
+│   └── subscribe-links.html     # Platform subscribe links (RSS, Apple, Spotify, etc.)
+├── _podcast/
+│   ├── generic/                 # Episodes for The Generic
+│   ├── ramblings/               # Episodes for Ramblings
+│   └── readings/                # Episodes for Readings
+├── _guests/                     # Guest profile markdown files
+├── _posts/                      # Blog posts
+├── podcast/
+│   ├── generic/index.html       # Show index page — The Generic
+│   ├── ramblings/index.html     # Show index page — Ramblings
+│   └── readings/index.html      # Show index page — Readings
+├── feed/
+│   ├── generic.xml              # RSS feed — The Generic
+│   ├── ramblings.xml            # RSS feed — Ramblings
+│   └── readings.xml             # RSS feed — Readings
+├── blog/index.html              # Blog listing
+├── guests/index.html            # Guest directory
+├── podcast.html                 # All shows landing page
+├── about.md                     # About page
+├── index.html                   # Home page
+├── 404.html                     # 404 page
+└── assets/
+    ├── css/main.css             # All styles (light + dark mode, full design system)
+    ├── js/theme.js              # Dark/light mode — reads OS pref, persists to localStorage
+    ├── js/main.js               # Mobile nav, dropdown toggle
+    └── images/
+        ├── guest-placeholder.svg
+        ├── podcast-cover.png            # Cover art — The Generic
+        ├── podcast-cover-ramblings.png  # Cover art — Ramblings
+        └── podcast-cover-readings.png   # Cover art — Readings
 ```
 
 ---
 
-## Light / Dark Mode
+## Local Development
 
-The site respects the visitor's OS preference by default (`prefers-color-scheme`). Visitors can override with the sun/moon toggle button in the header. Their preference is saved to `localStorage` and persists across visits.
+**Prerequisites:** Ruby 3.x, Bundler
+
+```bash
+bundle install
+bundle exec jekyll serve --livereload
+# → http://localhost:4000
+```
 
 ---
 
-## License
+## Deployment
 
-Do whatever you want with this. It's your podcast.
+Pushes to `main` trigger the GitHub Actions workflow at `.github/workflows/deploy.yml`, which builds with Jekyll and deploys to GitHub Pages automatically.
+
+The `development` branch is used for active work. Merge to `main` to deploy.
+
+---
+
+## Adding a New Episode
+
+Create a Markdown file in `_podcast/{show-slug}/`:
+
+```
+_podcast/generic/2024-06-01-004-episode-slug.md
+```
+
+**Front matter:**
+
+```yaml
+---
+show: generic
+title: "Episode Title"
+description: "One sentence — shown on cards, episode lists, and in the RSS feed."
+date: 2024-06-01
+episode_number: 4
+duration: "45:30"
+audio_url: "https://your-audio-host.com/episode-004.mp3"
+audio_size: "43700000"        # bytes — run: du -b yourfile.mp3
+audio_type: "audio/mpeg"      # audio/mpeg for MP3, audio/x-m4a for AAC
+permalink: /podcast/generic/004-episode-slug/
+guests:
+  - jane-doe                   # must match a filename slug in _guests/
+---
+
+Show notes in Markdown here.
+```
+
+**What happens automatically:**
+- Episode appears on the show index page (`/podcast/generic/`)
+- Episode appears in Latest Episodes on the home page if it's one of the 3 most recent across all shows
+- Episode is added to the show's RSS feed (`/feed/generic.xml`)
+- If guests are listed, the episode appears on each guest's profile page
+
+**What you do manually:**
+- Host the audio file (GitHub Releases, S3, Backblaze B2, Buzzsprout, etc.) and paste the URL
+- Get the file size in bytes (`du -b yourfile.mp3`)
+- Create a guest file first if it's someone new
+
+---
+
+## Adding a Guest
+
+Create a Markdown file in `_guests/`:
+
+```
+_guests/first-last.md
+```
+
+```yaml
+---
+layout: guest
+name: "First Last"
+slug: first-last
+title: "Their Title or Descriptor"
+website: "https://theirsite.com"
+twitter: "theirhandle"
+instagram: "theirhandle"
+photo:                         # leave blank for silhouette placeholder
+---
+
+A short bio in Markdown.
+```
+
+The `slug` must match exactly what you list under `guests:` in episode front matter. Episode appearances populate automatically on the guest's page.
+
+---
+
+## Adding a Blog Post
+
+Create a Markdown file in `_posts/`:
+
+```
+_posts/2024-06-01-post-slug.md
+```
+
+```yaml
+---
+title: "Post Title"
+description: "One sentence shown on the blog listing and home page preview."
+date: 2024-06-01
+tags: [updates, behind-the-scenes]
+---
+
+Post content in Markdown.
+```
+
+---
+
+## Adding a New Show
+
+1. Add an entry to `shows:` in `_config.yml`:
+
+```yaml
+- name: "New Show"
+  slug: new-show
+  description: "What it's about."
+  subtitle: "Tagline"
+  author: "VaguelyGeneric"
+  email: "hello@vaguelygeneric.website"
+  language: "en-us"
+  category: "Society & Culture"
+  subcategory: "Personal Journals"
+  explicit: "false"
+  image: "/assets/images/podcast-cover-new-show.png"
+  feed_url: "/feed/new-show.xml"
+```
+
+2. Create `_podcast/new-show/` for episode files
+3. Create `podcast/new-show/index.html` (copy an existing show index, update `show_slug` and `permalink`)
+4. Create `feed/new-show.xml` (copy an existing feed file, update `show_slug` in the front matter)
+5. Add cover art to `assets/images/`
+6. The nav dropdown populates from `shows:` automatically
+
+---
+
+## RSS Feeds
+
+Each show has its own feed, generated from the `_podcast/{slug}/` collection filtered by `show:` field:
+
+| Feed | URL |
+|------|-----|
+| The Generic | `https://vaguelygeneric.website/feed/generic.xml` |
+| Ramblings | `https://vaguelygeneric.website/feed/ramblings.xml` |
+| Readings | `https://vaguelygeneric.website/feed/readings.xml` |
+
+Feeds are compatible with Apple Podcasts, Spotify (via RSS import), Pocket Casts, Overcast, and all standard podcast apps. Each feed file also contains a commented-out manual episode template for adding episodes without a Markdown file.
+
+**Submitting to platforms:**
+
+| Platform | URL |
+|----------|-----|
+| Apple Podcasts | https://podcastsconnect.apple.com |
+| Spotify | https://podcasters.spotify.com |
+| Amazon Music | https://podcasters.amazon.com |
+| iHeart | https://www.iheart.com/content/submit-your-podcast |
+
+---
+
+## Configuration Reference
+
+Key fields in `_config.yml`:
+
+| Field | Purpose |
+|-------|---------|
+| `url` | Full site URL — used in RSS feeds and SEO tags |
+| `baseurl` | Leave blank for apex domain; use `/repo-name` for project sites |
+| `youtube_channel` | YouTube channel URL — used in nav and home page |
+| `shows` | Array of show definitions — drives nav, RSS, episode back-links |
+
+---
+
+## Cover Art Requirements
+
+Apple Podcasts requires square artwork between 1400×1400 and 3000×3000 px, PNG or JPG, under 512KB where possible. One image per show, referenced in `_config.yml` under `shows[].image`.
+
+---
+
+## Theme & Colors
+
+CSS variables are defined at the top of `assets/css/main.css` under `:root` (light mode) and `[data-theme="dark"]`. The accent color, background, surface, border, and text colors are all tokenized — change the variables to retheme the entire site.
+
+Font stack: **Syne** (headings/UI) + **Lora** (body), both loaded from Google Fonts in `_layouts/default.html`.

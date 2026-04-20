@@ -1,32 +1,38 @@
-<ul class="subscribe-links">
-  <li>
-    <a href="{{ include.feed_url | default: '/feed/generic.xml' | relative_url }}" class="subscribe-link" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
-      RSS Feed
-    </a>
-  </li>
-  <li>
-    <a href="https://podcasts.apple.com/podcast/id000000000" class="subscribe-link" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm.5 5.5c1.933 0 3.5 1.567 3.5 3.5S14.433 14.5 12.5 14.5 9 12.933 9 11s1.567-3.5 3.5-3.5zm0 9c-2.347 0-4.432-1.164-5.706-2.95.838-.637 2.259-1.05 3.706-1.05.427 0 .848.043 1.25.12.402-.077.823-.12 1.25-.12 1.447 0 2.868.413 3.706 1.05C15.432 15.336 13.347 16.5 11 16.5z"/></svg>
-      Apple Podcasts
-    </a>
-  </li>
-  <li>
-    <a href="https://podcasts.google.com/feed/YOURBASE64FEEDURL" class="subscribe-link" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-      Google Podcasts
-    </a>
-  </li>
-  <li>
-    <a href="https://open.spotify.com/show/YOURSHOWID" class="subscribe-link" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-      Spotify
-    </a>
-  </li>
-  <li>
-    <a href="https://pocketcasts.com/submit" class="subscribe-link" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0a12 12 0 1 0 0 24A12 12 0 0 0 12 0zm0 4.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zm0 3a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>
-      Pocket Casts
-    </a>
-  </li>
-</ul>
+{% assign show = include.show | default: page %}
+
+<div class="subscribe-links">
+
+  <a class="subscribe-link" href="{{ site.url }}{{ site.baseurl }}/feed/{{ show.slug }}.xml" aria-label="RSS Feed">
+    {% include icon.html name="rss" %}
+    <span>RSS</span>
+  </a>
+
+  {% if show.apple_url %}
+  <a class="subscribe-link" href="{{ show.apple_url }}" target="_blank" rel="noopener" aria-label="Apple Podcasts">
+    {% include icon.html name="apple" %}
+    <span>Apple</span>
+  </a>
+  {% endif %}
+
+  {% if show.spotify_url %}
+  <a class="subscribe-link" href="{{ show.spotify_url }}" target="_blank" rel="noopener">
+    {% include icon.html name="spotify" %}
+    <span>Spotify</span>
+  </a>
+  {% endif %}
+
+  {% if show.ytmusic_url %}
+  <a class="subscribe-link" href="{{ show.ytmusic_url }}" target="_blank" rel="noopener">
+    {% include icon.html name="ytmusic" %}
+    <span>YouTube Music</span>
+  </a>
+  {% endif %}
+
+  {% if show.pocketcast_url %}
+  <a class="subscribe-link" href="{{ show.pocketcast_url }}" target="_blank" rel="noopener">
+    {% include icon.html name="pocketcasts" %}
+    <span>Pocket Casts</span>
+  </a>
+  {% endif %}
+
+</div>
