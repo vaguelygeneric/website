@@ -14,13 +14,14 @@ layout: default
     </div>
     <div class="podcast-info">
       <p class="podcast-info-eyebrow">
-        <a href="{{ '/podcast/' | relative_url }}" style="color:inherit;text-decoration:none;">Podcasts</a> / {{ page.name }}
+        <a href="{{ '/podcast/' | relative_url }}" style="color:inherit;text-decoration:none;">Podcasts</a> / {{
+        page.name }}
       </p>
       <h1>{{ page.name }}</h1>
       <p class="podcast-info-desc">{{ page.description }}</p>
       <div class="podcast-info-subscribe">
         <h4>Subscribe</h4>
-        {% include subscribe-links.html feed_url=page.feed_url %}
+        {% include subscribe-links.html show=page %}
       </div>
     </div>
   </div>
