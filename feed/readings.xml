@@ -1,5 +1,5 @@
 ---
-layout: null
-slug: readings
+layout: feed
+show: readings
 permalink: /feed/readings.xml
 ---
