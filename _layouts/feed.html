@@ -2,37 +2,38 @@
 layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-{% assign episodes = site.podcast | where: "show", page.slug | sort: "date" | reverse %}
+{% assign show = site.shows | where: "slug", page.show | first %}
+{% assign episodes = site.podcast | where: "show", show.slug | sort: "date" | reverse %}
 <rss version="2.0"
   xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
   xmlns:content="http://purl.org/rss/1.0/modules/content/"
   xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
-    <title>{{ page.name | xml_escape }}</title>
-    <link>{{ site.url }}{{ site.baseurl }}/podcast/{{ page.slug }}/</link>
-    <description>{{ page.description | xml_escape }}</description>
-    <language>{{ page.language }}</language>
-    <copyright>&#169; {{ 'now' | date: "%Y" }} {{ page.author }}</copyright>
-    <atom:link href="{{ site.url }}{{ site.baseurl }}{{ page.feed_url }}" rel="self" type="application/rss+xml" />
-    <itunes:title>{{ page.name | xml_escape }}</itunes:title>
-    <itunes:subtitle>{{ page.subtitle | xml_escape }}</itunes:subtitle>
-    <itunes:summary>{{ page.description | xml_escape }}</itunes:summary>
-    <itunes:author>{{ page.author }}</itunes:author>
-    <itunes:explicit>{{ page.explicit }}</itunes:explicit>
+    <title>{{ show.name | xml_escape }}</title>
+    <link>{{ site.url }}{{ site.baseurl }}/podcast/{{ show.slug }}/</link>
+    <description>{{ show.description | xml_escape }}</description>
+    <language>{{ show.language }}</language>
+    <copyright>&#169; {{ 'now' | date: "%Y" }} {{ show.author }}</copyright>
+    <atom:link href="{{ site.url }}{{ site.baseurl }}{{ show.feed_url }}" rel="self" type="application/rss+xml" />
+    <itunes:title>{{ show.name | xml_escape }}</itunes:title>
+    <itunes:subtitle>{{ show.subtitle | xml_escape }}</itunes:subtitle>
+    <itunes:author>{{ show.author }}</itunes:author>
+    <itunes:summary>{{ show.description | xml_escape }}</itunes:summary>
+    <itunes:explicit>{{ show.explicit }}</itunes:explicit>
     <itunes:type>episodic</itunes:type>
     <itunes:owner>
-      <itunes:name>{{ page.author }}</itunes:name>
-      <itunes:email>{{ page.email }}</itunes:email>
+      <itunes:name>{{ show.author }}</itunes:name>
+      <itunes:email>{{ show.email }}</itunes:email>
     </itunes:owner>
-    <itunes:category text="{{ page.category }}">
-      <itunes:category text="{{ page.subcategory }}" />
+    <itunes:category text="{{ show.category }}">
+      <itunes:category text="{{ show.subcategory }}" />
     </itunes:category>
-    <itunes:image href="{{ site.url }}{{ site.baseurl }}{{ page.image }}" />
+    <itunes:image href="{{ site.url }}{{ site.baseurl }}{{ show.image }}" />
     <image>
-      <url>{{ site.url }}{{ site.baseurl }}{{ page.image }}</url>
-      <title>{{ page.name | xml_escape }}</title>
-      <link>{{ site.url }}{{ site.baseurl }}/podcast/{{ page.slug }}/</link>
+      <url>{{ site.url }}{{ site.baseurl }}{{ show.image }}</url>
+      <title>{{ show.name | xml_escape }}</title>
+      <link>{{ site.url }}{{ site.baseurl }}/podcast/{{ show.slug }}/</link>
     </image>
     {% for episode in episodes %}
     <item>
@@ -47,11 +48,11 @@ layout: null
       {% endif %}
       <itunes:title>{{ episode.title | xml_escape }}</itunes:title>
       <itunes:summary><![CDATA[{{ episode.description }}]]></itunes:summary>
-      <itunes:author>{{ page.author }}</itunes:author>
+      <itunes:author>{{ show.author }}</itunes:author>
       <itunes:duration>{{ episode.duration }}</itunes:duration>
       <itunes:episode>{{ episode.episode_number }}</itunes:episode>
       <itunes:episodeType>full</itunes:episodeType>
-      <itunes:explicit>{{ episode.explicit | default: page.explicit }}</itunes:explicit>
+      <itunes:explicit>{{ episode.explicit | default: show.explicit }}</itunes:explicit>
     </item>
     {% endfor %}
   </channel>
