@@ -48,7 +48,7 @@ layout: default
 
   <div class="episode-subscribe">
     <h3>Subscribe to {{ show_info.name | default: "the show" }}</h3>
-    {% assign show_info = site.shows | where: "slug", page.show | first %}
-    {% include subscribe-links.html feed_url=show_info.feed_url %}
+    {% assign show_page = site.shows | where: "slug", page.show | first %}
+    {% include subscribe-links.html show=show_page %}
   </div>
 </div>
