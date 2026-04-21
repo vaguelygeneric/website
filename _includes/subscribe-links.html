@@ -7,6 +7,20 @@
     <span>RSS</span>
   </a>
 
+  {% if show.podcast_addict_url %}
+  <a class="subscribe-link" href="{{ show.podcast_addict_url }}" target="_blank" rel="noopener">
+    {% include icon.html name="podcastaddict" %}
+    <span>Podcast Addict</span>
+  </a>
+  {% endif %}
+
+  {% if show.iheart_url %}
+  <a class="subscribe-link" href="{{ show.iheart_url }}" target="_blank" rel="noopener">
+    {% include icon.html name="iheart" %}
+    <span>iHeart</span>
+  </a>
+  {% endif %}
+
   {% if show.apple_url %}
   <a class="subscribe-link" href="{{ show.apple_url }}" target="_blank" rel="noopener" aria-label="Apple Podcasts">
     {% include icon.html name="apple" %}
@@ -32,6 +46,21 @@
   <a class="subscribe-link" href="{{ show.pocketcast_url }}" target="_blank" rel="noopener">
     {% include icon.html name="pocketcasts" %}
     <span>Pocket Casts</span>
+  </a>
+  {% endif %}
+
+
+  {% if show.podcast_index_url %}
+  <a class="subscribe-link" href="{{ show.podcast_index_url }}" target="_blank" rel="noopener">
+    {% include icon.html name="podcastindex" %}
+    <span>Podcast Index</span>
+  </a>
+  {% endif %}
+
+  {% if show.playerfm_url %}
+  <a class="subscribe-link" href="{{ show.playerfm_url }}" target="_blank" rel="noopener">
+    {% include icon.html name="playerfm" %}
+    <span>Player.fm</span>
   </a>
   {% endif %}
 
