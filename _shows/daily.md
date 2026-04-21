@@ -1,8 +1,8 @@
 ---
 name: "Daily"
 slug: daily
-description: "A daily podcast. 5 minutes of quiet at the end."
-subtitle: "Discussing Nothing Specific Since Whenever"
+description: "A daily podcast."
+subtitle: "5 minutes of quiet at the end."
 author: "The Host"
 email: "podcast+daily@vaguelygeneric.website"
 language: "en-us"
