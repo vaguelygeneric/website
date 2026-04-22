@@ -27,9 +27,9 @@ layout: null
     <itunes:category text="{{ show.category }}">
       <itunes:category text="{{ show.subcategory }}" />
     </itunes:category>
-    <itunes:image href="{{ site.url }}{{ site.baseurl }}{{ show.image }}" />
+    <itunes:image href="{{ site.url }}{{ site.baseurl }}{{ show.feed_image }}" />
     <image>
-      <url>{{ site.url }}{{ site.baseurl }}{{ show.image }}</url>
+      <url>{{ site.url }}{{ site.baseurl }}{{ show.feed_image }}</url>
       <title>{{ show.name | xml_escape }}</title>
       <link>{{ site.url }}{{ site.baseurl }}/podcast/{{ show.slug }}/</link>
     </image>

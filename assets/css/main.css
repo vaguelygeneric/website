@@ -1200,26 +1200,6 @@ li { margin-bottom: 0.4rem; }
   padding: 0.2rem 0.5rem;
   border-radius: 2px;
 }
-.show-badge--generic {
-  background: var(--accent-bg);
-  color: var(--accent);
-}
-.show-badge--ramblings {
-  background: #eaf0fd;
-  color: #4a72d4;
-}
-[data-theme="dark"] .show-badge--ramblings {
-  background: #141c2a;
-  color: #7a9eff;
-}
-.show-badge--readings {
-  background: #edf7ed;
-  color: #2e8b57;
-}
-[data-theme="dark"] .show-badge--readings {
-  background: #121a12;
-  color: #4dbb6d;
-}
 
 /* ── Shows Landing Page ── */
 .podcast-listing-header {
@@ -1266,17 +1246,9 @@ li { margin-bottom: 0.4rem; }
   color: var(--accent);
   letter-spacing: -0.02em;
 }
-.show-card-art--ramblings {
-  background: linear-gradient(135deg, #eaf0fd, #dde6f7);
-}
-[data-theme="dark"] .show-card-art--ramblings {
-  background: linear-gradient(135deg, #141c2a, #1a2540);
-}
-.show-card-art--readings {
-  background: linear-gradient(135deg, #edf7ed, #d9f0d9);
-}
-[data-theme="dark"] .show-card-art--readings {
-  background: linear-gradient(135deg, #121a12, #182018);
+.show-card-art svg {
+  width: 100%;
+  height: 100%;
 }
 .show-card-body {
   padding: 1.5rem;

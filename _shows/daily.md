@@ -9,7 +9,9 @@ language: "en-us"
 category: "Society &amp; Culture"
 subcategory: "Personal Journals"
 explicit: "false"
-image: "/assets/images/daily-logo.png"
+# SVGs are always in _include
+cover_svg: "daily-logo.svg"
+feed_image: "/assets/images/daily-logo.png"
 
 iheart_url: "https://iheart.com/podcast/331048832/"
 apple_url: "https://podcasts.apple.com/podcast/id1895034401"
