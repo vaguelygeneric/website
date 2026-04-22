@@ -9,7 +9,9 @@ language: "en-us"
 category: "Society &amp; Culture"
 subcategory: "Personal Journals"
 explicit: "false"
-image: "/assets/images/daily-logo.png"
+# SVGs are always in _include
+cover_svg: "daily-logo.svg"
+feed_image: "/assets/images/daily-logo.png"
 
 iheart_url: "https://iheart.com/podcast/331048832/"
 apple_url: "https://podcasts.apple.com/podcast/id1895034401"
@@ -20,6 +22,6 @@ playerfm_url: "https://player.fm/series/series-3728746"
 amazon_music_url: "https://music.amazon.com/podcasts/0f5a0ec3-6f85-443c-9042-a3d97f789654"
 # podchaser_url: ""
 # listennotes_url: ""
-# ytmusic_url: "https://podcasts.google.com/feed/dailypodcast00xx"
+# ytmusic_url: "https://www.youtube.com/playlist?list=PLCDKJEHVn-BFfrJF6fme9favwiP5kLx3u"
 pocketcast_url: "https://pca.st/2rxxjtgx"
 ---

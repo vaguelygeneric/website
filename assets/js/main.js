@@ -43,4 +43,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // ── Subscribe "more" toggle ──
+  document.querySelectorAll('.subscribe-links[data-collapsible="true"]').forEach(function (container) {
+    var btn = container.querySelector('.subscribe-more-btn');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      container.classList.add('is-expanded');
+      btn.setAttribute('aria-expanded', 'true');
+    });
+  });
+
 });

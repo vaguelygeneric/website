@@ -1134,21 +1134,26 @@ li { margin-bottom: 0.4rem; }
     border-left: 2px solid var(--border);
     border-radius: 0;
     background: transparent;
-    padding: 0 0 0.25rem 1rem;
+    padding: 0 0 0 1rem;
     margin-left: 0.75rem;
-    transition: none;
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: max-height 0.25s ease, padding 0.25s ease;
   }
   .nav-dropdown::before { display: none; }
   .nav-item--has-dropdown:hover .nav-dropdown {
+    max-height: 0;
     visibility: hidden;
-    opacity: 0;
     pointer-events: none;
   }
   .nav-item--has-dropdown.is-open .nav-dropdown {
+    max-height: 300px;
     visibility: visible;
-    opacity: 1;
     pointer-events: auto;
+    padding: 0 0 0.25rem 1rem;
     transform: none;
+    left: auto;
   }
   .nav-dropdown-divider { display: none; }
 }
@@ -1194,26 +1199,6 @@ li { margin-bottom: 0.4rem; }
   letter-spacing: 0.1em;
   padding: 0.2rem 0.5rem;
   border-radius: 2px;
-}
-.show-badge--generic {
-  background: var(--accent-bg);
-  color: var(--accent);
-}
-.show-badge--ramblings {
-  background: #eaf0fd;
-  color: #4a72d4;
-}
-[data-theme="dark"] .show-badge--ramblings {
-  background: #141c2a;
-  color: #7a9eff;
-}
-.show-badge--readings {
-  background: #edf7ed;
-  color: #2e8b57;
-}
-[data-theme="dark"] .show-badge--readings {
-  background: #121a12;
-  color: #4dbb6d;
 }
 
 /* ── Shows Landing Page ── */
@@ -1261,17 +1246,9 @@ li { margin-bottom: 0.4rem; }
   color: var(--accent);
   letter-spacing: -0.02em;
 }
-.show-card-art--ramblings {
-  background: linear-gradient(135deg, #eaf0fd, #dde6f7);
-}
-[data-theme="dark"] .show-card-art--ramblings {
-  background: linear-gradient(135deg, #141c2a, #1a2540);
-}
-.show-card-art--readings {
-  background: linear-gradient(135deg, #edf7ed, #d9f0d9);
-}
-[data-theme="dark"] .show-card-art--readings {
-  background: linear-gradient(135deg, #121a12, #182018);
+.show-card-art svg {
+  width: 100%;
+  height: 100%;
 }
 .show-card-body {
   padding: 1.5rem;
@@ -1610,3 +1587,47 @@ li { margin-bottom: 0.4rem; }
   transition: border-color 0.15s ease;
 }
 .episode-guest-link:hover { border-color: var(--accent); text-decoration: none; }
+/* ── Subscribe links overflow / "more" toggle ── */
+.subscribe-link--more {
+  display: none;
+}
+.subscribe-links.is-expanded .subscribe-link--more {
+  display: inline-flex;
+}
+.footer-col .subscribe-links.is-expanded .subscribe-link--more {
+  display: flex;
+}
+.subscribe-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.subscribe-more-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.subscribe-links.is-expanded .subscribe-more-btn {
+  display: none;
+}
+/* In footer vertical list, the toggle should match link style */
+.footer-col .subscribe-more-btn {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
