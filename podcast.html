@@ -16,9 +16,13 @@ permalink: /podcast/
     {% for show in shows %}
     <a href="{{ site.baseurl }}/podcast/{{ show.slug }}/" class="show-card">
       <div class="show-card-art show-card-art--{{ show.slug }}">
+        {% if show.image %}
+        <img src="{{ show.image }}" alt="{{ show.name }} cover art" class="show-card-art">
+        {% else %}
         <span class="logo-bracket">[</span>
         <span>{{ show.name | truncate: 2, "" | upcase }}</span>
         <span class="logo-bracket">]</span>
+        {% endif %}
       </div>
       <div class="show-card-body">
         <h2 class="show-card-title">{{ show.name }}</h2>
