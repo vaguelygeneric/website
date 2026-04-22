@@ -191,7 +191,8 @@ def main():
     date = parse_date_from_filename(args.input)
     slug = slugify(args.title)
 
-    base_name = f"podcast-ep{args.ep:03d}-{slug}"
+    ep_str = f"{args.ep:04d}"
+    base_name = f"{args.show}_ep{ep_str}"
 
     # -------------------------
     # TEST MODE
