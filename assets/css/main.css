@@ -6,20 +6,9 @@
 
 /* ── CSS Variables ── */
 :root {
-  --font-display: 'Syne', sans-serif;
+
   --font-display: 'Fira Sans', sans-serif;
-  --font-body: 'Libre Baskerville', Georgia, serif;
   --font-body: 'Lora', Georgia, serif;
-/*
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Lora', Georgia, serif;
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Lora', Georgia, serif;
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Lora', Georgia, serif;
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Lora', Georgia, serif; 
-*/
 
   /* Light mode (default) */
   --bg:          #f5f2eb;

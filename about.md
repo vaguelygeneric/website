@@ -23,9 +23,11 @@ permalink: /about/
       Sometimes it doesn't. We release it anyway.
     </p> -->
     <p>
-      The name came from a running joke: every time someone asked what the podcast was about,
-      the only honest answer was "you know, stuff." The Generic felt more dignified than "Stuff."
-      Barely.
+      The name was the result of identifying a consistent hangup. Too much is known about what small issues can cause a project to fail. Too much thought goes into it those ancillary aspects, instead of just the project itself. Spending time on branding, marketing, taglines, consistent presence, tone, and the like. It was easy, common even, to get so caught up in those little details that the project didn't get off the ground, with lots of time and money wasted. And with the identification of that hangup, there really was only one thing to do. Ignore it all, and ignore it purposefully and aggressively. No memorable name, no branding. A consistent color scheme is embedded too deeply to ignore, but otherwise, just go forth. 
+    </p>
+
+    <p>
+    £.87 and about 4 hours later, the base site was up and the email was configured. A bit of strightening up, brushing off some scaffolds langing around, and using free tiers on a few models, and here it is. Two days later, the first episode of the first podcast was up.
     </p>
 
     <h2>The Hosts</h2>
