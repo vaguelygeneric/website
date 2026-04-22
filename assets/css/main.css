@@ -1134,21 +1134,24 @@ li { margin-bottom: 0.4rem; }
     border-left: 2px solid var(--border);
     border-radius: 0;
     background: transparent;
-    padding: 0 0 0.25rem 1rem;
+    padding: 0 0 0 1rem;
     margin-left: 0.75rem;
-    transition: none;
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: max-height 0.25s ease, padding 0.25s ease;
   }
   .nav-dropdown::before { display: none; }
   .nav-item--has-dropdown:hover .nav-dropdown {
+    max-height: 0;
     visibility: hidden;
-    opacity: 0;
     pointer-events: none;
   }
   .nav-item--has-dropdown.is-open .nav-dropdown {
+    max-height: 300px;
     visibility: visible;
-    opacity: 1;
     pointer-events: auto;
-    transform: none;
+    padding: 0 0 0.25rem 1rem;
   }
   .nav-dropdown-divider { display: none; }
 }
@@ -1610,3 +1613,47 @@ li { margin-bottom: 0.4rem; }
   transition: border-color 0.15s ease;
 }
 .episode-guest-link:hover { border-color: var(--accent); text-decoration: none; }
+/* ── Subscribe links overflow / "more" toggle ── */
+.subscribe-link--more {
+  display: none;
+}
+.subscribe-links.is-expanded .subscribe-link--more {
+  display: inline-flex;
+}
+.footer-col .subscribe-links.is-expanded .subscribe-link--more {
+  display: flex;
+}
+.subscribe-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.subscribe-more-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.subscribe-links.is-expanded .subscribe-more-btn {
+  display: none;
+}
+/* In footer vertical list, the toggle should match link style */
+.footer-col .subscribe-more-btn {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
