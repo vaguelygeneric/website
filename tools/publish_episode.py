@@ -6,7 +6,8 @@ import os
 import re
 import json
 from datetime import datetime
-
+from dotenv import load_dotenv
+load_dotenv()
 
 # -------------------------
 # Helpers
@@ -18,14 +19,6 @@ def run(cmd, capture=False):
         return subprocess.run(cmd, capture_output=True, text=True)
     else:
         subprocess.run(cmd, check=True)
-
-
-def slugify(text):
-    text = text.lower()
-    text = re.sub(r'[^a-z0-9\s-]', '', text)
-    text = re.sub(r'\s+', '-', text)
-    return text.strip('-')
-
 
 def parse_date_from_filename(filename):
     base = os.path.basename(filename)
@@ -118,58 +111,84 @@ def single_pass(input_file, output_file):
 # Internet Archive
 # -------------------------
 
-def upload_to_archive(file, ep_num, title, description, date, show):
+def upload_to_archive(file, ep_num, title, description, date, show, test=False):
     from internetarchive import upload
+    
+    access_key = os.getenv("IA_ACCESS_KEY")
+    secret_key = os.getenv("IA_SECRET_KEY")
 
-    identifier = f"{show}_ep{ep_num:04d}"
+    if not access_key or not secret_key:
+        raise RuntimeError("Missing IA credentials in environment (.env not loaded?)")
+
+    base_identifier = f"{show}_ep{ep_num:04d}"
+
+    if test:
+        identifier = f"test_{base_identifier}"
+    else:
+        identifier = base_identifier
 
     metadata = {
-        "title": f"{show.capitalize()} – Episode {ep_num}: {title}",
+        "title": f"{show.capitalize()} – {title}",
         "creator": "Vaguely Generic",
         "mediatype": "audio",
-        "collection": "community_audio",
+        "collection": "opensource_audio", 
         "date": str(date.date()),
         "description": description,
         "subject": ["podcast", show, "vaguely generic"],
+        "series": show.capitalize(),
     }
 
-    print("\n=== Uploading to Internet Archive ===")
-    upload(identifier, files=[file], metadata=metadata)
+    if test:
+        metadata["title"] = f"[TEST] {metadata['title']}"
+
+    print(f"\n=== Uploading to Internet Archive: {identifier} ===")
+
+    upload(
+    identifier,
+    files=[file],
+    metadata=metadata,
+    access_key=access_key,
+    secret_key=secret_key
+    )
+
+    return identifier
 
 
 # -------------------------
 # Markdown
 # -------------------------
 
-def generate_markdown(ep, show, title, desc, duration, url, size, date):
-    slug = slugify(title)
+def generate_markdown(ep, show, title, description, duration, audio_size, date, identifier):
+    ep_str = f"{ep:04d}"
+
+    # Default to MP3 for new pipeline
+    audio_filename = f"{identifier}.mp3"
+    audio_url = f"https://archive.org/download/{identifier}/{audio_filename}"
 
     md = f"""---
 layout: episode
 show: {show}
 title: "{title}"
-description: "{desc[:150]}{'...' if len(desc) > 150 else ''}"
+description: "{description[:150]}{'...' if len(description) > 150 else ''}"
 date: {date.date()}
 episode_number: {ep}
 duration: "{duration}"
-audio_url: "{url}"
-audio_size: "{size}"
-audio_type: "audio/mpeg"
-permalink: /podcast/{ep:04d}-{slug}/
+audio_url: "{audio_url}"
+audio_size: "{audio_size}"
+audio_type: "audio/mp3"
+permalink: /podcast/{show}/{ep_str}/
 ---
 
-{desc}
+{description}
 """
 
-    fname = f"_podcast/{show}/{ep:04d}.md"
+    path = f"_podcast/{show}/{ep_str}.md"
+    os.makedirs(os.path.dirname(path), exist_ok=True)
 
-    os.makedirs(os.path.dirname(fname), exist_ok=True)
-
-    with open(fname, "w") as f:
+    with open(path, "w") as f:
         f.write(md)
 
-    return fname
-
+    return path
 
 # -------------------------
 # Main
@@ -180,19 +199,21 @@ def main():
     parser.add_argument("input")
     parser.add_argument("--ep", type=int, required=True)
     parser.add_argument("--show", required=True)
-    parser.add_argument("--title", required=True)
+    parser.add_argument("--title", help="Episode title (optional)")
     parser.add_argument("--desc", required=True)
     parser.add_argument("--archive", action="store_true")
     parser.add_argument("--test", action="store_true")
-    parser.add_argument("--base-url", default="https://your-audio-host.com/")
+    parser.add_argument("--testupload", action="store_true")
+
 
     args = parser.parse_args()
 
     date = parse_date_from_filename(args.input)
-    slug = slugify(args.title)
-
     ep_str = f"{args.ep:04d}"
     base_name = f"{args.show}_ep{ep_str}"
+    title = args.title if args.title else f"Episode {ep_str}"
+
+
 
     # -------------------------
     # TEST MODE
@@ -200,10 +221,10 @@ def main():
     if args.test:
         print("\n=== TEST MODE ===")
 
-        single_pass(args.input, f"{base_name}-v1-singlepass.mp3")
+        single_pass(args.input, f"test-{base_name}-v1-singlepass.mp3")
 
         stats = loudnorm_pass1(args.input)
-        loudnorm_pass2(args.input, f"{base_name}-v2-twopass.mp3", stats)
+        loudnorm_pass2(args.input, f"test-{base_name}-v2-doublepass.mp3", stats)
 
         print("\nCreated test variants. Compare and choose.")
 
@@ -219,28 +240,34 @@ def main():
     duration = get_duration(final_audio)
     size = get_file_size(final_audio)
 
-    audio_url = args.base_url.rstrip("/") + "/" + final_audio
+    identifier = None
+
+    if args.archive:
+        identifier = upload_to_archive(
+            final_audio,
+            args.ep,
+            title,
+            args.desc,
+            date,
+            args.show,
+            test=args.testupload
+
+        )
+    else:
+        # fallback (still deterministic)
+        identifier = f"{args.show}_ep{args.ep:04d}"
 
     md = generate_markdown(
         args.ep,
         args.show,
-        args.title,
+        title,
         args.desc,
         duration,
-        audio_url,
         size,
-        date
+        date,
+        identifier
     )
 
-    if args.archive:
-        upload_to_archive(
-            final_audio,
-            args.ep,
-            args.title,
-            args.desc,
-            date,
-            args.show
-        )
 
     print("\n=== Done ===")
     print(final_audio)
