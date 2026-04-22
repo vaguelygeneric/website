@@ -155,13 +155,16 @@ duration: "{duration}"
 audio_url: "{url}"
 audio_size: "{size}"
 audio_type: "audio/mpeg"
-permalink: /podcast/{ep:03d}-{slug}/
+permalink: /podcast/{ep:04d}-{slug}/
 ---
 
 {desc}
 """
 
-    fname = f"{ep:03d}-{slug}.md"
+    fname = f"_podcast/{show}/{ep:04d}.md"
+
+    os.makedirs(os.path.dirname(fname), exist_ok=True)
+
     with open(fname, "w") as f:
         f.write(md)
 
