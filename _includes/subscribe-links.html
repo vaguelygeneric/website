@@ -26,17 +26,20 @@
   {% else %}
     {% assign _rss_url = "/feed.xml" | relative_url %}
   {% endif %}
+
   <a class="subscribe-link" href="{{ _rss_url }}" aria-label="RSS Feed">
     {% include icon.html name="rss" %}
     <span>RSS</span>
   </a>
 
   {% comment %} Remaining links — track index manually {% endcomment %}
+
   {% assign _i = 2 %}
 
-  {% if show.podcast_addict_url %}
-    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.podcast_addict_url }}" target="_blank" rel="noopener">
-      {% include icon.html name="podcastaddict" %}<span>Podcast Addict</span>
+
+  {% if show.spotify_url %}
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.spotify_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="spotify" %}<span>Spotify</span>
     </a>
     {% assign _i = _i | plus: 1 %}
   {% endif %}
@@ -55,9 +58,9 @@
     {% assign _i = _i | plus: 1 %}
   {% endif %}
 
-  {% if show.spotify_url %}
-    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.spotify_url }}" target="_blank" rel="noopener">
-      {% include icon.html name="spotify" %}<span>Spotify</span>
+  {% if show.amazon_music_url %}
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.amazon_music_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="amazon" %}<span>Amazon Music</span>
     </a>
     {% assign _i = _i | plus: 1 %}
   {% endif %}
@@ -65,6 +68,13 @@
   {% if show.ytmusic_url %}
     <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.ytmusic_url }}" target="_blank" rel="noopener">
       {% include icon.html name="ytmusic" %}<span>YouTube Music</span>
+    </a>
+    {% assign _i = _i | plus: 1 %}
+  {% endif %}
+
+  {% if show.podcast_addict_url %}
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.podcast_addict_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="podcastaddict" %}<span>Podcast Addict</span>
     </a>
     {% assign _i = _i | plus: 1 %}
   {% endif %}
@@ -86,13 +96,6 @@
   {% if show.playerfm_url %}
     <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.playerfm_url }}" target="_blank" rel="noopener">
       {% include icon.html name="playerfm" %}<span>Player.fm</span>
-    </a>
-    {% assign _i = _i | plus: 1 %}
-  {% endif %}
-
-  {% if show.amazon_music_url %}
-    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.amazon_music_url }}" target="_blank" rel="noopener">
-      {% include icon.html name="amazon" %}<span>Amazon Music</span>
     </a>
     {% assign _i = _i | plus: 1 %}
   {% endif %}
