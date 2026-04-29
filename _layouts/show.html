@@ -7,9 +7,13 @@ layout: default
   <div class="podcast-hero">
     <div class="podcast-cover">
       <div class="podcast-cover-placeholder">
-        <span class="logo-bracket">[</span>
-        <span class="logo-text">{{ page.name }}</span>
-        <span class="logo-bracket">]</span>
+        {% if page.cover_svg %}
+          {% include {{ page.cover_svg }} %}
+        {% else %}
+          <span class="logo-bracket">[</span>
+          <span class="logo-text">{{ page.name }}</span>
+          <span class="logo-bracket">]</span>
+        {% endif %}
       </div>
     </div>
     <div class="podcast-info">
