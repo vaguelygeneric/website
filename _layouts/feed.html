@@ -39,7 +39,7 @@ layout: null
       <link>{{ site.url }}{{ site.baseurl }}{{ episode.url }}</link>
       <guid isPermaLink="true">{{ site.url }}{{ site.baseurl }}{{ episode.url }}</guid>
       <description>
-        <![CDATA[{{ episode.content | strip_html | truncate: 4000 }}]]>
+        <![CDATA[{{ episode.content | truncate: 4000 }}]]>
       </description>
       <content:encoded>
         <![CDATA[{{ episode.content }}]]>
