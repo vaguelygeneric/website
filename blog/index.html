@@ -11,7 +11,7 @@ permalink: /blog/
     <p>Updates, behind the scenes, and whatever else needs a home.</p>
   </div>
   <div class="blog-list">
-    {% assign posts = site.posts | sort: 'date' | reverse %}
+   {% assign posts = site.posts | where: "status", "published" | sort: 'date' | reverse %}
     {% for post in posts %}
     <a href="{{ post.url | relative_url }}" class="blog-card">
       <div class="blog-card-meta">

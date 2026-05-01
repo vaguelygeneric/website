@@ -6,20 +6,9 @@
 
 /* ── CSS Variables ── */
 :root {
-  --font-display: 'Syne', sans-serif;
+
   --font-display: 'Fira Sans', sans-serif;
-  --font-body: 'Libre Baskerville', Georgia, serif;
   --font-body: 'Lora', Georgia, serif;
-/*
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Lora', Georgia, serif;
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Lora', Georgia, serif;
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Lora', Georgia, serif;
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Lora', Georgia, serif; 
-*/
 
   /* Light mode (default) */
   --bg:          #f5f2eb;
@@ -1145,21 +1134,26 @@ li { margin-bottom: 0.4rem; }
     border-left: 2px solid var(--border);
     border-radius: 0;
     background: transparent;
-    padding: 0 0 0.25rem 1rem;
+    padding: 0 0 0 1rem;
     margin-left: 0.75rem;
-    transition: none;
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: max-height 0.25s ease, padding 0.25s ease;
   }
   .nav-dropdown::before { display: none; }
   .nav-item--has-dropdown:hover .nav-dropdown {
+    max-height: 0;
     visibility: hidden;
-    opacity: 0;
     pointer-events: none;
   }
   .nav-item--has-dropdown.is-open .nav-dropdown {
+    max-height: 300px;
     visibility: visible;
-    opacity: 1;
     pointer-events: auto;
+    padding: 0 0 0.25rem 1rem;
     transform: none;
+    left: auto;
   }
   .nav-dropdown-divider { display: none; }
 }
@@ -1205,26 +1199,6 @@ li { margin-bottom: 0.4rem; }
   letter-spacing: 0.1em;
   padding: 0.2rem 0.5rem;
   border-radius: 2px;
-}
-.show-badge--generic {
-  background: var(--accent-bg);
-  color: var(--accent);
-}
-.show-badge--ramblings {
-  background: #eaf0fd;
-  color: #4a72d4;
-}
-[data-theme="dark"] .show-badge--ramblings {
-  background: #141c2a;
-  color: #7a9eff;
-}
-.show-badge--readings {
-  background: #edf7ed;
-  color: #2e8b57;
-}
-[data-theme="dark"] .show-badge--readings {
-  background: #121a12;
-  color: #4dbb6d;
 }
 
 /* ── Shows Landing Page ── */
@@ -1272,17 +1246,9 @@ li { margin-bottom: 0.4rem; }
   color: var(--accent);
   letter-spacing: -0.02em;
 }
-.show-card-art--ramblings {
-  background: linear-gradient(135deg, #eaf0fd, #dde6f7);
-}
-[data-theme="dark"] .show-card-art--ramblings {
-  background: linear-gradient(135deg, #141c2a, #1a2540);
-}
-.show-card-art--readings {
-  background: linear-gradient(135deg, #edf7ed, #d9f0d9);
-}
-[data-theme="dark"] .show-card-art--readings {
-  background: linear-gradient(135deg, #121a12, #182018);
+.show-card-art svg {
+  width: 100%;
+  height: 100%;
 }
 .show-card-body {
   padding: 1.5rem;
@@ -1621,3 +1587,134 @@ li { margin-bottom: 0.4rem; }
   transition: border-color 0.15s ease;
 }
 .episode-guest-link:hover { border-color: var(--accent); text-decoration: none; }
+/* ── Subscribe links overflow / "more" toggle ── */
+.subscribe-link--more {
+  display: none;
+}
+.subscribe-links.is-expanded .subscribe-link--more {
+  display: inline-flex;
+}
+.footer-col .subscribe-links.is-expanded .subscribe-link--more {
+  display: flex;
+}
+.subscribe-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.subscribe-more-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.subscribe-links.is-expanded .subscribe-more-btn {
+  display: none;
+}
+/* In footer vertical list, the toggle should match link style */
+.footer-col .subscribe-more-btn {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/* ── Blockquote / Episode Notes ── */
+blockquote {
+  margin: 2.5rem 0;
+  padding: 0;
+  background: var(--bg-alt);
+  border-left: 4px solid var(--accent);
+  color: var(--text);
+}
+
+.blockquote-header {
+  padding: 1.5rem 1.5rem 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.blockquote-header h3 {
+  margin: 0 0 0.35rem 0;
+  font-size: 1.1rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.blockquote-header .blockquote-author {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: var(--font-body);
+  margin: 0;
+}
+
+.blockquote-content {
+  padding: 1.5rem 1.5rem 1.25rem 1.5rem;
+  font-style: italic;
+  line-height: 1.85;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.blockquote-content p {
+  margin-bottom: 0.75rem;
+}
+
+.blockquote-content p:last-child {
+  margin-bottom: 0;
+}
+
+.blockquote-content em {
+  font-style: normal;
+}
+
+.blockquote-content strong {
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Attribution footer */
+blockquote footer,
+.blockquote-footer {
+  display: block;
+  padding: 0.75rem 1.5rem 1.5rem 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: normal;
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+blockquote footer::before {
+  content: "— ";
+}
+
+/* Links in footer */
+blockquote footer a,
+.blockquote-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+blockquote footer a:hover,
+.blockquote-footer a:hover {
+  color: var(--accent-alt);
+  text-decoration: underline;
+}

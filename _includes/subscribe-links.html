@@ -1,38 +1,123 @@
 {% assign show = include.show | default: page %}
 
-<div class="subscribe-links">
+{% comment %} Count available links to determine if "more" button is needed {% endcomment %}
+{% assign _total = 1 %}
+{% if show.podcast_addict_url %}{% assign _total = _total | plus: 1 %}{% endif %}
+{% if show.iheart_url %}{% assign _total = _total | plus: 1 %}{% endif %}
+{% if show.apple_url %}{% assign _total = _total | plus: 1 %}{% endif %}
+{% if show.spotify_url %}{% assign _total = _total | plus: 1 %}{% endif %}
+{% if show.ytmusic_url %}{% assign _total = _total | plus: 1 %}{% endif %}
+{% if show.pocketcast_url %}{% assign _total = _total | plus: 1 %}{% endif %}
+{% if show.podcast_index_url %}{% assign _total = _total | plus: 1 %}{% endif %}
+{% if show.playerfm_url %}{% assign _total = _total | plus: 1 %}{% endif %}
+{% if show.amazon_music_url %}{% assign _total = _total | plus: 1 %}{% endif %}
+{% if show.podchaser_url %}{% assign _total = _total | plus: 1 %}{% endif %}
+{% if show.listennotes_url %}{% assign _total = _total | plus: 1 %}{% endif %}
 
-  <a class="subscribe-link" href="{{ site.url }}{{ site.baseurl }}/feed/{{ show.slug }}.xml" aria-label="RSS Feed">
+{% assign _limit = 4 %}
+{% assign _collapsible = false %}
+{% if _total > _limit %}{% assign _collapsible = true %}{% endif %}
+
+<div class="subscribe-links"{% if _collapsible %} data-collapsible="true"{% endif %}>
+
+  {% comment %} RSS — always first, always visible {% endcomment %}
+  {% if show.slug %}
+    {% assign _rss_url = site.url | append: site.baseurl | append: "/feed/" | append: show.slug | append: ".xml" %}
+  {% else %}
+    {% assign _rss_url = "/feed.xml" | relative_url %}
+  {% endif %}
+
+  <a class="subscribe-link" href="{{ _rss_url }}" aria-label="RSS Feed">
     {% include icon.html name="rss" %}
     <span>RSS</span>
   </a>
 
-  {% if show.apple_url %}
-  <a class="subscribe-link" href="{{ show.apple_url }}" target="_blank" rel="noopener" aria-label="Apple Podcasts">
-    {% include icon.html name="apple" %}
-    <span>Apple</span>
-  </a>
-  {% endif %}
+  {% comment %} Remaining links — track index manually {% endcomment %}
+
+  {% assign _i = 2 %}
+
 
   {% if show.spotify_url %}
-  <a class="subscribe-link" href="{{ show.spotify_url }}" target="_blank" rel="noopener">
-    {% include icon.html name="spotify" %}
-    <span>Spotify</span>
-  </a>
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.spotify_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="spotify" %}<span>Spotify</span>
+    </a>
+    {% assign _i = _i | plus: 1 %}
+  {% endif %}
+
+  {% if show.iheart_url %}
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.iheart_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="iheart" %}<span>iHeart</span>
+    </a>
+    {% assign _i = _i | plus: 1 %}
+  {% endif %}
+
+  {% if show.apple_url %}
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.apple_url }}" target="_blank" rel="noopener" aria-label="Apple Podcasts">
+      {% include icon.html name="apple" %}<span>Apple</span>
+    </a>
+    {% assign _i = _i | plus: 1 %}
+  {% endif %}
+
+  {% if show.amazon_music_url %}
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.amazon_music_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="amazon" %}<span>Amazon Music</span>
+    </a>
+    {% assign _i = _i | plus: 1 %}
   {% endif %}
 
   {% if show.ytmusic_url %}
-  <a class="subscribe-link" href="{{ show.ytmusic_url }}" target="_blank" rel="noopener">
-    {% include icon.html name="ytmusic" %}
-    <span>YouTube Music</span>
-  </a>
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.ytmusic_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="ytmusic" %}<span>YouTube Music</span>
+    </a>
+    {% assign _i = _i | plus: 1 %}
+  {% endif %}
+
+  {% if show.podcast_addict_url %}
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.podcast_addict_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="podcastaddict" %}<span>Podcast Addict</span>
+    </a>
+    {% assign _i = _i | plus: 1 %}
   {% endif %}
 
   {% if show.pocketcast_url %}
-  <a class="subscribe-link" href="{{ show.pocketcast_url }}" target="_blank" rel="noopener">
-    {% include icon.html name="pocketcasts" %}
-    <span>Pocket Casts</span>
-  </a>
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.pocketcast_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="pocketcasts" %}<span>Pocket Casts</span>
+    </a>
+    {% assign _i = _i | plus: 1 %}
+  {% endif %}
+
+  {% if show.podcast_index_url %}
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.podcast_index_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="podcastindex" %}<span>Podcast Index</span>
+    </a>
+    {% assign _i = _i | plus: 1 %}
+  {% endif %}
+
+  {% if show.playerfm_url %}
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.playerfm_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="playerfm" %}<span>Player.fm</span>
+    </a>
+    {% assign _i = _i | plus: 1 %}
+  {% endif %}
+
+  {% if show.podchaser_url %}
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.podchaser_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="podchaser" %}<span>Podchaser</span>
+    </a>
+    {% assign _i = _i | plus: 1 %}
+  {% endif %}
+
+  {% if show.listennotes_url %}
+    <a class="subscribe-link{% if _collapsible and _i > _limit %} subscribe-link--more{% endif %}" href="{{ show.listennotes_url }}" target="_blank" rel="noopener">
+      {% include icon.html name="listennotes" %}<span>Listen Notes</span>
+    </a>
+  {% endif %}
+
+  {% if _collapsible %}
+    {% assign _overflow = _total | minus: _limit %}
+    <button class="subscribe-more-btn" type="button" aria-expanded="false">
+      +{{ _overflow }} more
+    </button>
   {% endif %}
 
 </div>

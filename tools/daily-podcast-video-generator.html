@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily — Podcast Video Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600;700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #141210;
+    --bg-alt: #1e1b18;
+    --surface: #252118;
+    --border: #352f27;
+    --text: #f0ece3;
+    --text-muted: #9e9588;
+    --accent: #6366f1;
+    --accent-alt: #818cf8;
+    --accent-bg: #2e1d4f;
+    --font-display: 'Fira Sans', sans-serif;
+    --font-body: 'Lora', Georgia, serif;
+    --radius: 4px;
+    --radius-md: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px;
+    gap: 32px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    width: 100%;
+    max-width: 860px;
+  }
+
+  .panel-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .field label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .field input[type="text"] {
+    width: 100%;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 14px;
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .field input[type="text"]:focus {
+    border-color: var(--accent);
+  }
+
+  .drop-zone {
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    position: relative;
+  }
+
+  .drop-zone:hover, .drop-zone.drag-over {
+    border-color: var(--accent);
+    background: rgba(99,102,241,0.05);
+  }
+
+  .drop-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .drop-label {
+    font-family: var(--font-display);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .drop-label span {
+    color: var(--accent-alt);
+  }
+
+  .drop-status {
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: var(--accent-alt);
+    margin-top: 6px;
+  }
+
+  /* Canvas preview */
+  #preview-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 860px;
+    aspect-ratio: 16/9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  #preview {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Controls row */
+  .controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 860px;
+  }
+
+  .btn {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover:not(:disabled) { background: var(--accent-alt); }
+
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--accent-alt); }
+
+  .status-bar {
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+
+  #progress-bar {
+    width: 100%;
+    max-width: 860px;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    display: none;
+  }
+
+  #progress-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.3s;
+  }
+
+  /* Playhead */
+  #playhead {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    width: 2px;
+    height: 60px;
+    background: rgba(99,102,241,0.6);
+    pointer-events: none;
+    display: none;
+  }
+
+  .notice {
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    width: 100%;
+    max-width: 860px;
+    line-height: 1.6;
+  }
+
+  .notice strong { color: var(--text); font-weight: 600; }
+
+  .tag {
+    display: inline-block;
+    background: var(--accent-bg);
+    color: var(--accent-alt);
+    font-size: 11px;
+    font-family: var(--font-display);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<h1>Daily — Podcast Video Generator</h1>
+
+<div class="panel">
+  <div class="panel-title">Episode info</div>
+  <div class="fields">
+    <div class="field">
+      <label>Podcast name</label>
+      <input type="text" id="podcast-name" value="Daily" />
+    </div>
+    <div class="field">
+      <label>Episode number</label>
+      <input type="text" id="episode-num" value="0001" />
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-title">Assets</div>
+  <div class="fields">
+    <div>
+      <p class="panel-title" style="margin-bottom:8px;">Logo / cover art</p>
+      <div class="drop-zone" id="logo-drop">
+        <input type="file" id="logo-input" accept="image/*">
+        <div class="drop-label">Drop image or <span>click to browse</span></div>
+        <div class="drop-status" id="logo-status"></div>
+      </div>
+    </div>
+    <div>
+      <p class="panel-title" style="margin-bottom:8px;">Audio file</p>
+      <div class="drop-zone" id="audio-drop">
+        <input type="file" id="audio-input" accept="audio/*">
+        <div class="drop-label">Drop audio or <span>click to browse</span></div>
+        <div class="drop-status" id="audio-status"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="preview-wrap">
+  <canvas id="preview"></canvas>
+  <div id="playhead"></div>
+</div>
+
+<div class="controls">
+  <button class="btn btn-secondary" id="btn-preview">Preview animation</button>
+  <button class="btn btn-primary" id="btn-record" disabled>Record & export video</button>
+  <span class="status-bar" id="status-msg">Load an audio file to begin</span>
+</div>
+
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<div class="notice">
+  <strong>How to use:</strong> Fill in your episode info, drop in your logo and audio file, then hit <strong>Preview animation</strong> to see a live preview. When you're happy, click <strong>Record &amp; export video</strong> — it will play through the full episode and save a <span class="tag">.webm</span> video file you can upload to YouTube. Recording happens in real-time (same duration as your episode).
+  <br><br>
+  <strong>Tip:</strong> For future episodes, just change the episode number and swap the audio file. The template reuses everything else automatically.
+</div>
+
+<script>
+const canvas = document.getElementById('preview');
+const ctx = canvas.getContext('2d');
+
+let logoImg = null;
+let audioBuffer = null;
+let audioCtx = null;
+let analyser = null;
+let sourceNode = null;
+let animFrame = null;
+let isPlaying = false;
+let startTime = 0;
+let duration = 0;
+let mediaRecorder = null;
+let recordedChunks = [];
+let isRecording = false;
+let offscreenAudioCtx = null;
+
+const W = 1920, H = 1080;
+canvas.width = W;
+canvas.height = H;
+
+function getPodcastName() { return document.getElementById('podcast-name').value || 'Daily'; }
+function getEpisodeNum() { return document.getElementById('episode-num').value || '0001'; }
+
+// File loaders
+document.getElementById('logo-input').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const img = new Image();
+  img.onload = () => { logoImg = img; drawStatic(); document.getElementById('logo-status').textContent = file.name; };
+  img.src = URL.createObjectURL(file);
+});
+
+document.getElementById('audio-input').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  document.getElementById('audio-status').textContent = 'Loading…';
+  const reader = new FileReader();
+  reader.onload = async ev => {
+    try {
+      if (!audioCtx) audioCtx = new AudioContext();
+      audioBuffer = await audioCtx.decodeAudioData(ev.target.result);
+      duration = audioBuffer.duration;
+      const mins = Math.floor(duration / 60);
+      const secs = Math.floor(duration % 60).toString().padStart(2, '0');
+      document.getElementById('audio-status').textContent = `${file.name} — ${mins}:${secs}`;
+      document.getElementById('btn-record').disabled = false;
+      document.getElementById('status-msg').textContent = `Ready — ${mins}m ${secs}s`;
+      drawStatic();
+    } catch(err) {
+      document.getElementById('audio-status').textContent = 'Error decoding audio: ' + err.message;
+    }
+  };
+  reader.readAsArrayBuffer(file);
+});
+
+// Drag over styling
+['logo-drop','audio-drop'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('drag-over'); });
+  el.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+  el.addEventListener('drop', () => el.classList.remove('drag-over'));
+});
+
+// Redraw on text change
+['podcast-name','episode-num'].forEach(id => {
+  document.getElementById(id).addEventListener('input', () => { if (!isPlaying) drawStatic(); });
+});
+
+// Abstract background particles
+const particles = Array.from({length: 60}, () => ({
+  x: Math.random() * W,
+  y: Math.random() * H,
+  r: Math.random() * 1.5 + 0.5,
+  vx: (Math.random() - 0.5) * 0.3,
+  vy: (Math.random() - 0.5) * 0.3,
+  alpha: Math.random() * 0.3 + 0.05
+}));
+
+// Abstract orbs (slow drifting blobs)
+const orbs = [
+  { x: W * 0.15, y: H * 0.3, r: 280, color: '#3730a3', alpha: 0.18, vx: 0.08, vy: 0.05 },
+  { x: W * 0.85, y: H * 0.7, r: 220, color: '#6366f1', alpha: 0.14, vx: -0.06, vy: -0.07 },
+  { x: W * 0.5, y: H * 0.1, r: 180, color: '#312e81', alpha: 0.12, vx: 0.05, vy: 0.09 },
+];
+
+let tick = 0;
+
+function drawBackground(t) {
+  // Deep dark bg
+  ctx.fillStyle = '#141210';
+  ctx.fillRect(0, 0, W, H);
+
+  // Animated orbs (radial gradient blobs)
+  orbs.forEach((o, i) => {
+    if (t !== undefined) {
+      o.x += o.vx;
+      o.y += o.vy;
+      if (o.x < -o.r || o.x > W + o.r) o.vx *= -1;
+      if (o.y < -o.r || o.y > H + o.r) o.vy *= -1;
+    }
+    const grad = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+    grad.addColorStop(0, hexAlpha(o.color, o.alpha));
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+  });
+
+  // Fine particle grid
+  particles.forEach(p => {
+    if (t !== undefined) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+    }
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(99,102,241,${p.alpha})`;
+    ctx.fill();
+  });
+
+  // Subtle horizontal scan line texture
+  ctx.fillStyle = 'rgba(0,0,0,0.04)';
+  for (let y = 0; y < H; y += 4) {
+    ctx.fillRect(0, y, W, 1);
+  }
+}
+
+function hexAlpha(hex, a) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+function drawLogo(cx, cy, size) {
+  if (!logoImg) {
+    // Placeholder brackets
+    ctx.font = `bold ${size * 0.9}px 'Fira Sans', sans-serif`;
+    ctx.fillStyle = '#6366f1';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('[', cx - size * 0.22, cy);
+    ctx.fillText(']', cx + size * 0.22, cy);
+    ctx.fillStyle = '#1a4a4a';
+    ctx.font = `bold ${size * 0.55}px 'Fira Sans', sans-serif`;
+    ctx.fillText('Daily', cx, cy);
+  } else {
+    const aspect = logoImg.naturalWidth / logoImg.naturalHeight;
+    const lw = size * aspect;
+    const lh = size;
+    ctx.drawImage(logoImg, cx - lw / 2, cy - lh / 2, lw, lh);
+  }
+}
+
+function drawText() {
+  const name = getPodcastName().toUpperCase();
+  const ep = getEpisodeNum();
+
+  // Podcast name
+  ctx.font = `600 ${W * 0.028}px 'Fira Sans', sans-serif`;
+  ctx.fillStyle = '#f0ece3';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.letterSpacing = '0.15em';
+  ctx.fillText(name, W / 2, H * 0.72);
+
+  // Episode number
+  ctx.font = `400 ${W * 0.016}px 'Lora', Georgia, serif`;
+  ctx.fillStyle = '#9e9588';
+  ctx.letterSpacing = '0.08em';
+  ctx.fillText(ep, W / 2, H * 0.78);
+  ctx.letterSpacing = '0';
+}
+
+// Waveform constants
+const BAR_COUNT = 80;
+const BAR_GAP = 4;
+const WAVEFORM_Y = H * 0.875;
+const WAVEFORM_H = H * 0.07;
+
+function drawWaveform(dataArray) {
+  const totalW = W * 0.6;
+  const startX = (W - totalW) / 2;
+  const barW = (totalW - (BAR_COUNT - 1) * BAR_GAP) / BAR_COUNT;
+
+  ctx.save();
+  for (let i = 0; i < BAR_COUNT; i++) {
+    let amp;
+    if (dataArray) {
+      const idx = Math.floor((i / BAR_COUNT) * dataArray.length);
+      amp = dataArray[idx] / 255;
+    } else {
+      // Idle animation
+      amp = 0.08 + Math.sin(tick * 0.04 + i * 0.3) * 0.06 + Math.sin(tick * 0.02 + i * 0.5) * 0.04;
+    }
+
+    const barH = Math.max(3, amp * WAVEFORM_H * 2.2);
+    const x = startX + i * (barW + BAR_GAP);
+    const y = WAVEFORM_Y - barH / 2;
+
+    const alpha = 0.4 + amp * 0.6;
+    ctx.fillStyle = `rgba(99,102,241,${alpha})`;
+    ctx.beginPath();
+    ctx.roundRect(x, y, barW, barH, 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+// Thin separator line above waveform
+function drawDivider() {
+  ctx.strokeStyle = 'rgba(99,102,241,0.18)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(W * 0.2, H * 0.845);
+  ctx.lineTo(W * 0.8, H * 0.845);
+  ctx.stroke();
+}
+
+function drawStatic() {
+  tick++;
+  drawBackground();
+  drawLogo(W / 2, H * 0.42, H * 0.22);
+  drawDivider();
+  drawText();
+  drawWaveform(null);
+}
+
+function startPreview() {
+  if (isPlaying) { stopPreview(); return; }
+  if (!audioBuffer) { drawAnimLoop(); return; }
+
+  if (!audioCtx) audioCtx = new AudioContext();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+  sourceNode = audioCtx.createBufferSource();
+  sourceNode.buffer = audioBuffer;
+  sourceNode.connect(analyser);
+  analyser.connect(audioCtx.destination);
+  sourceNode.start();
+  startTime = audioCtx.currentTime;
+  isPlaying = true;
+
+  document.getElementById('btn-preview').textContent = 'Stop preview';
+  document.getElementById('status-msg').textContent = 'Playing preview…';
+
+  function loop() {
+    tick++;
+    analyser.getByteFrequencyData(dataArray);
+    drawBackground(true);
+    drawLogo(W / 2, H * 0.42, H * 0.22);
+    drawDivider();
+    drawText();
+    drawWaveform(dataArray);
+    animFrame = requestAnimationFrame(loop);
+  }
+  loop();
+
+  sourceNode.onended = () => { if (isPlaying) stopPreview(); };
+}
+
+function drawAnimLoop() {
+  // No audio — just animate idle
+  isPlaying = true;
+  document.getElementById('btn-preview').textContent = 'Stop preview';
+  function loop() {
+    tick++;
+    drawBackground(true);
+    drawLogo(W / 2, H * 0.42, H * 0.22);
+    drawDivider();
+    drawText();
+    drawWaveform(null);
+    animFrame = requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+function stopPreview() {
+  isPlaying = false;
+  cancelAnimationFrame(animFrame);
+  if (sourceNode) { try { sourceNode.stop(); } catch(e) {} sourceNode = null; }
+  if (analyser) { analyser.disconnect(); analyser = null; }
+  document.getElementById('btn-preview').textContent = 'Preview animation';
+  document.getElementById('status-msg').textContent = audioBuffer ? 'Ready to record' : 'Load an audio file to begin';
+  drawStatic();
+}
+
+// Recording
+async function startRecording() {
+  if (isPlaying) stopPreview();
+  if (!audioBuffer) return;
+
+  isRecording = true;
+  recordedChunks = [];
+
+  document.getElementById('btn-record').disabled = true;
+  document.getElementById('btn-preview').disabled = true;
+  document.getElementById('btn-record').textContent = 'Recording…';
+  document.getElementById('progress-bar').style.display = 'block';
+
+  // Set up fresh audio context
+  const recCtx = new AudioContext();
+  const recAnalyser = recCtx.createAnalyser();
+  recAnalyser.fftSize = 256;
+  const dataArray = new Uint8Array(recAnalyser.frequencyBinCount);
+
+  const recSource = recCtx.createBufferSource();
+  recSource.buffer = audioBuffer;
+
+  // Connect audio: source → analyser → dest (for waveform data)
+  recSource.connect(recAnalyser);
+  recAnalyser.connect(recCtx.destination);
+
+  // Capture canvas stream + audio
+  const canvasStream = canvas.captureStream(30);
+  const audioDestNode = recCtx.createMediaStreamDestination();
+  recSource.connect(audioDestNode);
+  const audioTrack = audioDestNode.stream.getAudioTracks()[0];
+  if (audioTrack) canvasStream.addTrack(audioTrack);
+
+  const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')
+    ? 'video/webm;codecs=vp9,opus'
+    : 'video/webm';
+
+  mediaRecorder = new MediaRecorder(canvasStream, { mimeType, videoBitsPerSecond: 8000000 });
+  mediaRecorder.ondataavailable = e => { if (e.data.size > 0) recordedChunks.push(e.data); };
+  mediaRecorder.onstop = () => saveVideo();
+
+  mediaRecorder.start(1000);
+  recSource.start();
+  const recStartTime = recCtx.currentTime;
+
+  function recLoop() {
+    if (!isRecording) return;
+    tick++;
+    const elapsed = recCtx.currentTime - recStartTime;
+    const pct = Math.min(100, (elapsed / duration) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    const remaining = Math.max(0, duration - elapsed);
+    const mins = Math.floor(remaining / 60);
+    const secs = Math.floor(remaining % 60).toString().padStart(2, '0');
+    document.getElementById('status-msg').textContent = `Recording — ${mins}:${secs} remaining`;
+
+    recAnalyser.getByteFrequencyData(dataArray);
+    drawBackground(true);
+    drawLogo(W / 2, H * 0.42, H * 0.22);
+    drawDivider();
+    drawText();
+    drawWaveform(dataArray);
+    animFrame = requestAnimationFrame(recLoop);
+  }
+  recLoop();
+
+  recSource.onended = () => {
+    isRecording = false;
+    cancelAnimationFrame(animFrame);
+    mediaRecorder.stop();
+    recCtx.close();
+  };
+}
+
+function saveVideo() {
+  const blob = new Blob(recordedChunks, { type: 'video/webm' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const epNum = getEpisodeNum();
+  a.href = url;
+  a.download = `daily_ep${epNum}.webm`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  document.getElementById('btn-record').disabled = false;
+  document.getElementById('btn-preview').disabled = false;
+  document.getElementById('btn-record').textContent = 'Record & export video';
+  document.getElementById('progress-bar').style.display = 'none';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('status-msg').textContent = `Saved: daily_ep${epNum}.webm`;
+  drawStatic();
+}
+
+document.getElementById('btn-preview').addEventListener('click', startPreview);
+document.getElementById('btn-record').addEventListener('click', startRecording);
+
+// Initial draw
+drawStatic();
+
+// Keep idle animation ticking even before interaction
+(function idleLoop() {
+  if (!isPlaying && !isRecording) {
+    tick++;
+    drawBackground();
+    drawLogo(W / 2, H * 0.42, H * 0.22);
+    drawDivider();
+    drawText();
+    drawWaveform(null);
+  }
+  setTimeout(idleLoop, 50);
+})();
+</script>
+</body>
+</html>

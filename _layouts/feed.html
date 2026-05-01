@@ -12,7 +12,7 @@ layout: null
     <link>{{ site.url }}{{ site.baseurl }}/podcast/{{ show.slug }}/</link>
     <description>{{ show.description | xml_escape }}</description>
     <language>{{ show.language }}</language>
-    <copyright>&#169; {{ 'now' | date: "%Y" }} {{ show.author }}</copyright>
+    <copyright>&#169; {{ 'now' | date: "%Y" }} Vaguely Generic</copyright>
     <atom:link href="{{ site.url }}{{ site.baseurl }}{{ page.url }}" rel="self" type="application/rss+xml" />
     <itunes:title>{{ show.name | xml_escape }}</itunes:title>
     <itunes:subtitle>{{ show.subtitle | xml_escape }}</itunes:subtitle>
@@ -27,9 +27,9 @@ layout: null
     <itunes:category text="{{ show.category }}">
       <itunes:category text="{{ show.subcategory }}" />
     </itunes:category>
-    <itunes:image href="{{ site.url }}{{ site.baseurl }}{{ show.image }}" />
+    <itunes:image href="{{ site.url }}{{ site.baseurl }}{{ show.feed_image }}" />
     <image>
-      <url>{{ site.url }}{{ site.baseurl }}{{ show.image }}</url>
+      <url>{{ site.url }}{{ site.baseurl }}{{ show.feed_image }}</url>
       <title>{{ show.name | xml_escape }}</title>
       <link>{{ site.url }}{{ site.baseurl }}/podcast/{{ show.slug }}/</link>
     </image>
@@ -39,7 +39,7 @@ layout: null
       <link>{{ site.url }}{{ site.baseurl }}{{ episode.url }}</link>
       <guid isPermaLink="true">{{ site.url }}{{ site.baseurl }}{{ episode.url }}</guid>
       <description>
-        <![CDATA[{{ episode.content | strip_html | truncate: 4000 }}]]>
+        <![CDATA[{{ episode.content | truncate: 4000 }}]]>
       </description>
       <content:encoded>
         <![CDATA[{{ episode.content }}]]>
