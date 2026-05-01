@@ -100,3 +100,4 @@ exclude:
   - README.md
   - Dockerfile
   - tools
+  - temp
