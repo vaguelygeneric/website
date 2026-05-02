@@ -1,3 +1,13 @@
+module Jekyll
+  module RSSFilters
+    def strip_classes(input)
+      input.to_s.gsub(/\s+class="[^"]*"/, '')
+    end
+  end
+end
+
+Liquid::Template.register_filter(Jekyll::RSSFilters)
+
 class FeedPage < Jekyll::Page
   def initialize(site, show)
     @site = site
