@@ -44,7 +44,7 @@ layout: null
       <content:encoded>
         {{ episode.content | strip_classes | xml_escape }}
       </content:encoded>
-      <pubDate>{{ episode.date | date_to_rfc822 }}</pubDate>
+      <pubDate>{{ episode.publish_date | default: episode.date | date_to_rfc822 }}</pubDate>
       {% if episode.audio_url %}
       <enclosure url="{{ episode.audio_url }}" length="{{ episode.audio_size | default: '0' }}"
         type="{{ episode.audio_type | default: 'audio/mpeg' }}" />
