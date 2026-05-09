@@ -1,0 +1,50 @@
+---
+layout: null
+permalink: /blog.xml
+---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/">
+
+  <channel>
+    <title>{{ site.title }}</title>
+    <link>{{ site.url }}</link>
+    <description>{{ site.description }}</description>
+    <language>en-gb</language>
+
+    <atom:link href="{{ site.url }}/blog.xml" rel="self" type="application/rss+xml" />
+
+    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
+
+    {% assign posts = site.posts
+      | where: "status", "published"
+      | sort: "date"
+      | reverse %}
+
+    {% for post in posts limit:50 %}
+    <item>
+      <title>{{ post.title | xml_escape }}</title>
+      <link>{{ site.url }}{{ post.url }}</link>
+
+      <guid isPermaLink="true">{{ site.url }}{{ post.url }}</guid>
+
+      <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
+
+      {% if post.tags %}
+      {% for tag in post.tags %}
+      <category>{{ tag }}</category>
+      {% endfor %}
+      {% endif %}
+
+      <description>{{ post.description | xml_escape }}</description>
+
+      <content:encoded>
+        {{ post.content | xml_escape }}
+      </content:encoded>
+    </item>
+    {% endfor %}
+
+  </channel>
+</rss>

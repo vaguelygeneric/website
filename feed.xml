@@ -1,0 +1,59 @@
+---
+layout: null
+permalink: /feed.xml
+---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/">
+
+  <channel>
+    <title>{{ site.title }} - Everything</title>
+    <link>{{ site.url }}</link>
+    <description>{{ site.description }}</description>
+    <language>en-gb</language>
+
+    <atom:link href="{{ site.url }}/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
+
+    {% assign posts = site.posts | where: "status", "published" %}
+    {% assign podcast = site.podcast %}
+    {% assign shows = site.shows %}
+    {% assign all = posts | concat: podcast | concat: shows %}
+    {% assign sorted = all | sort: "date" | reverse %}
+
+    {% for item in sorted limit:50 %}
+
+      {% assign url = item.url | default: item.permalink %}
+      {% assign title = item.title | default: item.episode.title %}
+      {% assign desc = item.description | default: item.excerpt %}
+      {% assign body = item.content | default: item.episode.content %}
+
+      <item>
+        <title>{{ title | xml_escape }}</title>
+
+        <link>{{ site.url }}{{ url }}</link>
+
+        <guid isPermaLink="true">{{ site.url }}{{ url }}</guid>
+
+        <pubDate>{{ item.date | date_to_rfc822 }}</pubDate>
+        <category>{{ item.collection }}</category>
+        {% if item.tags %}
+          {% for tag in item.tags %}
+            <tag>{{ tag }}</tag>
+          {% endfor %}
+        {% endif %}
+
+        <description>{{ desc | xml_escape }}</description>
+
+        <content:encoded>
+          {{ body | strip_classes | xml_escape }}
+        </content:encoded>
+
+      </item>
+
+    {% endfor %}
+
+  </channel>
+</rss>

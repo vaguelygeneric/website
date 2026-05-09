@@ -5,10 +5,11 @@ description: "A quick share of the audio that Daily uses towards the end"
 date: 2025-05-09
 tags: [meta, updates, Daily, podcast]
 status: published
+author: Daily Host
 audio_url: https://archive.org/download/morning-silence/MorningSilence.mp3
 ---
 
-Due to absolutely no demand, but because I felt like it, I have decided to upload and share the audio file used in the [Daily podcast]({{ "/podcast/daily" | relative_url }}). 
+Due to absolutely no demand, but because I felt like it, I have decided to upload and share the audio file used in the [Daily podcast]({% link _shows/daily.md %}).
 
 If you like the idea of taking 5 minutes each day, but don't like the idea of sitting through whatever ambient noise that will assuredly be in the podcast, here you are. You can play it here, or download the mp3.
 

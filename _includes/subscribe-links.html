@@ -24,7 +24,7 @@
   {% if show.slug %}
     {% assign _rss_url = site.url | append: site.baseurl | append: "/feed/" | append: show.slug | append: ".xml" %}
   {% else %}
-    {% assign _rss_url = "/feed.xml" | relative_url %}
+    {% assign _rss_url = "/blog.xml" | relative_url %}
   {% endif %}
 
   <a class="subscribe-link" href="{{ _rss_url }}" aria-label="RSS Feed">
