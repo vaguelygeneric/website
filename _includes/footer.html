@@ -17,10 +17,12 @@
           <li><a href="{{ site.youtube_channel }}" target="_blank" rel="noopener">YouTube</a></li>
         </ul>
       </div>
+      {% if page.show %}
       <div class="footer-col">
         <h4>Subscribe</h4>
         {% include subscribe-links.html show=site.shows.first footer=true %}
       </div>
+      {% endif %}
     </div>
   </div>
   <div class="footer-bottom">
