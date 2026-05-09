@@ -6,12 +6,21 @@ layout: default
     <a href="{{ '/blog/' | relative_url }}" class="back-link">← Blog</a>
     <div class="post-meta">
       <span class="post-date">{{ page.date | date: "%B %-d, %Y" }}</span>
-      {% if page.tags %}<span class="post-tags">{% for tag in page.tags %}<span class="post-tag">{{ tag }}</span>{% endfor %}</span>{% endif %}
+      {% if page.tags %}<span class="post-tags">{% for tag in page.tags %}<span class="post-tag">{{ tag }}</span>{%
+        endfor %}</span>{% endif %}
     </div>
     <h1 class="post-title">{{ page.title }}</h1>
     {% if page.description %}<p class="post-desc">{{ page.description }}</p>{% endif %}
   </div>
   <div class="post-body">
+    {% if page.audio_url %}
+    <div class="episode-player">
+      <audio controls preload="metadata">
+        <source src="{{ page.audio_url }}" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+    {% endif %}
     {{ content }}
   </div>
 </div>

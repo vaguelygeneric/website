@@ -10,7 +10,7 @@ title: Home
 
       <h1 class="hero-title">Nothing<br><em>Specific.</em></h1>
       <p class="hero-desc">
-        Media. Content. Other stuff. 
+        Media. Content. Other stuff.
       </p>
       <div class="hero-actions">
         <a href="{{ '/podcast/' | relative_url }}" class="btn btn-primary">Browse All Shows</a>
@@ -24,7 +24,7 @@ title: Home
       </div>
     </div>
     <div class="hero-visual">
-        
+
       <div class="hero-shows">
         <!-- <a href="{{ '/podcast/generic/' | relative_url }}" class="hero-show-pill">
           <span class="hero-show-pill-bracket">[</span>The Generic<span class="hero-show-pill-bracket">]</span>
@@ -75,8 +75,8 @@ title: Home
     <a href="{{ '/blog/' | relative_url }}" class="section-more">All Posts →</a>
   </div>
   <div class="blog-preview-grid">
-    {% assign posts = site.posts | sort: 'date' | reverse %}
-    {% for post in posts limit:2 %}
+    {% assign posts = site.posts | where: "status", "published" | sort: 'date' | reverse %}
+    {% for post in posts limit:3 %}
     <a href="{{ post.url | relative_url }}" class="blog-preview-card">
       <div class="blog-card-meta">
         <span class="blog-card-date">{{ post.date | date: "%B %-d, %Y" }}</span>
