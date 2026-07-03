@@ -1,0 +1,46 @@
+---
+layout: default
+---
+
+<div class="episode-wrapper">
+  <div class="episode-header">
+    {% assign comic_info = site.comics | where: "slug", page.comic | first %}
+    <a href="{{ site.baseurl }}/comics/{{ page.comic }}/" class="back-link">← {{ comic_info.name | default: "All Comics" }}</a>
+    <div class="episode-meta">
+      <span class="show-badge">{{ comic_info.name | default: page.comic }}</span>
+      <span class="episode-number">Strip {{ page.strip_number }}</span>
+      <span class="episode-date">{{ page.date | date: "%B %-d, %Y" }}</span>
+      {% if page.arc %}<span class="post-tag">{{ page.arc }}</span>{% endif %}
+    </div>
+    <h1 class="episode-title">{{ page.title }}</h1>
+  </div>
+
+  {% if page.image %}
+  <div class="comic-strip-image">
+    <img src="{{ page.image | relative_url }}" alt="{{ page.alt_text | default: page.title }}" />
+  </div>
+  {% endif %}
+
+  {% if content != "" %}
+  <div class="episode-body">
+    {{ content }}
+  </div>
+  {% endif %}
+
+  {% assign strips = site.comic | where: "comic", page.comic | sort: "publish_date" %}
+  {% assign prev_strip = nil %}
+  {% assign next_strip = nil %}
+  {% for strip in strips %}
+    {% if strip.url == page.url %}
+      {% assign prev_index = forloop.index0 | minus: 1 %}
+      {% assign next_index = forloop.index0 | plus: 1 %}
+      {% if prev_index >= 0 %}{% assign prev_strip = strips[prev_index] %}{% endif %}
+      {% assign next_strip = strips[next_index] %}
+    {% endif %}
+  {% endfor %}
+
+  <div class="chapter-nav">
+    {% if prev_strip %}<a href="{{ prev_strip.url | relative_url }}" class="btn btn-outline">← {{ prev_strip.title }}</a>{% endif %}
+    {% if next_strip %}<a href="{{ next_strip.url | relative_url }}" class="btn btn-primary">{{ next_strip.title }} →</a>{% endif %}
+  </div>
+</div>

@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+<div class="episode-wrapper">
+  <div class="episode-header">
+    {% assign story_info = site.stories | where: "slug", page.story | first %}
+    <a href="{{ site.baseurl }}/stories/{{ page.story }}/" class="back-link">← {{ story_info.name | default: "All Stories" }}</a>
+    <div class="episode-meta">
+      <span class="show-badge">{{ story_info.name | default: page.story }}</span>
+      <span class="episode-number">Chapter {{ page.chapter_number }}</span>
+      <span class="episode-date">{{ page.date | date: "%B %-d, %Y" }}</span>
+      {% if page.arc %}<span class="post-tag">{{ page.arc }}</span>{% endif %}
+    </div>
+    <h1 class="episode-title">{{ page.title }}</h1>
+  </div>
+
+  <div class="episode-body">
+    {{ content }}
+  </div>
+
+  {% assign chapters = site.story | where: "story", page.story | sort: "publish_date" %}
+  {% assign prev_chapter = nil %}
+  {% assign next_chapter = nil %}
+  {% for chapter in chapters %}
+    {% if chapter.url == page.url %}
+      {% assign prev_index = forloop.index0 | minus: 1 %}
+      {% assign next_index = forloop.index0 | plus: 1 %}
+      {% if prev_index >= 0 %}{% assign prev_chapter = chapters[prev_index] %}{% endif %}
+      {% assign next_chapter = chapters[next_index] %}
+    {% endif %}
+  {% endfor %}
+
+  <div class="chapter-nav">
+    {% if prev_chapter %}<a href="{{ prev_chapter.url | relative_url }}" class="btn btn-outline">← {{ prev_chapter.title }}</a>{% endif %}
+    {% if next_chapter %}<a href="{{ next_chapter.url | relative_url }}" class="btn btn-primary">{{ next_chapter.title }} →</a>{% endif %}
+  </div>
+</div>

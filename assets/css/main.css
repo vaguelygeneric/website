@@ -1203,6 +1203,28 @@ li { margin-bottom: 0.4rem; }
   background: var(--surface);
 }
 
+/* ── Comic Strip ── */
+.comic-strip-image {
+  margin: 2rem 0;
+  text-align: center;
+}
+.comic-strip-image img {
+  max-width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+/* ── Chapter / Strip Navigation ── */
+.chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.chapter-nav .btn:only-child { margin-left: auto; }
+
 /* ── Shows Landing Page ── */
 .podcast-listing-header {
   margin-bottom: 3rem;

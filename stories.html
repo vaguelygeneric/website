@@ -1,0 +1,33 @@
+---
+layout: default
+title: Stories
+description: "All fiction serials from VaguelyGeneric."
+permalink: /stories/
+---
+
+<div class="podcast-page">
+  <div class="podcast-listing-header">
+    <h1>Stories</h1>
+    <p>Serialized fiction. Or is it?</p>
+  </div>
+
+  <div class="show-grid">
+    {% assign stories = site.stories | sort: "name" %}
+    {% for story in stories %}
+    <a href="{{ site.baseurl }}/stories/{{ story.slug }}/" class="show-card">
+      <div class="show-card-art">
+        <span class="logo-bracket">[</span>
+        <span>{{ story.name | truncate: 2, "" | upcase }}</span>
+        <span class="logo-bracket">]</span>
+      </div>
+      <div class="show-card-body">
+        <h2 class="show-card-title">{{ story.name }}</h2>
+        <p class="show-card-desc">{{ story.description }}</p>
+        <span class="show-card-cta">Read →</span>
+      </div>
+    </a>
+    {% else %}
+    <p style="color: var(--text-muted);">Nothing published yet.</p>
+    {% endfor %}
+  </div>
+</div>

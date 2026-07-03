@@ -1,0 +1,33 @@
+---
+layout: default
+title: Comics
+description: "All webcomics from VaguelyGeneric."
+permalink: /comics/
+---
+
+<div class="podcast-page">
+  <div class="podcast-listing-header">
+    <h1>Comics</h1>
+    <p>Webcomic series.</p>
+  </div>
+
+  <div class="show-grid">
+    {% assign comics = site.comics | sort: "name" %}
+    {% for comic in comics %}
+    <a href="{{ site.baseurl }}/comics/{{ comic.slug }}/" class="show-card">
+      <div class="show-card-art">
+        <span class="logo-bracket">[</span>
+        <span>{{ comic.name | truncate: 2, "" | upcase }}</span>
+        <span class="logo-bracket">]</span>
+      </div>
+      <div class="show-card-body">
+        <h2 class="show-card-title">{{ comic.name }}</h2>
+        <p class="show-card-desc">{{ comic.description }}</p>
+        <span class="show-card-cta">Read →</span>
+      </div>
+    </a>
+    {% else %}
+    <p style="color: var(--text-muted);">Nothing published yet.</p>
+    {% endfor %}
+  </div>
+</div>

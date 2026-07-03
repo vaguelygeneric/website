@@ -22,6 +22,18 @@ collections:
   guests:
     output: true
     permalink: /guests/:slug/
+  comics:
+    output: true
+    permalink: /comics/:slug/
+  comic:
+    output: true
+    permalink: /comics/:path/
+  stories:
+    output: true
+    permalink: /stories/:slug/
+  story:
+    output: true
+    permalink: /stories/:path/
 
 defaults:
   - scope:
@@ -44,6 +56,26 @@ defaults:
       type: "guests"
     values:
       layout: "guest"
+  - scope:
+      path: ""
+      type: "comics"
+    values:
+      layout: "comic"
+  - scope:
+      path: ""
+      type: "comic"
+    values:
+      layout: "comic-strip"
+  - scope:
+      path: ""
+      type: "stories"
+    values:
+      layout: "story"
+  - scope:
+      path: ""
+      type: "story"
+    values:
+      layout: "story-chapter"
 
 # Build settings
 markdown: kramdown
