@@ -58,16 +58,6 @@ defaults:
       layout: "guest"
   - scope:
       path: ""
-      type: "comics"
-    values:
-      layout: "comic"
-  - scope:
-      path: ""
-      type: "comic"
-    values:
-      layout: "comic-strip"
-  - scope:
-      path: ""
       type: "stories"
     values:
       layout: "story"
@@ -76,6 +66,16 @@ defaults:
       type: "story"
     values:
       layout: "story-chapter"
+  - scope:
+      path: ""
+      type: "comics"
+    values:
+      layout: "comic"
+  - scope:
+      path: ""
+      type: "comic"
+    values:
+      layout: "comic-strip"
 
 # Build settings
 markdown: kramdown
