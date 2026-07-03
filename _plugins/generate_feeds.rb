@@ -28,16 +28,6 @@ class FeedGenerator < Jekyll::Generator
   safe true
 
   def generate(site)
-    # Gate the podcast collection to only publicly-published episodes.
-    # This runs once, here, so every consumer of `site.podcast`
-    # (homepage, show pages, generated feeds) sees a consistent set
-    # without needing to repeat the filter in each template.
-    now = site.time
-    site.collections["podcast"].docs.select! do |doc|
-      publish_date = doc.data["publish_date"] || doc.data["date"]
-      publish_date <= now
-    end
-
     site.collections["shows"].docs.each do |show|
       site.pages << FeedPage.new(site, show)
     end
