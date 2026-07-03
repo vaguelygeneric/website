@@ -1,0 +1,2 @@
+{% assign show_info = site.shows | where: "slug", include.show | first %}
+<span class="show-badge" style="--badge-accent: {{ show_info.accent | default: 'var(--accent)' }};">{{ show_info.name | default: include.show }}</span>

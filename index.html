@@ -26,15 +26,11 @@ title: Home
     <div class="hero-visual">
 
       <div class="hero-shows">
-        <!-- <a href="{{ '/podcast/generic/' | relative_url }}" class="hero-show-pill">
-          <span class="hero-show-pill-bracket">[</span>The Generic<span class="hero-show-pill-bracket">]</span>
+        {% for show in site.shows %}
+        <a href="{{ site.baseurl }}/podcast/{{ show.slug }}/" class="hero-show-pill" style="--pill-accent: {{ show.accent | default: 'var(--accent)' }};">
+          <span class="hero-show-pill-bracket">[</span><br />{{ show.name }}<span class="hero-show-pill-bracket"><br />]</span>
         </a>
-        <a href="{{ '/podcast/ramblings/' | relative_url }}" class="hero-show-pill hero-show-pill--ramblings">
-          <span class="hero-show-pill-bracket">[</span>Ramblings<span class="hero-show-pill-bracket">]</span>
-        </a>
-        <a href="{{ '/podcast/readings/' | relative_url }}" class="hero-show-pill hero-show-pill--readings">
-          <span class="hero-show-pill-bracket">[</span>Readings<span class="hero-show-pill-bracket">]</span>
-        </a> -->
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -47,11 +43,11 @@ title: Home
     <a href="{{ '/podcast/' | relative_url }}" class="section-more">All Shows →</a>
   </div>
   <div class="episode-grid">
-    {% assign episodes = site.podcast | sort: 'date' | reverse %}
+    {% assign episodes = site.podcast | sort: 'publish_date' | reverse %}
     {% for episode in episodes limit:3 %}
     <a href="{{ episode.url | relative_url }}" class="episode-card">
       <div class="episode-card-meta">
-        <span class="show-badge show-badge--{{ episode.show }}">{{ episode.show | capitalize }}</span>
+        {% include show-badge.html show=episode.show %}
         <span class="episode-num">Ep. {{ episode.episode_number }}</span>
         <span class="episode-card-duration">{{ episode.duration }}</span>
       </div>
