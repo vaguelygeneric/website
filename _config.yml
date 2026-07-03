@@ -3,6 +3,7 @@ tagline: "An online presence about nothing specific."
 description: "Vaguely Generic is a presence that exists to do whatever."
 baseurl: ""
 url: "https://vaguelygeneric.website"
+timezone: "UTC"
 email: "email@vaguelygeneric.website"
 # YouTube
 youtube_channel: "https://www.youtube.com/@VaguelyGeneric"

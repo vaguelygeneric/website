@@ -47,7 +47,7 @@ title: Home
     <a href="{{ '/podcast/' | relative_url }}" class="section-more">All Shows →</a>
   </div>
   <div class="episode-grid">
-    {% assign episodes = site.podcast | sort: 'date' | reverse %}
+    {% assign episodes = site.podcast | sort: 'publish_date' | reverse %}
     {% for episode in episodes limit:3 %}
     <a href="{{ episode.url | relative_url }}" class="episode-card">
       <div class="episode-card-meta">

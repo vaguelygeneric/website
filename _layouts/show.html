@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{% assign episodes = site.podcast | where: "show", page.slug | sort: "date" | reverse %}
+{% assign episodes = site.podcast | where: "show", page.slug | sort: "publish_date" | reverse %}
 
 <div class="podcast-page">
   <div class="podcast-hero">
