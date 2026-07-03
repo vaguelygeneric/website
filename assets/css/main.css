@@ -1180,15 +1180,13 @@ li { margin-bottom: 0.4rem; }
   display: inline-block;
 }
 .hero-show-pill:hover {
-  border-color: var(--accent);
+  border-color: var(--pill-accent, var(--accent));
   transform: translateX(4px);
   box-shadow: var(--shadow-sm);
   text-decoration: none;
   color: var(--text);
 }
-.hero-show-pill-bracket { color: var(--accent); }
-.hero-show-pill--ramblings .hero-show-pill-bracket { color: #4a72d4; }
-.hero-show-pill--readings .hero-show-pill-bracket { color: #2e8b57; }
+.hero-show-pill-bracket { color: var(--pill-accent, var(--accent)); }
 
 /* ── Show Badge ── */
 .show-badge {
@@ -1199,6 +1197,9 @@ li { margin-bottom: 0.4rem; }
   letter-spacing: 0.1em;
   padding: 0.2rem 0.5rem;
   border-radius: 2px;
+  color: var(--badge-accent, var(--accent));
+  border: 1px solid var(--badge-accent, var(--accent));
+  background: var(--surface);
 }
 
 /* ── Shows Landing Page ── */

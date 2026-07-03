@@ -33,7 +33,7 @@ layout: default
   </div>
   {% endif %}
 
-  {% assign guest_episodes = site.podcast | where_exp: "ep", "ep.guests contains page.slug" | sort: "date" | reverse %}
+  {% assign guest_episodes = site.podcast | where_exp: "ep", "ep.guests contains page.slug" | sort: "publish_date" | reverse %}
   {% if guest_episodes.size > 0 %}
   <div class="guest-episodes">
     <h2>Episodes with {{ page.name }}</h2>
@@ -46,7 +46,7 @@ layout: default
           <div class="episode-list-desc">{{ episode.description }}</div>
         </div>
         <div class="episode-list-meta">
-          <span class="show-badge show-badge--{{ episode.show }}">{{ episode.show }}</span>
+          {% include show-badge.html show=episode.show %}
           <span class="episode-list-date">{{ episode.date | date: "%b %-d, %Y" }}</span>
         </div>
       </a>
