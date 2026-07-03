@@ -1,0 +1,29 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, serif">
+  <rect x="0" y="0" width="800" height="500" fill="#f4ede1"/>
+  <rect x="12" y="12" width="776" height="476" fill="none" stroke="#1a1714" stroke-width="4"/>
+
+  <!-- desk -->
+  <rect x="40" y="360" width="720" height="16" fill="#1a1714"/>
+
+  <!-- cartographer, back to viewer, hunched over a table -->
+  <g stroke="#1a1714" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 340 360 L 340 260 Q 340 230 380 225 L 430 225 Q 470 230 470 260 L 470 360" />
+    <circle cx="400" cy="195" r="30" fill="#1a1714" stroke="none" />
+    <path d="M 355 245 Q 320 270 300 330" />
+    <path d="M 445 245 Q 480 270 500 330" />
+  </g>
+
+  <!-- table with an unfinished map -->
+  <rect x="220" y="355" width="360" height="10" fill="#c2410c" opacity="0.15"/>
+  <g stroke="#c2410c" stroke-width="2" fill="none" opacity="0.7">
+    <path d="M 260 350 Q 320 320 300 280 Q 280 250 340 240" />
+    <circle cx="340" cy="240" r="4" fill="#c2410c" stroke="none"/>
+    <path d="M 400 300 L 420 260" stroke-dasharray="4 4"/>
+  </g>
+
+  <!-- blank wall ahead -->
+  <rect x="40" y="40" width="720" height="180" fill="none" stroke="#1a1714" stroke-width="2" stroke-dasharray="6 6" opacity="0.3"/>
+  <text x="400" y="140" text-anchor="middle" font-size="20" fill="#1a1714" opacity="0.35" font-style="italic">(nothing here yet)</text>
+
+  <text x="400" y="460" text-anchor="middle" font-size="15" fill="#1a1714" opacity="0.6">Wanderlines — Strip 1</text>
+</svg>

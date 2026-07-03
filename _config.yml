@@ -30,10 +30,10 @@ collections:
     permalink: /comics/:path/
   stories:
     output: true
-    permalink: /stories/:slug/
+    permalink: /story/:slug/
   story:
     output: true
-    permalink: /stories/:path/
+    permalink: /story/:path/
 
 defaults:
   - scope:

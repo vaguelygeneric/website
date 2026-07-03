@@ -1,0 +1,33 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, serif">
+  <rect x="0" y="0" width="800" height="500" fill="#f4ede1"/>
+  <rect x="12" y="12" width="776" height="476" fill="none" stroke="#1a1714" stroke-width="4"/>
+
+  <!-- three panels -->
+  <line x1="272" y1="12" x2="272" y2="488" stroke="#1a1714" stroke-width="3"/>
+  <line x1="532" y1="12" x2="532" y2="488" stroke="#1a1714" stroke-width="3"/>
+
+  <!-- panel 1: pencil hovering -->
+  <g stroke="#1a1714" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 90 300 L 190 220" />
+    <path d="M 185 214 L 200 200 L 210 215 L 195 230 Z" fill="#1a1714" stroke="none"/>
+  </g>
+  <text x="142" y="360" text-anchor="middle" font-size="14" fill="#1a1714" opacity="0.6">hesitates</text>
+
+  <!-- panel 2: single line drawn -->
+  <g stroke="#c2410c" stroke-width="3" fill="none">
+    <path d="M 320 260 Q 380 240 400 280 Q 420 320 470 300" />
+  </g>
+  <text x="402" y="360" text-anchor="middle" font-size="14" fill="#1a1714" opacity="0.6">one line</text>
+
+  <!-- panel 3: line becomes a coastline, small flag -->
+  <g stroke="#c2410c" stroke-width="3" fill="none">
+    <path d="M 560 260 Q 620 230 650 280 Q 670 320 720 290 Q 740 275 760 300" />
+  </g>
+  <g stroke="#1a1714" stroke-width="3" fill="none">
+    <line x1="650" y1="280" x2="650" y2="230"/>
+    <path d="M 650 230 L 680 240 L 650 250 Z" fill="#1a1714"/>
+  </g>
+  <text x="662" y="360" text-anchor="middle" font-size="14" fill="#1a1714" opacity="0.6">a coastline, maybe</text>
+
+  <text x="400" y="460" text-anchor="middle" font-size="15" fill="#1a1714" opacity="0.6">Wanderlines — Strip 2</text>
+</svg>

@@ -14,7 +14,7 @@ permalink: /stories/
   <div class="show-grid">
     {% assign stories = site.stories | sort: "name" %}
     {% for story in stories %}
-    <a href="{{ site.baseurl }}/stories/{{ story.slug }}/" class="show-card">
+    <a href="{{ site.baseurl }}/story/{{ story.slug }}/" class="show-card">
       <div class="show-card-art">
         <span class="logo-bracket">[</span>
         <span>{{ story.name | truncate: 2, "" | upcase }}</span>
