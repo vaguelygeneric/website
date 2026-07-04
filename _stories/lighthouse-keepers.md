@@ -9,8 +9,10 @@ language: "en-us"
 # SVGs are always in _include
 cover_svg: "lighthouse.svg"
 
-status: published
+status: draft
 accent: "#0f766e"
 ---
+
+# Generated slop for testing (Seems like Claude was in a House of Leaves mood or something)
 
 A serial told through the almanac entries of a keeper stationed somewhere the maps disagree about.

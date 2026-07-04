@@ -28,7 +28,12 @@ class FeedGenerator < Jekyll::Generator
   safe true
 
   def generate(site)
+    existing_permalinks = site.pages.map { |p| p.data["permalink"] }.compact
+
     site.collections["shows"].docs.each do |show|
+      permalink = "/feed/#{show.data['slug']}.xml"
+      next if existing_permalinks.include?(permalink)
+
       site.pages << FeedPage.new(site, show)
     end
   end
