@@ -15,4 +15,5 @@ If you like the idea of taking 5 minutes each day, but don't like the idea of si
 
 Since we here at Vaguely Generic are dedicated to openness, we licensed this mp3 under the amazing [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/). The (admittedly tiny amount of) effort that went into creating it is for the benefit of all.
 
->The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
+> The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
+(If it's not allowed by law, do it anyway)
