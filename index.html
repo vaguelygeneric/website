@@ -39,11 +39,11 @@ title: Home
 <!-- LATEST EPISODES -->
 <section class="section">
   <div class="section-header">
-    <span class="section-title">Latest Episodes</span>
+    <span class="section-title">Latest Podcast Episodes</span>
     <a href="{{ '/podcast/' | relative_url }}" class="section-more">All Shows →</a>
   </div>
   <div class="episode-grid">
-    {% assign episodes = site.podcast | sort: 'publish_date' | reverse %}
+    {% assign episodes = site.podcast | listed_installments | sort: 'publish_date' | reverse %}
     {% for episode in episodes limit:3 %}
     <a href="{{ episode.url | relative_url }}" class="episode-card">
       <div class="episode-card-meta">

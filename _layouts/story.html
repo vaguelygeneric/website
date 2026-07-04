@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{% assign chapters = site.story | where: "story", page.slug | sort: "publish_date" %}
+{% assign chapters = site.story | listed_installments: "story", page.slug | sort: "publish_date" %}
 
 <div class="podcast-page">
   <div class="podcast-hero">
@@ -35,7 +35,7 @@ layout: default
         {% if chapter.arc %}<div class="episode-list-desc">{{ chapter.arc }}</div>{% endif %}
       </div>
       <div class="episode-list-meta">
-        <span class="episode-list-date">{{ chapter.date | date: "%b %-d, %Y" }}</span>
+        <span class="episode-list-date">{{ chapter.created | date: "%b %-d, %Y" }}</span>
       </div>
     </a>
     {% else %}

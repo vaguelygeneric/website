@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{% assign episodes = site.podcast | where: "show", page.slug | where_exp: "item", "item.publish_date <= site.time" | sort: "publish_date" | reverse %}
+{% assign episodes = site.podcast | listed_installments: "show", page.slug | sort: "publish_date" | reverse %}
 
 <div class="podcast-page">
   <div class="podcast-hero">
@@ -39,7 +39,7 @@ layout: default
         <div class="episode-list-desc">{{ episode.description }}</div>
       </div>
       <div class="episode-list-meta">
-        <span class="episode-list-date">{{ episode.date | date: "%b %-d, %Y" }}</span>
+        <span class="episode-list-date">{{ episode.created | date: "%b %-d, %Y" }}</span>
         <span class="episode-list-duration">{{ episode.duration }}</span>
       </div>
     </a>

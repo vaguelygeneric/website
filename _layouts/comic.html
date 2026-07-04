@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{% assign strips = site.comic | where: "comic", page.slug | sort: "publish_date" %}
+{% assign strips = site.comic | listed_installments: "comic", page.slug | sort: "publish_date" %}
 
 <div class="podcast-page">
   <div class="podcast-hero">
@@ -35,7 +35,7 @@ layout: default
         {% if strip.arc %}<div class="episode-list-desc">{{ strip.arc }}</div>{% endif %}
       </div>
       <div class="episode-list-meta">
-        <span class="episode-list-date">{{ strip.date | date: "%b %-d, %Y" }}</span>
+        <span class="episode-list-date">{{ strip.created | date: "%b %-d, %Y" }}</span>
       </div>
     </a>
     {% else %}

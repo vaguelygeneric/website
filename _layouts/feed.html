@@ -3,7 +3,7 @@ layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 {% assign show = site.shows | where: "slug", page.show | first %}
-{% assign episodes = site.podcast | where: "show", show.slug | where_exp: "item", "item.publish_date <= site.time" | sort: "publish_date" | reverse %}
+{% assign episodes = site.podcast | listed_installments: "show", show.slug | sort: "publish_date" | reverse %}
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
   xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:media="http://search.yahoo.com/mrss/">
@@ -44,7 +44,7 @@ layout: null
       <content:encoded>
         {{ episode.content | strip_classes | xml_escape }}
       </content:encoded>
-      <pubDate>{{ episode.publish_date | default: episode.date | date_to_rfc822 }}</pubDate>
+      <pubDate>{{ episode.publish_date | default: episode.created | date_to_rfc822 }}</pubDate>
       {% if episode.audio_url %}
       <enclosure url="{{ episode.audio_url }}" length="{{ episode.audio_size | default: '0' }}"
         type="{{ episode.audio_type | default: 'audio/mpeg' }}" />
