@@ -8,7 +8,7 @@ on:
     # Rebuilds daily so episodes with a future publish_date go live
     # on their own once that time passes, without a new push.
     # Time is UTC regardless of the `timezone` set in _config.yml.
-    - cron: '0 6 * * *'
+    - cron: '0 4 * * *'
 
 permissions:
   contents: read
