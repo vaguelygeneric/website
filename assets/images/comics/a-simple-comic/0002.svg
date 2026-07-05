@@ -1,0 +1,38 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, serif">
+  <rect x="0" y="0" width="800" height="500" fill="#eef7f8"/>
+  <rect x="12" y="12" width="776" height="476" fill="none" stroke="#0f2a2e" stroke-width="4"/>
+
+  <!-- three panels -->
+  <line x1="272" y1="12" x2="272" y2="488" stroke="#0f2a2e" stroke-width="3"/>
+  <line x1="532" y1="12" x2="532" y2="488" stroke="#0f2a2e" stroke-width="3"/>
+
+  <!-- panel 1: a form / front matter fields sketched as a checklist -->
+  <g stroke="#0f2a2e" stroke-width="3" fill="none">
+    <rect x="70" y="180" width="140" height="140" rx="4"/>
+    <line x1="85" y1="205" x2="195" y2="205"/>
+    <line x1="85" y1="230" x2="195" y2="230"/>
+    <line x1="85" y1="255" x2="160" y2="255"/>
+    <line x1="85" y1="280" x2="180" y2="280"/>
+  </g>
+  <text x="142" y="360" text-anchor="middle" font-size="14" fill="#0f2a2e" opacity="0.6">front matter</text>
+
+  <!-- panel 2: a calendar page with one date circled -->
+  <g stroke="#0891b2" stroke-width="3" fill="none">
+    <rect x="330" y="180" width="140" height="140" rx="4"/>
+    <line x1="330" y1="215" x2="470" y2="215"/>
+    <circle cx="400" cy="270" r="20"/>
+  </g>
+  <text x="402" y="360" text-anchor="middle" font-size="14" fill="#0f2a2e" opacity="0.6">one date, no time</text>
+
+  <!-- panel 3: a strip icon sliding into place with a small checkmark -->
+  <g stroke="#0f2a2e" stroke-width="3" fill="none">
+    <rect x="590" y="200" width="120" height="90" rx="4"/>
+    <path d="M 600 285 L 700 285" stroke-dasharray="4 4" opacity="0.5"/>
+  </g>
+  <g stroke="#0891b2" stroke-width="4" fill="none">
+    <path d="M 715 210 L 725 220 L 745 195"/>
+  </g>
+  <text x="662" y="360" text-anchor="middle" font-size="14" fill="#0f2a2e" opacity="0.6">status: draft, for now</text>
+
+  <text x="400" y="450" text-anchor="middle" font-size="15" fill="#0f2a2e" opacity="0.6">A Simple Comic — Strip 2</text>
+</svg>
