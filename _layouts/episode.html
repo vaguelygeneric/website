@@ -11,7 +11,7 @@ layout: default
     <div class="episode-meta">
       {% include show-badge.html show=page.show %}
       <span class="episode-number">Episode {{ page.episode_number }}</span>
-      <span class="episode-date">{{ page.created | date: "%B %-d, %Y" }}</span>
+      <span class="episode-date">{{ page.publish_date | date: "%B %-d, %Y" }}</span>
       <span class="episode-duration">{{ page.duration }}</span>
     </div>
     <h1 class="episode-title">{{ page.title }}</h1>

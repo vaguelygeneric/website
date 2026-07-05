@@ -39,7 +39,7 @@ layout: default
         <div class="episode-list-desc">{{ episode.description }}</div>
       </div>
       <div class="episode-list-meta">
-        <span class="episode-list-date">{{ episode.created | date: "%b %-d, %Y" }}</span>
+        <span class="episode-list-date">{{ episode.publish_date | date: "%b %-d, %Y" }}</span>
         <span class="episode-list-duration">{{ episode.duration }}</span>
       </div>
     </a>
