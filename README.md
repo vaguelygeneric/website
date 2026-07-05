@@ -185,10 +185,31 @@ audio_type: "audio/mp3"
 permalink: /podcast/daily/0037/
 guests:
   - jane-doe                   # must match a filename slug in _guests/
+thumbnail: "/assets/images/daily/ep37.png"   # optional — see below
+thumbnail_alt: "Description of the image for accessibility."
 ---
 
 Show notes in Markdown here.
 ```
+
+**Episode thumbnails:**
+
+If an episode has its own image (as opposed to the show's general
+cover art), set `thumbnail` (a site-root-relative path) rather than
+embedding the image in the Markdown body. This one field drives three
+things:
+- the episode page shows it as a featured image, above the player
+- the episode card on the show index shows it (this already worked
+  before `thumbnail` had a writer — `_layouts/show-cards.html` has
+  looked for `episode.thumbnail` for a while)
+- the RSS feed gets a per-episode `<itunes:image>`, which is the
+  standard, widely-supported way podcast apps show episode-specific
+  artwork — rather than an app inferring it from whatever image
+  happens to appear in the show notes, which only works in apps that
+  do that inference (and is that much more markup to hand-type and
+  mistype)
+
+`thumbnail_alt` is optional and falls back to the episode title.
 
 **What happens automatically:**
 - Episode appears on the show index page once its publish gate opens

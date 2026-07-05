@@ -50,6 +50,9 @@ layout: null
         type="{{ episode.audio_type | default: 'audio/mpeg' }}" />
       {% endif %}
       <itunes:title>{{ episode.title | xml_escape }}</itunes:title>
+      {% if episode.thumbnail %}
+      <itunes:image href="{{ site.url }}{{ site.baseurl }}{{ episode.thumbnail }}" />
+      {% endif %}
       <itunes:summary>
         {{ episode.description | strip_classes | xml_escape }}
       </itunes:summary>
