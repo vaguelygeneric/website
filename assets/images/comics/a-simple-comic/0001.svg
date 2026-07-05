@@ -1,0 +1,24 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, serif">
+  <rect x="0" y="0" width="800" height="500" fill="#eef7f8"/>
+  <rect x="12" y="12" width="776" height="476" fill="none" stroke="#0f2a2e" stroke-width="4"/>
+
+  <!-- desk with a tablet -->
+  <rect x="40" y="380" width="720" height="14" fill="#0f2a2e"/>
+  <rect x="280" y="300" width="240" height="80" rx="6" fill="none" stroke="#0f2a2e" stroke-width="4"/>
+  <line x1="280" y1="365" x2="520" y2="365" stroke="#0f2a2e" stroke-width="2" opacity="0.4"/>
+
+  <!-- figure, stylus raised, staring at a blank tablet -->
+  <g stroke="#0f2a2e" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 340 380 L 340 270 Q 340 240 380 235 L 430 235 Q 470 240 470 270 L 470 380" />
+    <circle cx="400" cy="205" r="30" fill="#0f2a2e" stroke="none" />
+    <path d="M 355 250 Q 320 220 300 180" />
+    <path d="M 296 172 L 285 160 L 300 155 L 308 168 Z" fill="#0f2a2e" stroke="none"/>
+    <path d="M 445 250 Q 480 260 500 300" />
+  </g>
+
+  <!-- blank tablet screen -->
+  <rect x="300" y="140" width="200" height="140" fill="#fff" stroke="#0891b2" stroke-width="2" stroke-dasharray="6 6" opacity="0.6"/>
+  <text x="400" y="215" text-anchor="middle" font-size="18" fill="#0891b2" opacity="0.5" font-style="italic">(new layer, untitled)</text>
+
+  <text x="400" y="450" text-anchor="middle" font-size="15" fill="#0f2a2e" opacity="0.6">A Simple Comic — Strip 1</text>
+</svg>
