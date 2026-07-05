@@ -1712,6 +1712,127 @@ blockquote {
   color: var(--text);
 }
 
+.blockquote-content .poem-heading {
+  margin: 1.25rem 0 0.75rem;
+  font-style: normal;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.blockquote-content .poem-heading:first-child {
+  margin-top: 0;
+}
+
+/* ── Poem plate: centered title/byline + ruled manuscript body ── */
+blockquote.poem {
+  max-width: 460px;
+  margin: 2.5rem auto;
+  padding: 0;
+  background: none;
+  border-left: none;
+  text-align: center;
+  color: var(--text);
+}
+
+.poem-header {
+  margin-bottom: 1.75rem;
+}
+
+.poem-header::before {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: var(--accent);
+  margin: 0 auto 0.9rem;
+}
+
+.poem-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 0.3rem;
+}
+
+.poem-byline {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.poem-body {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.5rem;
+  text-align: left;
+  font-style: italic;
+  line-height: 1.95;
+}
+
+.poem-body p {
+  margin-bottom: 1.1rem;
+}
+
+.poem-body p:last-child {
+  margin-bottom: 0;
+}
+
+.poem-body em {
+  font-style: normal;
+}
+
+.poem-body strong {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.poem-body .poem-heading {
+  margin: 1.5rem 0 1.1rem;
+  font-style: normal;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.poem-body .poem-heading:first-child {
+  margin-top: 0;
+}
+
+.poem-footer {
+  margin-top: 1.75rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+
+.poem-footer::before {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: var(--accent);
+  margin: 0 auto 0.9rem;
+}
+
+.poem-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.poem-footer a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
 /* Attribution footer */
 blockquote footer,
 .blockquote-footer {

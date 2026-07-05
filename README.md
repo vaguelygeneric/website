@@ -203,6 +203,42 @@ Show notes in Markdown here.
 
 ---
 
+## Quoting a Poem in Show Notes
+
+Use the `{% poem %}` tag rather than hand-typing `<blockquote>` markup.
+It only needs plain text — blank lines split it into stanzas, single
+line breaks become `<br>`s, and everything is HTML-escaped, so there's
+no markup to mistype and nothing for a podcast app to mangle. It
+renders as a centered title/byline plate framing a left-ruled body
+where the verse itself lives — not a boxed callout:
+
+```liquid
+{% poem title="Poem Title" author="Author Name"
+   source_title="Book or Collection Title" source_url="https://example.com/source" %}
+First line of the first stanza
+Second line of the first stanza
+
+First line of the second stanza
+Second line of the second stanza
+{% endpoem %}
+```
+
+- `title` / `author` are optional — omit both to skip the header block.
+- `source_title` / `source_url` are optional — omit both to skip the
+  footer attribution, or give `source_title` alone for unlinked text.
+- A stanza that's just one line starting with `## ` renders as a small
+  bolded label (e.g. `## MORAL`) instead of a verse line — this
+  matches Project Gutenberg's own convention for section headers, so
+  text can usually be pasted in from a Gutenberg HTML edition with
+  only light cleanup (stripping page markers, image tags, and `[Pg N]`
+  markers).
+- `*italic*` and `**bold**` work inline.
+
+See `_podcast/daily/0036.md` for a full example, and
+`_plugins/poem_tag.rb` for implementation notes.
+
+---
+
 ## Adding a New Comic Strip
 
 Create a Markdown file in `_comic/{comic-slug}/`:
