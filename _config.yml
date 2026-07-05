@@ -83,6 +83,15 @@ plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
 
+# Nothing on the site reads page/document .excerpt (checked: no template
+# references it). Disabling it stops Jekyll's default excerpt_separator
+# ("\n\n") from scanning raw content for a blank line to cut at, which
+# otherwise trips a "Excerpt modified ... Liquid block containing the
+# excerpt separator" warning on any {% poem %}/{% endpoem %} block whose
+# body has stanza breaks -- Jekyll doesn't know the blank line is inside
+# an open Liquid block until it's already tried to split on it.
+excerpt_separator: ""
+
 permalink: /:categories/:year/:month/:day/:title/
 
 exclude:
