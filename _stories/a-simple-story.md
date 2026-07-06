@@ -6,4 +6,4 @@ status: draft
 accent: "#7c3aed"
 ---
 
-A Simple Story is exactly what it sounds like — mostly. Kept here as a living template for what a new story's front matter and structure should look like.
+A Simple Story is exactly what it sounds like - mostly. Kept here as a living template for what a new story's front matter and structure should look like.

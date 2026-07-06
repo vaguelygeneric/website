@@ -1,6 +1,6 @@
-# VaguelyGeneric — Website
+# VaguelyGeneric - Website
 
-The Jekyll source for [vaguelygeneric.website](https://vaguelygeneric.website) — an umbrella content platform hosting podcasts, webcomics, and serialized fiction.
+The Jekyll source for [vaguelygeneric.website](https://vaguelygeneric.website) - an umbrella content platform hosting podcasts, webcomics, and serialized fiction.
 
 ---
 
@@ -11,7 +11,7 @@ The Jekyll source for [vaguelygeneric.website](https://vaguelygeneric.website) �
 - **Serialized stories** with individual chapter pages (reading order) and prev/next navigation
 - **Blog** for updates and behind-the-scenes posts
 - **Guest directory** with individual guest profiles that auto-populate with their episode appearances
-- **Scheduled publishing** — content can be drafted, dated in the future, and gated from feeds/listings until it's meant to go public
+- **Scheduled publishing** - content can be drafted, dated in the future, and gated from feeds/listings until it's meant to go public
 - **Light/dark mode** that follows OS preference by default, overridable per-visitor
 - **Responsive layout** down to mobile
 
@@ -21,8 +21,8 @@ The Jekyll source for [vaguelygeneric.website](https://vaguelygeneric.website) �
 
 Podcasts, webcomics, and stories all follow the same two-tier pattern:
 
-- A **property** collection (`_shows`, `_comics`, `_stories`) — one Markdown file per show/comic/story, holding its name, description, and metadata. This is what populates listing pages and back-links.
-- An **installment** collection (`_podcast`, `_comic`, `_story`) — one Markdown file per episode/strip/chapter, linked to its property via a `show:`/`comic:`/`story:` field.
+- A **property** collection (`_shows`, `_comics`, `_stories`) - one Markdown file per show/comic/story, holding its name, description, and metadata. This is what populates listing pages and back-links.
+- An **installment** collection (`_podcast`, `_comic`, `_story`) - one Markdown file per episode/strip/chapter, linked to its property via a `show:`/`comic:`/`story:` field.
 
 | Type | Property collection | Installment collection | URL pattern |
 |------|---------------------|-------------------------|-------------|
@@ -30,13 +30,13 @@ Podcasts, webcomics, and stories all follow the same two-tier pattern:
 | Webcomic | `_comics/*.md` | `_comic/{slug}/*.md` | `/comics/{slug}/{strip}/` |
 | Story | `_stories/*.md` | `_story/{slug}/*.md` | `/story/{slug}/{chapter}/` |
 
-Note stories use the singular `/story/` in their URL, unlike the plural `/comics/` — an intentional inconsistency carried from an earlier naming decision, not a typo. The `stories.html` landing page itself is still at `/stories/`.
+Note stories use the singular `/story/` in their URL, unlike the plural `/comics/` - an intentional inconsistency carried from an earlier naming decision, not a typo. The `stories.html` landing page itself is still at `/stories/`.
 
-Podcast episodes are listed latest-first (it's a feed). Comic strips and story chapters are listed oldest-first (it's a serial — readers start at the beginning).
+Podcast episodes are listed latest-first (it's a feed). Comic strips and story chapters are listed oldest-first (it's a serial - readers start at the beginning).
 
-These are intentionally separate, parallel collections rather than one unified "content" type — a podcast show will never need chapter numbers, and a story chapter will never need an `audio_url`. Adding a new type later means adding another property/installment pair, not reshaping the existing ones.
+These are intentionally separate, parallel collections rather than one unified "content" type - a podcast show will never need chapter numbers, and a story chapter will never need an `audio_url`. Adding a new type later means adding another property/installment pair, not reshaping the existing ones.
 
-**Nav note:** Comics and stories don't currently have their own nav dropdown or hero-pill presence — only podcast shows do (`_includes/header.html`). Reachable by direct link/landing page (`/comics/`, `/stories/`) but not yet surfaced in navigation.
+**Nav note:** Comics and stories don't currently have their own nav dropdown or hero-pill presence - only podcast shows do (`_includes/header.html`). Reachable by direct link/landing page (`/comics/`, `/stories/`) but not yet surfaced in navigation.
 
 ---
 
@@ -44,12 +44,12 @@ These are intentionally separate, parallel collections rather than one unified "
 
 Two separate fields, two separate jobs:
 
-- **`created`** — a full datetime (`2026-07-04T15:44:40`). The content's own timeline: when it was recorded/drawn/written. Doesn't drive anything user-facing on its own.
-- **`publish_date`** — a date only (`2026-07-05`), no time-of-day. This is what actually controls visibility and ordering everywhere — feeds, listings, sort order, RSS `pubDate`.
+- **`created`** - a full datetime (`2026-07-04T15:44:40`). The content's own timeline: when it was recorded/drawn/written. Doesn't drive anything user-facing on its own.
+- **`publish_date`** - a date only (`2026-07-05`), no time-of-day. This is what actually controls visibility and ordering everywhere - feeds, listings, sort order, RSS `pubDate`.
 
-Keep them equal unless you have a specific reason to diverge (e.g. something recorded well before it's actually released). If they do diverge, get `publish_date` right — it's the one that matters publicly, and reflects when something goes live.
+Keep them equal unless you have a specific reason to diverge (e.g. something recorded well before it's actually released). If they do diverge, get `publish_date` right - it's the one that matters publicly, and reflects when something goes live.
 
-**Why not `date`?** `created` used to be named `date`. Renamed because Jekyll silently excludes any document — in *any* collection, not just `_posts` — whose `date` field is in the future, when `site.time` (fixed at build time) is compared against it. That's an automatic, undocumented-feeling behavior with no forgiving error, just a page that never gets generated. `created` and `publish_date` are both plain custom fields Jekyll has no opinion about, so nothing gets silently excluded — visibility is entirely up to `status` and `publish_date`, both explicit and both under our control.
+**Why not `date`?** `created` used to be named `date`. Renamed because Jekyll silently excludes any document - in *any* collection, not just `_posts` - whose `date` field is in the future, when `site.time` (fixed at build time) is compared against it. That's an automatic, undocumented-feeling behavior with no forgiving error, just a page that never gets generated. `created` and `publish_date` are both plain custom fields Jekyll has no opinion about, so nothing gets silently excluded - visibility is entirely up to `status` and `publish_date`, both explicit and both under our control.
 
 `publish_date` being date-only (not a datetime) is deliberate: it avoids a timing race between when something was actually recorded/authored during the day and when the nightly rebuild happens to run. A date-only `publish_date` becomes `<= now` the moment its UTC day begins, regardless of what time of day anything was created.
 
@@ -64,17 +64,17 @@ Every property and installment supports an optional `status` field:
 | `draft` | Never listed, regardless of date. Use this for anything not ready to be seen. |
 | `scheduled` | Hidden until `publish_date` (or `created`, if `publish_date` isn't set) has passed. |
 | `published` | Always listed, regardless of date. |
-| *(unset)* | Same as `scheduled` — this is the default so existing content needs no changes. |
+| *(unset)* | Same as `scheduled` - this is the default so existing content needs no changes. |
 
-This is enforced by a shared Liquid filter in `_plugins/installment_filters.rb`, not a generator — `listed_installments` (for episodes/strips/chapters) and `listed_strands` (for whole shows/comics/stories). Every template that lists installments or strands calls one of these instead of duplicating a `where`/`where_exp` chain:
+This is enforced by a shared Liquid filter in `_plugins/installment_filters.rb`, not a generator - `listed_installments` (for episodes/strips/chapters) and `listed_strands` (for whole shows/comics/stories). Every template that lists installments or strands calls one of these instead of duplicating a `where`/`where_exp` chain:
 
 ```liquid
 {% assign episodes = site.podcast | listed_installments: "show", page.slug | sort: "publish_date" | reverse %}
 ```
 
-**Important:** this only controls whether something is *listed* — it never removes a document from its collection, so every installment's own page still builds and is reachable by direct URL regardless of status or date. There is no page-level gating; `status: draft` hides something from feeds and nav, it does not make the URL 404.
+**Important:** this only controls whether something is *listed* - it never removes a document from its collection, so every installment's own page still builds and is reachable by direct URL regardless of status or date. There is no page-level gating; `status: draft` hides something from feeds and nav, it does not make the URL 404.
 
-Because this is a static site, `site.time` (what "now" means to the filter above) is only ever as current as the last build. `_plugins/generate_feeds.rb` handles RSS feed generation only — it has no gating logic of its own. Making something appear or disappear on schedule requires an actual rebuild once its `publish_date` has passed, which is what the cron schedule below is for.
+Because this is a static site, `site.time` (what "now" means to the filter above) is only ever as current as the last build. `_plugins/generate_feeds.rb` handles RSS feed generation only - it has no gating logic of its own. Making something appear or disappear on schedule requires an actual rebuild once its `publish_date` has passed, which is what the cron schedule below is for.
 
 ---
 
@@ -82,9 +82,9 @@ Because this is a static site, `site.time` (what "now" means to the filter above
 
 Pushes to `main` trigger the GitHub Actions workflow at `.github/workflows/deploy.yml`, which builds with Jekyll and deploys to GitHub Pages. The workflow also runs on a daily `cron` schedule (`0 4 * * *`, UTC) so future-dated content goes live without a manual push, and can be triggered manually via `workflow_dispatch`.
 
-Scheduled GitHub Actions runs are best-effort, not exact — they can and do lag the nominal cron time by a few hours, especially during high-load periods. That's normal; it doesn't mean the schedule is broken.
+Scheduled GitHub Actions runs are best-effort, not exact - they can and do lag the nominal cron time by a few hours, especially during high-load periods. That's normal; it doesn't mean the schedule is broken.
 
-The site's `timezone` is set to `UTC` in `_config.yml` (chosen for travel — no daylight saving/timezone drift to account for). The cron schedule is also in UTC, so the two always agree.
+The site's `timezone` is set to `UTC` in `_config.yml` (chosen for travel - no daylight saving/timezone drift to account for). The cron schedule is also in UTC, so the two always agree.
 
 The `development` branch is used for active work; feature branches (e.g. `dev/*`) branch off it for larger changes. Merge to `main` to deploy.
 
@@ -137,7 +137,7 @@ vaguelygeneric/
 └── assets/
     ├── css/main.css             # All styles (light + dark mode, full design system)
     ├── css/podcast-cards.css    # Card-grid variant for show listings
-    ├── js/theme.js              # Dark/light mode — reads OS pref, persists to localStorage
+    ├── js/theme.js              # Dark/light mode - reads OS pref, persists to localStorage
     ├── js/main.js                # Mobile nav, dropdown toggle
     └── images/
 ```
@@ -154,7 +154,7 @@ bundle exec jekyll serve --livereload
 # → http://localhost:4000
 ```
 
-`site.time` (used for the publish gate) is only recalculated when Jekyll actually rebuilds. If a scheduled item should have gone live since you started `jekyll serve`, restart the server or force a fresh `bundle exec jekyll build` — clock time passing alone doesn't trigger a rebuild, and `--incremental` mode can skip pages that depend on a collection but whose own source file didn't change.
+`site.time` (used for the publish gate) is only recalculated when Jekyll actually rebuilds. If a scheduled item should have gone live since you started `jekyll serve`, restart the server or force a fresh `bundle exec jekyll build` - clock time passing alone doesn't trigger a rebuild, and `--incremental` mode can skip pages that depend on a collection but whose own source file didn't change.
 
 ---
 
@@ -173,19 +173,19 @@ _podcast/daily/0037.md
 layout: episode
 show: daily
 title: "Episode 0037"
-description: "One sentence — shown on cards, episode lists, and in the RSS feed."
+description: "One sentence - shown on cards, episode lists, and in the RSS feed."
 created: 2026-07-10T14:20:00
 publish_date: 2026-07-11
-status: scheduled              # optional — omit for the same date-gated behavior
+status: scheduled              # optional - omit for the same date-gated behavior
 episode_number: 37
 duration: "8:14"
 audio_url: "https://your-audio-host.com/episode-0037.mp3"
-audio_size: "6100000"          # bytes — run: du -b yourfile.mp3
+audio_size: "6100000"          # bytes - run: du -b yourfile.mp3
 audio_type: "audio/mp3"
 permalink: /podcast/daily/0037/
 guests:
   - jane-doe                   # must match a filename slug in _guests/
-thumbnail: "/assets/images/daily/ep37.png"   # optional — see below
+thumbnail: "/assets/images/daily/ep37.png"   # optional - see below
 thumbnail_alt: "Description of the image for accessibility."
 ---
 
@@ -200,11 +200,11 @@ embedding the image in the Markdown body. This one field drives three
 things:
 - the episode page shows it as a featured image, above the player
 - the episode card on the show index shows it (this already worked
-  before `thumbnail` had a writer — `_layouts/show-cards.html` has
+  before `thumbnail` had a writer - `_layouts/show-cards.html` has
   looked for `episode.thumbnail` for a while)
 - the RSS feed gets a per-episode `<itunes:image>`, which is the
   standard, widely-supported way podcast apps show episode-specific
-  artwork — rather than an app inferring it from whatever image
+  artwork - rather than an app inferring it from whatever image
   happens to appear in the show notes, which only works in apps that
   do that inference (and is that much more markup to hand-type and
   mistype)
@@ -227,11 +227,11 @@ things:
 ## Quoting a Poem in Show Notes
 
 Use the `{% poem %}` tag rather than hand-typing `<blockquote>` markup.
-It only needs plain text — blank lines split it into stanzas, single
+It only needs plain text - blank lines split it into stanzas, single
 line breaks become `<br>`s, and everything is HTML-escaped, so there's
 no markup to mistype and nothing for a podcast app to mangle. It
 renders as a centered title/byline plate framing a left-ruled body
-where the verse itself lives — not a boxed callout:
+where the verse itself lives - not a boxed callout:
 
 ```liquid
 {% poem title="Poem Title" author="Author Name"
@@ -244,11 +244,11 @@ Second line of the second stanza
 {% endpoem %}
 ```
 
-- `title` / `author` are optional — omit both to skip the header block.
-- `source_title` / `source_url` are optional — omit both to skip the
+- `title` / `author` are optional - omit both to skip the header block.
+- `source_title` / `source_url` are optional - omit both to skip the
   footer attribution, or give `source_title` alone for unlinked text.
 - A stanza that's just one line starting with `## ` renders as a small
-  bolded label (e.g. `## MORAL`) instead of a verse line — this
+  bolded label (e.g. `## MORAL`) instead of a verse line - this
   matches Project Gutenberg's own convention for section headers, so
   text can usually be pasted in from a Gutenberg HTML edition with
   only light cleanup (stripping page markers, image tags, and `[Pg N]`
@@ -359,7 +359,7 @@ tags: [updates, behind-the-scenes]
 Post content in Markdown.
 ```
 
-Note blog posts keep the real `date` field, unlike podcast/comic/story installments — Jekyll's `_posts` collection genuinely needs it for permalink generation, and posts aren't currently scheduled far in advance the way other content is.
+Note blog posts keep the real `date` field, unlike podcast/comic/story installments - Jekyll's `_posts` collection genuinely needs it for permalink generation, and posts aren't currently scheduled far in advance the way other content is.
 
 ---
 
@@ -381,7 +381,7 @@ category: "Society &amp; Culture"
 subcategory: "Personal Journals"
 explicit: "false"
 status: draft                  # flip to published/remove when ready to launch
-accent: "#hex"                 # optional — tints its hero pill and badge
+accent: "#hex"                 # optional - tints its hero pill and badge
 cover_svg: "new-show-logo.svg" # optional, in _includes/
 feed_image: "/assets/images/new-show-feed-logo.png"
 spotify_url: "..."
@@ -389,7 +389,7 @@ spotify_url: "..."
 ---
 ```
 
-That's it — the `/podcast/` listing, hero pills, RSS feed (`/feed/{slug}.xml`), and episode back-links all populate automatically from this one file. Add episode files to `_podcast/{slug}/` when ready.
+That's it - the `/podcast/` listing, hero pills, RSS feed (`/feed/{slug}.xml`), and episode back-links all populate automatically from this one file. Add episode files to `_podcast/{slug}/` when ready.
 
 By default, `_plugins/generate_feeds.rb` auto-generates that show's feed page dynamically. Once a show is stable and you'd rather hand-author the feed file directly, create `feed/{slug}.xml` yourself:
 
@@ -401,19 +401,19 @@ permalink: /feed/daily.xml
 ---
 ```
 
-The generator checks for an existing page at that permalink first and skips auto-generating one if it finds it — so a manually-created feed file simply takes over, no config change needed. `daily` already works this way; every other show is still auto-generated.
+The generator checks for an existing page at that permalink first and skips auto-generating one if it finds it - so a manually-created feed file simply takes over, no config change needed. `daily` already works this way; every other show is still auto-generated.
 
 ## Adding a New Webcomic or Story
 
 Same pattern: add `_comics/{slug}.md` or `_stories/{slug}.md` with `name`, `slug`, `description`, and optionally `status`/`accent`. Add installment files to `_comic/{slug}/` or `_story/{slug}/`. No RSS feed is generated for these types currently.
 
-**Reference example:** `_comics/wanderlines.md` and `_stories/lighthouse-keepers.md`, both `status: draft`, are intentionally left in the repo as worked examples of the full pattern (property file, installments, arcs, images). They're excluded from feeds/listings by their draft status but not from the build — don't be surprised to find them if you go looking.
+**Reference example:** `_comics/wanderlines.md` and `_stories/lighthouse-keepers.md`, both `status: draft`, are intentionally left in the repo as worked examples of the full pattern (property file, installments, arcs, images). They're excluded from feeds/listings by their draft status but not from the build - don't be surprised to find them if you go looking.
 
 ---
 
 ## RSS Feeds
 
-Podcast shows each get their own feed, generated (or hand-authored — see above) from the `_podcast/{slug}/` collection filtered by `show:` and the publish gate.
+Podcast shows each get their own feed, generated (or hand-authored - see above) from the `_podcast/{slug}/` collection filtered by `show:` and the publish gate.
 
 Feed URL pattern: `https://vaguelygeneric.website/feed/{slug}.xml`
 
@@ -428,7 +428,7 @@ Feeds are compatible with Apple Podcasts, Spotify (via RSS import), Pocket Casts
 | Amazon Music | https://podcasters.amazon.com |
 | iHeart | https://www.iheart.com/content/submit-your-podcast |
 
-Webcomics and stories don't currently have RSS feeds — everything about them lives on the site itself.
+Webcomics and stories don't currently have RSS feeds - everything about them lives on the site itself.
 
 ---
 
@@ -438,10 +438,10 @@ Key fields in `_config.yml`:
 
 | Field | Purpose |
 |-------|---------|
-| `url` | Full site URL — used in RSS feeds and SEO tags |
+| `url` | Full site URL - used in RSS feeds and SEO tags |
 | `baseurl` | Leave blank for apex domain; use `/repo-name` for project sites |
-| `timezone` | `UTC` — anchors the publish gate and RSS `pubDate` |
-| `youtube_channel` | YouTube channel URL — used in nav and home page |
+| `timezone` | `UTC` - anchors the publish gate and RSS `pubDate` |
+| `youtube_channel` | YouTube channel URL - used in nav and home page |
 | `collections` | Registers `shows`/`podcast`, `comics`/`comic`, `stories`/`story`, `posts`, `guests` |
 
 Show/comic/story metadata itself lives in the collections (`_shows/*.md`, etc.), not in `_config.yml`.
@@ -456,7 +456,7 @@ Apple Podcasts requires square artwork between 1400×1400 and 3000×3000 px, PNG
 
 ## Theme & Colors
 
-CSS variables are defined at the top of `assets/css/main.css` under `:root` (light mode) and `[data-theme="dark"]`. The accent color, background, surface, border, and text colors are all tokenized — change the variables to retheme the entire site.
+CSS variables are defined at the top of `assets/css/main.css` under `:root` (light mode) and `[data-theme="dark"]`. The accent color, background, surface, border, and text colors are all tokenized - change the variables to retheme the entire site.
 
 Individual shows/comics/stories can override their own accent color via the `accent:` field in their property file, which tints their hero pill and badge without touching the CSS.
 

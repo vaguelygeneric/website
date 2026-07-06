@@ -1,5 +1,5 @@
 /* ============================================
-   THE GENERIC — Main Stylesheet
+   THE GENERIC - Main Stylesheet
    Aesthetic: Editorial Brutalism / Refined Type
    Fonts: Syne (display) + Lora (body)
    ============================================ */
@@ -1857,7 +1857,7 @@ blockquote footer,
 }
 
 blockquote footer::before {
-  content: "— ";
+  content: "- ";
 }
 
 /* Links in footer */

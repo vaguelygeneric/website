@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily — Podcast Video Generator</title>
+<title>Daily - Podcast Video Generator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600;700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
@@ -262,7 +262,7 @@
 </head>
 <body>
 
-<h1>Daily — Podcast Video Generator</h1>
+<h1>Daily - Podcast Video Generator</h1>
 
 <div class="panel">
   <div class="panel-title">Episode info</div>
@@ -314,7 +314,7 @@
 <div id="progress-bar"><div id="progress-fill"></div></div>
 
 <div class="notice">
-  <strong>How to use:</strong> Fill in your episode info, drop in your logo and audio file, then hit <strong>Preview animation</strong> to see a live preview. When you're happy, click <strong>Record &amp; export video</strong> — it will play through the full episode and save a <span class="tag">.webm</span> video file you can upload to YouTube. Recording happens in real-time (same duration as your episode).
+  <strong>How to use:</strong> Fill in your episode info, drop in your logo and audio file, then hit <strong>Preview animation</strong> to see a live preview. When you're happy, click <strong>Record &amp; export video</strong> - it will play through the full episode and save a <span class="tag">.webm</span> video file you can upload to YouTube. Recording happens in real-time (same duration as your episode).
   <br><br>
   <strong>Tip:</strong> For future episodes, just change the episode number and swap the audio file. The template reuses everything else automatically.
 </div>
@@ -365,9 +365,9 @@ document.getElementById('audio-input').addEventListener('change', e => {
       duration = audioBuffer.duration;
       const mins = Math.floor(duration / 60);
       const secs = Math.floor(duration % 60).toString().padStart(2, '0');
-      document.getElementById('audio-status').textContent = `${file.name} — ${mins}:${secs}`;
+      document.getElementById('audio-status').textContent = `${file.name} - ${mins}:${secs}`;
       document.getElementById('btn-record').disabled = false;
-      document.getElementById('status-msg').textContent = `Ready — ${mins}m ${secs}s`;
+      document.getElementById('status-msg').textContent = `Ready - ${mins}m ${secs}s`;
       drawStatic();
     } catch(err) {
       document.getElementById('audio-status').textContent = 'Error decoding audio: ' + err.message;
@@ -589,7 +589,7 @@ function startPreview() {
 }
 
 function drawAnimLoop() {
-  // No audio — just animate idle
+  // No audio - just animate idle
   isPlaying = true;
   document.getElementById('btn-preview').textContent = 'Stop preview';
   function loop() {
@@ -668,7 +668,7 @@ async function startRecording() {
     const remaining = Math.max(0, duration - elapsed);
     const mins = Math.floor(remaining / 60);
     const secs = Math.floor(remaining % 60).toString().padStart(2, '0');
-    document.getElementById('status-msg').textContent = `Recording — ${mins}:${secs} remaining`;
+    document.getElementById('status-msg').textContent = `Recording - ${mins}:${secs} remaining`;
 
     recAnalyser.getByteFrequencyData(dataArray);
     drawBackground(true);

@@ -20,7 +20,7 @@
 
 <div class="subscribe-links"{% if _collapsible %} data-collapsible="true"{% endif %}>
 
-  {% comment %} RSS — always first, always visible {% endcomment %}
+  {% comment %} RSS - always first, always visible {% endcomment %}
   {% if show.slug %}
     {% assign _rss_url = site.url | append: site.baseurl | append: "/feed/" | append: show.slug | append: ".xml" %}
   {% else %}
@@ -32,7 +32,7 @@
     <span>RSS</span>
   </a>
 
-  {% comment %} Remaining links — track index manually {% endcomment %}
+  {% comment %} Remaining links - track index manually {% endcomment %}
 
   {% assign _i = 2 %}
 

@@ -6,4 +6,4 @@ status: draft
 accent: "#0891b2"
 ---
 
-A Simple Comic is exactly what it sounds like — mostly. Kept here as a living template for what a new comic's front matter and structure should look like.
+A Simple Comic is exactly what it sounds like - mostly. Kept here as a living template for what a new comic's front matter and structure should look like.
