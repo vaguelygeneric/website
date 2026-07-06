@@ -20,5 +20,5 @@
   <rect x="300" y="140" width="200" height="140" fill="#fff" stroke="#0891b2" stroke-width="2" stroke-dasharray="6 6" opacity="0.6"/>
   <text x="400" y="215" text-anchor="middle" font-size="18" fill="#0891b2" opacity="0.5" font-style="italic">(new layer, untitled)</text>
 
-  <text x="400" y="450" text-anchor="middle" font-size="15" fill="#0f2a2e" opacity="0.6">A Simple Comic — Strip 1</text>
+  <text x="400" y="450" text-anchor="middle" font-size="15" fill="#0f2a2e" opacity="0.6">A Simple Comic - Strip 1</text>
 </svg>

@@ -39,9 +39,9 @@ module Jekyll
     end
 
     # Same idea, one level up -- hides a whole strand (show/comic/story)
-    # from nav, landing pages, and hero pills while it's `status: draft`.
+    # from nav, landing pages, and hero pills while it's `status: draft` or `status: hidden`.
     def listed_strands(items)
-      items.reject { |item| item.data["status"] == "draft" }
+      items.reject { |item| item.data["status"] == "draft" || item.data["status"] == "hidden" }
     end
   end
 end

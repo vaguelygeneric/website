@@ -1,5 +1,5 @@
 /* ============================================
-   THE GENERIC — Main Stylesheet
+   THE GENERIC - Main Stylesheet
    Aesthetic: Editorial Brutalism / Refined Type
    Fonts: Syne (display) + Lora (body)
    ============================================ */
@@ -1669,7 +1669,7 @@ li { margin-bottom: 0.4rem; }
 /* ── Blockquote / Episode Notes ── */
 blockquote {
   margin: 2.5rem 0;
-  padding: 0;
+  padding: 1rem;
   background: var(--bg-alt);
   border-left: 4px solid var(--accent);
   color: var(--text);
@@ -1857,7 +1857,7 @@ blockquote footer,
 }
 
 blockquote footer::before {
-  content: "— ";
+  content: "- ";
 }
 
 /* Links in footer */

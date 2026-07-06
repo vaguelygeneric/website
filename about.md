@@ -1,7 +1,7 @@
 ---
 layout: default
 title: About
-description: "About The Generic — a podcast about nothing specific."
+description: "About The Generic - a podcast about nothing specific."
 permalink: /about/
 ---
 
@@ -17,7 +17,7 @@ permalink: /about/
 
     <h2>What Is This?</h2>
     <!-- <p>
-      The Generic is a podcast that defies easy categorization — which is, somewhat intentionally, the point.
+      The Generic is a podcast that defies easy categorization - which is, somewhat intentionally, the point.
       Each episode is a freeform conversation between hosts who find themselves curious about something
       and follow that curiosity wherever it leads. Sometimes it leads somewhere interesting.
       Sometimes it doesn't. We release it anyway.
@@ -35,11 +35,11 @@ permalink: /about/
       People. Who talk. Or Write. Or procrastinate.
     </p>
     <!-- <p>
-      <strong>[Your Name Here]</strong> — Placeholder biography. Replace this with a sentence or two
+      <strong>[Your Name Here]</strong> - Placeholder biography. Replace this with a sentence or two
       about yourself, your background, or whatever detail you'd like listeners to know.
     </p>
     <p>
-      <strong>[Co-host Name]</strong> — Another placeholder. Feel free to add co-host bios here,
+      <strong>[Co-host Name]</strong> - Another placeholder. Feel free to add co-host bios here,
       or remove this section entirely if it's a solo show.
     </p> -->
 
@@ -49,7 +49,7 @@ permalink: /about/
       Also: we have things to maybe say and the world keeps not stopping us.
     </p>
     <!-- <p>
-      We started this because we wanted a record of the conversations we were already having —
+      We started this because we wanted a record of the conversations we were already having -
       the kind that happen over coffee or a drive and then evaporate.
       The Generic is us making those conversations permanent, for better or worse.
     </p> -->

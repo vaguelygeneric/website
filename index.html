@@ -26,7 +26,8 @@ title: Home
     <div class="hero-visual">
 
       <div class="hero-shows">
-        {% for show in site.shows %}
+        {% assign shows = site.shows | listed_strands %}
+        {% for show in shows %}
         <a href="{{ site.baseurl }}/podcast/{{ show.slug }}/" class="hero-show-pill" style="--pill-accent: {{ show.accent | default: 'var(--accent)' }};">
           <span class="hero-show-pill-bracket">[</span><br />{{ show.name }}<span class="hero-show-pill-bracket"><br />]</span>
         </a>
