@@ -12,7 +12,7 @@ permalink: /podcast/
   </div>
 
   <div class="show-grid">
-    {% assign shows = site.shows | sort: "name" %}
+    {% assign shows = site.shows | listed_strands | sort: "name" %}
     {% for show in shows %}
     <a href="{{ site.baseurl }}/podcast/{{ show.slug }}/" class="show-card">
       <div class="show-card-art show-card-art--{{ show.slug }}">

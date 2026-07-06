@@ -42,7 +42,7 @@ layout: default
   {% if page.audio_url %}
   <div class="episode-player">
     <audio controls preload="metadata">
-      <source src="{{ page.audio_url }}" type="audio/mpeg" />
+      <source src="{{ page.audio_url | relative_url }}" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
   </div>

@@ -21,7 +21,8 @@
           <ul class="nav-dropdown">
             <li><a href="{{ '/podcast/' | relative_url }}" class="nav-dropdown-link">All Shows</a></li>
             <li class="nav-dropdown-divider"></li>
-            {% for show in site.shows %}
+            {% assign shows = site.shows | listed_strands %}
+            {% for show in shows %}
             <li>
               <a href="{{ site.baseurl }}/podcast/{{ show.slug }}/" class="nav-dropdown-link">{{ show.name }}</a>
             </li>

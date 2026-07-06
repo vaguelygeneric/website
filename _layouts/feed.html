@@ -46,7 +46,7 @@ layout: null
       </content:encoded>
       <pubDate>{{ episode.publish_date | default: episode.created | date_to_rfc822 }}</pubDate>
       {% if episode.audio_url %}
-      <enclosure url="{{ episode.audio_url }}" length="{{ episode.audio_size | default: '0' }}"
+      <enclosure url="{{ site.url }}{{ site.baseurl }}{{ episode.audio_url }}" length="{{ episode.audio_size | default: '0' }}"
         type="{{ episode.audio_type | default: 'audio/mpeg' }}" />
       {% endif %}
       <itunes:title>{{ episode.title | xml_escape }}</itunes:title>
