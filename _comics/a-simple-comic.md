@@ -2,7 +2,7 @@
 name: "A Simple Comic"
 slug: a-simple-comic
 description: "A somewhat silly comic about a person who opens an image editor and draws a comic about opening an image editor."
-status: draft
+status: hidden
 accent: "#0891b2"
 ---
 

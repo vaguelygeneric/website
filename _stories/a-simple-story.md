@@ -2,7 +2,7 @@
 name: "A Simple Story"
 slug: a-simple-story
 description: "A somewhat silly story about a person who sits down, opens a laptop, and adds a story to this very repository."
-status: draft
+status: hidden
 accent: "#7c3aed"
 ---
 

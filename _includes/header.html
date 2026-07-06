@@ -45,7 +45,9 @@
             YouTube
           </a>
         </li>
-        <!-- <li class="nav-item--has-dropdown">
+        {% assign comics = site.comics | listed_strands %}
+        {% if comics != "" %}
+        <li class="nav-item--has-dropdown">
           <a href="{{ '/comics/' | relative_url }}"
             class="nav-link nav-link--parent {% if page.url contains '/comics' %}active{% endif %}">
             Comics
@@ -57,13 +59,14 @@
           <ul class="nav-dropdown">
             <li><a href="{{ '/comics/' | relative_url }}" class="nav-dropdown-link">All Comics</a></li>
             <li class="nav-dropdown-divider"></li>
-            {% for comic in site.comics %}
+            {% for comic in comics %}
             <li>
               <a href="{{ site.baseurl }}/comics/{{ comic.slug }}/" class="nav-dropdown-link">{{ comic.name }}</a>
             </li>
             {% endfor %}
           </ul>
         </li>
+        {% endif %}
         <li class="nav-item--has-dropdown">
           <a href="{{ '/stories/' | relative_url }}"
             class="nav-link nav-link--parent {% if page.url contains '/stories' %}active{% endif %}">
@@ -82,7 +85,7 @@
             </li>
             {% endfor %}
           </ul>
-        </li> -->
+        </li>
       </ul>
     </nav>
 
