@@ -29,7 +29,7 @@ module Jekyll
         end
 
         status = item.data["status"]
-        next false if status == "draft"
+        next false if status == "draft" || status == "hidden"
         next true if status == "published"
 
         publish_date = item.data["publish_date"] || item.data["created"]
