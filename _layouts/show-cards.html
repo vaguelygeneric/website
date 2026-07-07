@@ -8,11 +8,11 @@ layout: default
     <div class="podcast-cover">
       <div class="podcast-cover-placeholder">
         {% if page.cover_svg %}
-          {% include {{ page.cover_svg }} %}
+        {% include {{ page.cover_svg }} %}
         {% else %}
-          <span class="logo-bracket">[</span>
-          <span class="logo-text">{{ page.name }}</span>
-          <span class="logo-bracket">]</span>
+        <span class="logo-bracket">[</span>
+        <span class="logo-text">{{ page.name }}</span>
+        <span class="logo-bracket">]</span>
         {% endif %}
       </div>
     </div>
@@ -43,161 +43,165 @@ layout: default
   <div class="container">
     <div class="episodes-grid" id="episodesGrid">
       {% for episode in episodes %}
-        <a href="{{ episode.url | relative_url }}" class="episode-card" data-tags="{% if episode.tags %}{{ episode.tags | join: ',' }}{% endif %}">
-          <!-- Thumbnail (only if episode has one) -->
+      <a href="{{ episode.url | relative_url }}" class="episode-card"
+        data-tags="{% if episode.tags %}{{ episode.tags | join: ',' }}{% endif %}">
+        <!-- Thumbnail (only if episode has one) -->
+        <div class="episode-card-thumbnail">
           {% if episode.thumbnail %}
-            <div class="episode-card-thumbnail">
-              <img src="{{ episode.thumbnail | relative_url }}" alt="{{ episode.title }}" loading="lazy">
-            </div>
+          <img src="{{ episode.thumbnail | relative_url }}" alt="{{ episode.title }}" loading="lazy">
+          {% else %}
+          <img src="{{ page.feed_image | relative_url }}" alt="{{ episode.title }}" loading="lazy">
+          {% endif %}
+        </div>
+
+        <!-- Card Body -->
+        <div class="episode-card-body">
+          <!-- Meta Row (Number, Duration, Date) -->
+          <div class="episode-card-meta">
+            <div class="episode-card-number">{{ episode.episode_number | prepend: '00' | slice: -2, 2 }}</div>
+            <div class="episode-card-duration">{{ episode.duration }}</div>
+            <div class="episode-card-date">{{ episode.created | date: "%b %d" }}</div>
+          </div>
+
+          <!-- Title -->
+          <h3 class="episode-card-title">{{ episode.title }}</h3>
+
+          <!-- Description -->
+          {% if episode.description %}
+          <p class="episode-card-desc">{{ episode.description }}</p>
           {% endif %}
 
-          <!-- Card Body -->
-          <div class="episode-card-body">
-            <!-- Meta Row (Number, Duration, Date) -->
-            <div class="episode-card-meta">
-              <div class="episode-card-number">{{ episode.episode_number | prepend: '00' | slice: -2, 2 }}</div>
-              <div class="episode-card-duration">{{ episode.duration }}</div>
-              <div class="episode-card-date">{{ episode.created | date: "%b %d" }}</div>
-            </div>
-
-            <!-- Title -->
-            <h3 class="episode-card-title">{{ episode.title }}</h3>
-
-            <!-- Description -->
-            {% if episode.description %}
-              <p class="episode-card-desc">{{ episode.description }}</p>
-            {% endif %}
-
-            <!-- Tags -->
-            {% if episode.tags %}
-              <div class="episode-card-tags">
-                {% for tag in episode.tags %}
-                  <button class="episode-card-tag" data-tag="{{ tag }}" onclick="filterByTag(event, '{{ tag }}'); return false;">{{ tag }}</button>
-                {% endfor %}
-              </div>
-            {% endif %}
+          <!-- Tags -->
+          {% if episode.tags %}
+          <div class="episode-card-tags">
+            {% for tag in episode.tags %}
+            <button class="episode-card-tag" data-tag="{{ tag }}"
+              onclick="filterByTag(event, '{{ tag }}'); return false;">{{ tag }}</button>
+            {% endfor %}
           </div>
-        </a>
-      {% else %}
-        <div class="episodes-empty" style="grid-column: 1 / -1;">
-          <p>Episodes coming soon.</p>
+          {% endif %}
         </div>
+      </a>
+      {% else %}
+      <div class="episodes-empty" style="grid-column: 1 / -1;">
+        <p>Episodes coming soon.</p>
+      </div>
       {% endfor %}
     </div>
   </div>
 </div>
 
 <script>
-// Tag filtering system
-const filterBar = document.getElementById('filterBar');
-const filterButtons = document.getElementById('filterButtons');
-const clearFiltersBtn = document.getElementById('clearFiltersBtn');
-const episodesGrid = document.getElementById('episodesGrid');
-const episodeCards = Array.from(document.querySelectorAll('.episode-card'));
+  // Tag filtering system
+  const filterBar = document.getElementById('filterBar');
+  const filterButtons = document.getElementById('filterButtons');
+  const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+  const episodesGrid = document.getElementById('episodesGrid');
+  const episodeCards = Array.from(document.querySelectorAll('.episode-card'));
 
-let activeFilters = new Set();
+  let activeFilters = new Set();
 
-// Extract unique tags from all episodes
-function getAllTags() {
-  const tags = new Set();
-  episodeCards.forEach(card => {
-    const cardTags = card.dataset.tags;
-    if (cardTags) {
-      cardTags.split(',').forEach(tag => {
-        if (tag.trim()) tags.add(tag.trim());
-      });
-    }
-  });
-  return Array.from(tags).sort();
-}
-
-// Render filter buttons
-function renderFilterButtons() {
-  const tags = getAllTags();
-  
-  if (tags.length === 0) {
-    filterBar.style.display = 'none';
-    return;
+  // Extract unique tags from all episodes
+  function getAllTags() {
+    const tags = new Set();
+    episodeCards.forEach(card => {
+      const cardTags = card.dataset.tags;
+      if (cardTags) {
+        cardTags.split(',').forEach(tag => {
+          if (tag.trim()) tags.add(tag.trim());
+        });
+      }
+    });
+    return Array.from(tags).sort();
   }
 
-  filterBar.style.display = 'block';
-  filterButtons.innerHTML = '';
+  // Render filter buttons
+  function renderFilterButtons() {
+    const tags = getAllTags();
 
-  tags.forEach(tag => {
-    const btn = document.createElement('button');
-    btn.className = 'filter-btn';
-    btn.textContent = tag;
-    btn.dataset.tag = tag;
-    btn.addEventListener('click', () => toggleFilter(tag));
-    filterButtons.appendChild(btn);
-  });
-}
+    if (tags.length === 0) {
+      filterBar.style.display = 'none';
+      return;
+    }
 
-// Toggle filter on/off
-function toggleFilter(tag) {
-  if (activeFilters.has(tag)) {
-    activeFilters.delete(tag);
-  } else {
+    filterBar.style.display = 'block';
+    filterButtons.innerHTML = '';
+
+    tags.forEach(tag => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.textContent = tag;
+      btn.dataset.tag = tag;
+      btn.addEventListener('click', () => toggleFilter(tag));
+      filterButtons.appendChild(btn);
+    });
+  }
+
+  // Toggle filter on/off
+  function toggleFilter(tag) {
+    if (activeFilters.has(tag)) {
+      activeFilters.delete(tag);
+    } else {
+      activeFilters.add(tag);
+    }
+    updateUI();
+  }
+
+  // Filter by tag from card tag button
+  function filterByTag(event, tag) {
+    event.preventDefault();
+    event.stopPropagation();
+    activeFilters.clear();
     activeFilters.add(tag);
+    updateUI();
   }
-  updateUI();
-}
 
-// Filter by tag from card tag button
-function filterByTag(event, tag) {
-  event.preventDefault();
-  event.stopPropagation();
-  activeFilters.clear();
-  activeFilters.add(tag);
-  updateUI();
-}
+  // Update filter button states and card visibility
+  function updateUI() {
+    // Update button states
+    document.querySelectorAll('.filter-btn[data-tag]').forEach(btn => {
+      if (activeFilters.has(btn.dataset.tag)) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
 
-// Update filter button states and card visibility
-function updateUI() {
-  // Update button states
-  document.querySelectorAll('.filter-btn[data-tag]').forEach(btn => {
-    if (activeFilters.has(btn.dataset.tag)) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
+    // Update clear button state
+    clearFiltersBtn.disabled = activeFilters.size === 0;
+
+    // Filter cards
+    let visibleCount = 0;
+    episodeCards.forEach(card => {
+      const cardTags = card.dataset.tags
+        ? card.dataset.tags.split(',').map(t => t.trim()).filter(t => t)
+        : [];
+
+      const matches = activeFilters.size === 0 ||
+        Array.from(activeFilters).some(filter => cardTags.includes(filter));
+
+      if (matches) {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Show/hide empty state
+    const emptyState = episodesGrid.querySelector('.episodes-empty');
+    if (emptyState) {
+      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
     }
+  }
+
+  // Clear all filters
+  clearFiltersBtn.addEventListener('click', () => {
+    activeFilters.clear();
+    updateUI();
   });
 
-  // Update clear button state
-  clearFiltersBtn.disabled = activeFilters.size === 0;
-
-  // Filter cards
-  let visibleCount = 0;
-  episodeCards.forEach(card => {
-    const cardTags = card.dataset.tags
-      ? card.dataset.tags.split(',').map(t => t.trim()).filter(t => t)
-      : [];
-
-    const matches = activeFilters.size === 0 || 
-                    Array.from(activeFilters).some(filter => cardTags.includes(filter));
-
-    if (matches) {
-      card.style.display = '';
-      visibleCount++;
-    } else {
-      card.style.display = 'none';
-    }
-  });
-
-  // Show/hide empty state
-  const emptyState = episodesGrid.querySelector('.episodes-empty');
-  if (emptyState) {
-    emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
-  }
-}
-
-// Clear all filters
-clearFiltersBtn.addEventListener('click', () => {
-  activeFilters.clear();
+  // Initialize
+  renderFilterButtons();
   updateUI();
-});
-
-// Initialize
-renderFilterButtons();
-updateUI();
 </script>
