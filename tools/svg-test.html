@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SVG Colour Test</title>
+  <style>
+    :root {
+      --text:   #1a1714;
+      --accent: #3730a3;
+      --bg:     #f5f0e8;
+      --border: color-mix(in srgb, var(--text) 15%, transparent);
+      --label:  color-mix(in srgb, var(--text) 55%, transparent);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Fira Sans', sans-serif;
+      padding: 2rem;
+      transition: background .25s, color .25s;
+      min-height: 100vh;
+    }
+
+    /* ── toolbar ── */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toolbar-group { display: flex; flex-direction: column; gap: .4rem; }
+
+    label {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--label);
+    }
+
+    .file-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: .45rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: .85rem;
+      font-family: inherit;
+      transition: opacity .15s;
+    }
+    .file-btn:hover { opacity: .85; }
+    #file-input { display: none; }
+
+    #file-name {
+      font-size: .8rem;
+      color: var(--label);
+      font-style: italic;
+      min-width: 12ch;
+    }
+
+    /* colour pickers */
+    .swatch-row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+
+    .var-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .25rem;
+    }
+
+    .var-swatch span {
+      font-size: .65rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--label);
+    }
+
+    input[type="color"] {
+      width: 2.4rem;
+      height: 2.4rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 2px;
+      background: var(--bg);
+    }
+
+    /* theme toggle */
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: .45rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: .85rem;
+      font-family: inherit;
+      transition: border-color .15s;
+      align-self: flex-end;
+    }
+    .theme-toggle:hover { border-color: var(--accent); }
+
+    /* ── section headings ── */
+    h2 {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--accent);
+      margin-bottom: .6rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── grid / swatches ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .cell { display: flex; flex-direction: column; gap: .5rem; }
+
+    .swatch {
+      width: 100%;
+      aspect-ratio: 1;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: var(--bg);
+      transition: background .25s;
+    }
+
+    .swatch svg { width: 100%; height: 100%; }
+
+    /* live SVG preview */
+    #svg-preview-inline { width: 100%; height: 100%; }
+
+    p {
+      font-size: .8rem;
+      line-height: 1.5;
+      opacity: .72;
+    }
+
+    code {
+      font-size: .75rem;
+      background: color-mix(in srgb, var(--text) 10%, transparent);
+      padding: .1em .3em;
+      border-radius: 3px;
+    }
+
+    .empty-state {
+      font-size: .8rem;
+      color: var(--label);
+      font-style: italic;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── toolbar ─────────────────────────────────────── -->
+<div class="toolbar">
+
+  <div class="toolbar-group">
+    <label>SVG file</label>
+    <div style="display:flex;gap:.6rem;align-items:center">
+      <label class="file-btn" for="file-input">Choose SVG…</label>
+      <input type="file" id="file-input" accept=".svg,image/svg+xml">
+      <span id="file-name">no file chosen</span>
+    </div>
+  </div>
+
+  <div class="toolbar-group">
+    <label>CSS variables</label>
+    <div class="swatch-row">
+      <div class="var-swatch">
+        <input type="color" id="pick-text"   value="#1a1714" title="--text">
+        <span>--text</span>
+      </div>
+      <div class="var-swatch">
+        <input type="color" id="pick-accent" value="#3730a3" title="--accent">
+        <span>--accent</span>
+      </div>
+      <div class="var-swatch">
+        <input type="color" id="pick-bg"     value="#f5f0e8" title="--bg">
+        <span>--bg</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="theme-toggle" id="theme-btn">Switch to Dark</button>
+
+</div>
+
+<!-- ── your SVG ─────────────────────────────────────── -->
+<h2>Your SVG</h2>
+<div class="grid">
+
+  <div class="cell">
+    <div class="swatch" id="inline-swatch">
+      <span class="empty-state">Load a file above ↑</span>
+    </div>
+    <h2>Inline SVG</h2>
+    <p>Inherits <code>--accent</code>, <code>--text</code>, and <code>--bg</code> from the page.
+       Change the colour pickers or toggle dark mode to see it respond live.</p>
+  </div>
+
+  <div class="cell">
+    <div class="swatch">
+      <img id="img-preview" src="" style="width:100%;height:100%;display:none" alt="SVG as img tag">
+      <span class="empty-state" id="img-empty">Load a file above ↑</span>
+    </div>
+    <h2>Same SVG as &lt;img&gt;</h2>
+    <p>CSS variables <strong>don't reach in here</strong>. The SVG is sandboxed — it uses only its own
+       hardcoded fallback colours.</p>
+  </div>
+
+</div>
+
+<hr>
+
+<!-- ── opacity reference ────────────────────────────── -->
+<h2>Opacity</h2>
+<div class="grid">
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="80" height="80" fill="var(--accent)"/>
+      </svg>
+    </div>
+    <h2>opacity: 1 (full)</h2>
+    <p>Shape at full colour.</p>
+  </div>
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="80" height="80" fill="var(--accent)" opacity="0.4"/>
+      </svg>
+    </div>
+    <h2>opacity: 0.4 on element</h2>
+    <p>The whole element (fill <em>and</em> any stroke) fades. The background shows through.</p>
+  </div>
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="80" height="80" fill="var(--accent)" fill-opacity="0.4"/>
+      </svg>
+    </div>
+    <h2>fill-opacity: 0.4</h2>
+    <p>Only the fill fades. If there were a stroke, it would stay solid. More surgical than <code>opacity</code>.</p>
+  </div>
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g opacity="0.4">
+          <rect x="10" y="10" width="80" height="80" fill="var(--accent)"/>
+          <rect x="25" y="25" width="50" height="50" fill="var(--text)"/>
+        </g>
+      </svg>
+    </div>
+    <h2>opacity: 0.4 on a &lt;g&gt;</h2>
+    <p>The whole group fades <em>together as a unit</em>. Inner shapes blend with whatever is behind the group.</p>
+  </div>
+
+</div>
+
+<hr>
+
+<!-- ── layer order reference ────────────────────────── -->
+<h2>Layer order (painter's model — later = on top)</h2>
+<div class="grid">
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="10" width="12" height="80" fill="var(--accent)"/>
+        <rect x="68" y="10" width="12" height="80" fill="var(--accent)"/>
+        <circle cx="50" cy="50" r="25" fill="var(--text)"/>
+      </svg>
+    </div>
+    <h2>Icon on top of brackets</h2>
+    <p>Icon drawn last, sits on top. Brackets are fully hidden where they overlap.</p>
+  </div>
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="25" fill="var(--text)"/>
+        <rect x="20" y="10" width="12" height="80" fill="var(--accent)"/>
+        <rect x="68" y="10" width="12" height="80" fill="var(--accent)"/>
+      </svg>
+    </div>
+    <h2>Brackets on top of icon</h2>
+    <p>Brackets drawn last, cross over the icon. Useful if you want brackets to feel like a frame.</p>
+  </div>
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="25" fill="var(--text)"/>
+        <rect x="20" y="10" width="12" height="80" fill="var(--accent)" opacity="0.6"/>
+        <rect x="68" y="10" width="12" height="80" fill="var(--accent)" opacity="0.6"/>
+      </svg>
+    </div>
+    <h2>Brackets on top + semi-transparent</h2>
+    <p>Brackets cross the icon but let it show through. The overlap area blends the two colours.</p>
+  </div>
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="25" fill="var(--text)" opacity="0.5"/>
+        <rect x="20" y="10" width="12" height="80" fill="var(--accent)"/>
+        <rect x="68" y="10" width="12" height="80" fill="var(--accent)"/>
+      </svg>
+    </div>
+    <h2>Icon semi-transparent, brackets solid</h2>
+    <p>Icon recedes, brackets pop. The icon blends into the background at overlapping areas.</p>
+  </div>
+
+</div>
+
+<hr>
+
+<!-- ── css variables reference ──────────────────────── -->
+<h2>CSS variables — inline vs hardcoded</h2>
+<div class="grid">
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="35" fill="var(--accent)"/>
+      </svg>
+    </div>
+    <h2>var(--accent) — responds to theme</h2>
+    <p>Toggle dark mode. This circle uses the page's <code>--accent</code> variable and follows it.</p>
+  </div>
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="35" fill="#3730a3"/>
+      </svg>
+    </div>
+    <h2>#3730a3 — hardcoded, static</h2>
+    <p>Toggle dark mode. This stays the same light-mode purple regardless. Wrong for a themed UI.</p>
+  </div>
+
+</div>
+
+<!-- ── animateMotion reference ──────────────────────── -->
+<h2>animateMotion along a path</h2>
+<p style="margin-bottom:1.5rem">All examples use the waveform path from your icon. The motion guide path is invisible (<code>fill="none" stroke="none"</code>) — it's there purely as a track.</p>
+<div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 210 80" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- motion guide: waveform path, invisible -->
+          <path id="wave-a"
+            d="M 1.6437,32.5493 h 6.689 c 0.6164,0 1.1871,-0.3653 1.3469,-1.0273 l 0.6621,-2.945
+               3.2189,14.9075 c 0.2968,1.3698 2.534,1.3698 2.7395,-0.0228 l 2.7851,-18.3091
+               3.2646,28.2398 c 0.2055,1.6894 2.6254,1.6665 2.7624,0 l 3.0134,-33.6732
+               2.9907,33.6504 c 0.1598,1.7122 2.5568,1.7122 2.7623,0 l 3.2646,-28.217
+               2.808,18.3319 c 0.2054,1.3926 2.4199,1.3926 2.7397,0 l 3.1732,-14.7249
+               0.6845,2.7624 c 0.2057,0.7533 0.7308,1.0273 1.347,1.0273 h 6.4839"/>
+        </defs>
+        <!-- visible waveform for reference -->
+        <use href="#wave-a" fill="none" stroke="var(--text)" stroke-width="1.5" opacity="0.25"/>
+        <!-- particle -->
+        <circle r="3" fill="var(--accent)">
+          <animateMotion dur="2.5s" repeatCount="indefinite" calcMode="paced">
+            <mpath href="#wave-a"/>
+          </animateMotion>
+        </circle>
+      </svg>
+    </div>
+    <h2>Basic — dot, no rotation</h2>
+    <p>Constant speed (<code>calcMode="paced"</code>). The dot stays upright — fine for a circle, matters for directional shapes.</p>
+  </div>
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 210 80" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <path id="wave-b"
+            d="M 1.6437,32.5493 h 6.689 c 0.6164,0 1.1871,-0.3653 1.3469,-1.0273 l 0.6621,-2.945
+               3.2189,14.9075 c 0.2968,1.3698 2.534,1.3698 2.7395,-0.0228 l 2.7851,-18.3091
+               3.2646,28.2398 c 0.2055,1.6894 2.6254,1.6665 2.7624,0 l 3.0134,-33.6732
+               2.9907,33.6504 c 0.1598,1.7122 2.5568,1.7122 2.7623,0 l 3.2646,-28.217
+               2.808,18.3319 c 0.2054,1.3926 2.4199,1.3926 2.7397,0 l 3.1732,-14.7249
+               0.6845,2.7624 c 0.2057,0.7533 0.7308,1.0273 1.347,1.0273 h 6.4839"/>
+        </defs>
+        <use href="#wave-b" fill="none" stroke="var(--text)" stroke-width="1.5" opacity="0.25"/>
+        <!-- arrowhead shape so rotation is visible -->
+        <polygon points="0,-4 3,3 0,1.5 -3,3" fill="var(--accent)">
+          <animateMotion dur="2.5s" repeatCount="indefinite" calcMode="paced" rotate="auto">
+            <mpath href="#wave-b"/>
+          </animateMotion>
+        </polygon>
+      </svg>
+    </div>
+    <h2>rotate="auto"</h2>
+    <p>The particle tilts to follow the path tangent. Essential for arrow or teardrop shapes — shows direction of travel.</p>
+  </div>
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 210 80" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <path id="wave-c"
+            d="M 1.6437,32.5493 h 6.689 c 0.6164,0 1.1871,-0.3653 1.3469,-1.0273 l 0.6621,-2.945
+               3.2189,14.9075 c 0.2968,1.3698 2.534,1.3698 2.7395,-0.0228 l 2.7851,-18.3091
+               3.2646,28.2398 c 0.2055,1.6894 2.6254,1.6665 2.7624,0 l 3.0134,-33.6732
+               2.9907,33.6504 c 0.1598,1.7122 2.5568,1.7122 2.7623,0 l 3.2646,-28.217
+               2.808,18.3319 c 0.2054,1.3926 2.4199,1.3926 2.7397,0 l 3.1732,-14.7249
+               0.6845,2.7624 c 0.2057,0.7533 0.7308,1.0273 1.347,1.0273 h 6.4839"/>
+        </defs>
+        <use href="#wave-c" fill="none" stroke="var(--text)" stroke-width="1.5" opacity="0.25"/>
+        <circle r="3" fill="var(--accent)">
+          <!-- keyTimes + keySplines = cubic easing per segment -->
+          <animateMotion dur="2.5s" repeatCount="indefinite"
+            calcMode="spline"
+            keyTimes="0; 0.5; 1"
+            keyPoints="0; 0.5; 1"
+            keySplines="0.42 0 0.58 1; 0.42 0 0.58 1">
+            <mpath href="#wave-c"/>
+          </animateMotion>
+        </circle>
+      </svg>
+    </div>
+    <h2>keySplines easing</h2>
+    <p><code>calcMode="spline"</code> with cubic bezier curves per segment. This pair gives ease-in-out across the full path — gently accelerates, then decelerates.</p>
+  </div>
+
+  <div class="cell">
+    <div class="swatch">
+      <svg viewBox="0 0 210 80" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <path id="wave-d"
+            d="M 1.6437,32.5493 h 6.689 c 0.6164,0 1.1871,-0.3653 1.3469,-1.0273 l 0.6621,-2.945
+               3.2189,14.9075 c 0.2968,1.3698 2.534,1.3698 2.7395,-0.0228 l 2.7851,-18.3091
+               3.2646,28.2398 c 0.2055,1.6894 2.6254,1.6665 2.7624,0 l 3.0134,-33.6732
+               2.9907,33.6504 c 0.1598,1.7122 2.5568,1.7122 2.7623,0 l 3.2646,-28.217
+               2.808,18.3319 c 0.2054,1.3926 2.4199,1.3926 2.7397,0 l 3.1732,-14.7249
+               0.6845,2.7624 c 0.2057,0.7533 0.7308,1.0273 1.347,1.0273 h 6.4839"/>
+        </defs>
+        <use href="#wave-d" fill="none" stroke="var(--text)" stroke-width="1.5" opacity="0.25"/>
+        <!-- trail: three staggered dots with begin offset -->
+        <circle r="3" fill="var(--accent)">
+          <animateMotion dur="2.5s" repeatCount="indefinite" calcMode="paced">
+            <mpath href="#wave-d"/>
+          </animateMotion>
+        </circle>
+        <circle r="2.2" fill="var(--accent)" opacity="0.55">
+          <animateMotion dur="2.5s" begin="-0.12s" repeatCount="indefinite" calcMode="paced">
+            <mpath href="#wave-d"/>
+          </animateMotion>
+        </circle>
+        <circle r="1.5" fill="var(--accent)" opacity="0.25">
+          <animateMotion dur="2.5s" begin="-0.24s" repeatCount="indefinite" calcMode="paced">
+            <mpath href="#wave-d"/>
+          </animateMotion>
+        </circle>
+      </svg>
+    </div>
+    <h2>Trail effect</h2>
+    <p>Three particles on the same path, staggered with negative <code>begin</code> offsets and decreasing size + opacity. No JS needed.</p>
+  </div>
+
+</div>
+
+<hr>
+
+<script>
+  // ── dark / light theme ──────────────────────────────
+  const themeBtn = document.getElementById('theme-btn');
+  const darkVars = { '--text': '#f0ece3', '--accent': '#6366f1', '--bg': '#1a1714' };
+  const lightVars = { '--text': '#1a1714', '--accent': '#3730a3', '--bg': '#f5f0e8' };
+  let dark = false;
+
+  themeBtn.addEventListener('click', () => {
+    dark = !dark;
+    const vars = dark ? darkVars : lightVars;
+    for (const [k, v] of Object.entries(vars)) {
+      document.documentElement.style.setProperty(k, v);
+    }
+    // sync pickers to new values
+    document.getElementById('pick-text').value   = vars['--text'];
+    document.getElementById('pick-accent').value = vars['--accent'];
+    document.getElementById('pick-bg').value      = vars['--bg'];
+    themeBtn.textContent = dark ? 'Switch to Light' : 'Switch to Dark';
+  });
+
+  // ── colour pickers ──────────────────────────────────
+  function bindPicker(id, varName) {
+    document.getElementById(id).addEventListener('input', e => {
+      document.documentElement.style.setProperty(varName, e.target.value);
+    });
+  }
+  bindPicker('pick-text',   '--text');
+  bindPicker('pick-accent', '--accent');
+  bindPicker('pick-bg',     '--bg');
+
+  // ── SVG file loader ─────────────────────────────────
+  const fileInput   = document.getElementById('file-input');
+  const fileName    = document.getElementById('file-name');
+  const inlineSwatch = document.getElementById('inline-swatch');
+  const imgPreview  = document.getElementById('img-preview');
+  const imgEmpty    = document.getElementById('img-empty');
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    fileName.textContent = file.name;
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      const svgText = e.target.result;
+
+      // inline — inject raw SVG so CSS vars work
+      inlineSwatch.innerHTML = svgText;
+      const inlineSvg = inlineSwatch.querySelector('svg');
+      if (inlineSvg) {
+        inlineSvg.style.width  = '100%';
+        inlineSvg.style.height = '100%';
+        // strip hardcoded width/height attrs so it scales properly
+        inlineSvg.removeAttribute('width');
+        inlineSvg.removeAttribute('height');
+      }
+
+      // img tag — sandboxed, no CSS vars
+      const blob = new Blob([svgText], { type: 'image/svg+xml' });
+      imgPreview.src = URL.createObjectURL(blob);
+      imgPreview.style.display = 'block';
+      imgEmpty.style.display   = 'none';
+    };
+    reader.readAsText(file);
+  });
+</script>
+</body>
+</html>
