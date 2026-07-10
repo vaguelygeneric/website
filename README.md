@@ -113,6 +113,7 @@ vaguelygeneric/
 │   ├── footer.html              # Site footer + RSS link
 │   ├── show-badge.html          # Shared show lookup + accent-colored badge
 │   ├── people-credit.html       # Shared role credit line (host/guests/artist/author/contributors)
+│   ├── person-card.html         # Shared person card w/ role badge pills, for /people/
 │   ├── subscribe-links.html     # Platform subscribe links (RSS, Apple, Spotify, etc.)
 │   ├── daily-logo.svg           # Show-specific cover art referenced via cover_svg
 │   └── lighthouse.svg
@@ -367,15 +368,30 @@ the profile is what makes it a link and lets it show up on `/people/`.
 
 **How people are displayed:**
 
-Both `/people/` and each person's own page are broken into sections
-by collection + role rather than one flat list: Podcast Hosts,
-Podcast Guests, Comic Artists, Story Authors, Blog Authors, and a
-single merged Contributors section (contributions aren't scoped to
-one role the way hosting or writing are, so that section pools
-credits from every content type). A person only appears in the
-sections they actually have credits in, and a person with several
-roles - a podcast guest who's also drawn a comic, say - shows up in
-each relevant section rather than once with a single combined count.
+`/people/` is a single flat grid, sorted alphabetically by name (no
+weighting by role or activity yet - that can wait until there are
+enough people for sort order to matter). Each card shows a small row
+of role pills - Host, Guest, Artist, Author, Contributor - computed
+per person by the `person-card.html` include, so a person with
+several roles just gets several pills (e.g. a podcast guest who's
+also drawn a comic shows both "Guest" and "Artist"). `author` on
+stories and `author` on posts both collapse into the same "Author"
+pill; there's no separate "story author" vs. "blog author" badge.
+
+Each person's own page (`_layouts/person.html`) is still broken out
+by collection + role - Hosting, Guest Appearances, Comics, Stories,
+Blog Posts, and a merged Contributions section - since that's a
+one-person view of everything they've done, not a many-people
+directory, and the sections there aren't trying to solve a sort-order
+problem.
+
+**A note on `{% comment %}`:** Jekyll's Liquid still parses tags
+inside `{% comment %}...{% endcomment %}` blocks, so a comment
+containing example usage like `{% include foo.html %}` will try to
+render that include and can break the build. Keep include/layout
+usage notes here in the README instead of in-file comments; if an
+in-file comment is truly needed, keep it plain text with no `{% %}`
+or `{{ }}` inside it.
 
 ---
 

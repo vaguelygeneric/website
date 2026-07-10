@@ -10,106 +10,12 @@ permalink: /people/
     <h1>People</h1>
     <p>People who've joined us in the media here.</p>
   </div>
-
-  {% assign people = site.people | sort: "name" %}
-
-  {% if people.size == 0 %}
-  <p style="color: var(--text-muted);">No people yet.</p>
-  {% else %}
-
-  <div class="people-section">
-    <h2>Podcast Hosts</h2>
-    <div class="people-grid">
-      {% assign section_has_people = false %}
-      {% for person in people %}
-        {% assign credits = site.podcast | listed_installments: "host", person.slug %}
-        {% if credits.size > 0 %}
-          {% assign section_has_people = true %}
-          {% include person-card.html person=person count=credits.size count_label="episode" %}
-        {% endif %}
-      {% endfor %}
-      {% unless section_has_people %}<p style="color: var(--text-muted);">No hosts yet.</p>{% endunless %}
-    </div>
+  <div class="people-grid">
+    {% assign people = site.people | sort: "name" %}
+    {% for person in people %}
+    {% include person-card.html person=person %}
+    {% else %}
+    <p style="color: var(--text-muted);">No people yet.</p>
+    {% endfor %}
   </div>
-
-  <div class="people-section">
-    <h2>Podcast Guests</h2>
-    <div class="people-grid">
-      {% assign section_has_people = false %}
-      {% for person in people %}
-        {% assign credits = site.podcast | listed_installments: "guests", person.slug %}
-        {% if credits.size > 0 %}
-          {% assign section_has_people = true %}
-          {% include person-card.html person=person count=credits.size count_label="episode" %}
-        {% endif %}
-      {% endfor %}
-      {% unless section_has_people %}<p style="color: var(--text-muted);">No guests yet.</p>{% endunless %}
-    </div>
-  </div>
-
-  <div class="people-section">
-    <h2>Comic Artists</h2>
-    <div class="people-grid">
-      {% assign section_has_people = false %}
-      {% for person in people %}
-        {% assign credits = site.comic | listed_installments: "artist", person.slug %}
-        {% if credits.size > 0 %}
-          {% assign section_has_people = true %}
-          {% include person-card.html person=person count=credits.size count_label="strip" %}
-        {% endif %}
-      {% endfor %}
-      {% unless section_has_people %}<p style="color: var(--text-muted);">No artists yet.</p>{% endunless %}
-    </div>
-  </div>
-
-  <div class="people-section">
-    <h2>Story Authors</h2>
-    <div class="people-grid">
-      {% assign section_has_people = false %}
-      {% for person in people %}
-        {% assign credits = site.story | listed_installments: "author", person.slug %}
-        {% if credits.size > 0 %}
-          {% assign section_has_people = true %}
-          {% include person-card.html person=person count=credits.size count_label="chapter" %}
-        {% endif %}
-      {% endfor %}
-      {% unless section_has_people %}<p style="color: var(--text-muted);">No story authors yet.</p>{% endunless %}
-    </div>
-  </div>
-
-  <div class="people-section">
-    <h2>Blog Authors</h2>
-    <div class="people-grid">
-      {% assign section_has_people = false %}
-      {% for person in people %}
-        {% assign credits = site.posts | listed_installments: "author", person.slug %}
-        {% if credits.size > 0 %}
-          {% assign section_has_people = true %}
-          {% include person-card.html person=person count=credits.size count_label="post" %}
-        {% endif %}
-      {% endfor %}
-      {% unless section_has_people %}<p style="color: var(--text-muted);">No blog authors yet.</p>{% endunless %}
-    </div>
-  </div>
-
-  <div class="people-section">
-    <h2>Contributors</h2>
-    <div class="people-grid">
-      {% assign section_has_people = false %}
-      {% for person in people %}
-        {% assign podcast_credits = site.podcast | listed_installments: "contributors", person.slug %}
-        {% assign comic_credits = site.comic | listed_installments: "contributors", person.slug %}
-        {% assign story_credits = site.story | listed_installments: "contributors", person.slug %}
-        {% assign post_credits = site.posts | listed_installments: "contributors", person.slug %}
-        {% assign total = podcast_credits.size | plus: comic_credits.size | plus: story_credits.size | plus: post_credits.size %}
-        {% if total > 0 %}
-          {% assign section_has_people = true %}
-          {% include person-card.html person=person count=total count_label="credit" %}
-        {% endif %}
-      {% endfor %}
-      {% unless section_has_people %}<p style="color: var(--text-muted);">No contributors yet.</p>{% endunless %}
-    </div>
-  </div>
-
-  {% endif %}
 </div>

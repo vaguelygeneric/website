@@ -1516,13 +1516,23 @@ li { margin-bottom: 0.4rem; }
   color: var(--text-muted);
   margin-bottom: 0.4rem;
 }
-.person-card-count {
+.person-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+.role-pill {
   font-family: var(--font-display);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--accent);
+  background: var(--accent-bg);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.55rem;
+  border-radius: 100px;
 }
 
 /* Person detail page */
@@ -1587,6 +1597,7 @@ li { margin-bottom: 0.4rem; }
 }
 .person-bio p { margin-bottom: 1.25rem; }
 
+/* Person profile page - credit sections (Hosting, Guest Appearances, etc.) */
 .person-credits {
   margin-bottom: 3rem;
 }
@@ -1594,18 +1605,6 @@ li { margin-bottom: 0.4rem; }
   margin-bottom: 0;
 }
 .person-credits h2 {
-  font-size: 1.35rem;
-  margin-bottom: 1.5rem;
-}
-
-/* People directory - role sections */
-.people-section {
-  margin-bottom: 3rem;
-}
-.people-section:last-child {
-  margin-bottom: 0;
-}
-.people-section h2 {
   font-size: 1.35rem;
   margin-bottom: 1.5rem;
 }
