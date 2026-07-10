@@ -1,16 +1,4 @@
-{% comment %}
-  Renders one credit line for a role (host, guests, artist, author,
-  contributors, ...) on any installment/post layout.
 
-    {% include people-credit.html label="Featuring" slugs=page.guests %}
-
-  - `slugs` is a front matter array of person slugs.
-  - Each slug is resolved against site.people; if a matching profile
-    exists it's linked, otherwise the raw slug is shown as plain text
-    (same fallback the old inline guest block on episode.html had).
-  - Renders nothing if `slugs` is empty/unset, so call sites don't need
-    to guard with an {% if %} themselves.
-{% endcomment %}
 {% if include.slugs and include.slugs.size > 0 %}
 <div class="credit-line">
   <span class="credit-label">{{ include.label }}:</span>
