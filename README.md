@@ -114,6 +114,7 @@ vaguelygeneric/
 │   ├── show-badge.html          # Shared show lookup + accent-colored badge
 │   ├── people-credit.html       # Shared role credit line (host/guests/artist/author/contributors)
 │   ├── person-card.html         # Shared person card w/ role badge pills, for /people/
+│   ├── person-links.html        # Shared links: renderer (website/twitter/etc.) w/ icons
 │   ├── subscribe-links.html     # Platform subscribe links (RSS, Apple, Spotify, etc.)
 │   ├── daily-logo.svg           # Show-specific cover art referenced via cover_svg
 │   └── lighthouse.svg
@@ -342,14 +343,19 @@ layout: person
 name: "First Last"
 slug: first-last
 title: "Their Title or Descriptor"
-website: "https://theirsite.com"
-twitter: "theirhandle"
-instagram: "theirhandle"
+pronouns: "she/her"           # optional - shown next to the name
+links:                        # optional - each entry is one platform: value
+  - website: "https://theirsite.com"   # website expects a full URL
+  - twitter: "theirhandle"             # everything else expects a bare handle...
+  - github: "theirhandle"              # ...unless the value itself starts with
+  - substack: "theirhandle"            # http, in which case it's used as-is
 photo:                         # leave blank for silhouette placeholder
 ---
 
 A short bio in Markdown.
 ```
+
+Supported `links:` platforms: `website`, `twitter`, `facebook`, `instagram`, `github`, `substack`, `twitch`, `tiktok`. Each is rendered via the shared `_includes/person-links.html` include, which looks up the matching icon in `_includes/icon.html` and builds the profile URL from the handle (or uses the value directly if it's already a full URL - handy for a Substack on a custom domain, or any platform not in the list above). Order in the list is the order they're displayed in.
 
 The `slug` must match exactly what you list under `host:`/`guests:`/`artist:`/`author:`/`contributors:` in installment or post front matter. Appearances populate automatically on the person's page.
 

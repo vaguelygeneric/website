@@ -15,16 +15,9 @@ layout: default
       <img src="{{ '/assets/images/person-placeholder.svg' | relative_url }}" alt="Person placeholder" />
     </div>
     {% endif %}
-    <h1 class="person-name">{{ page.name }}</h1>
+    <h1 class="person-name">{{ page.name }}{% if page.pronouns %} <span class="person-pronouns">({{ page.pronouns }})</span>{% endif %}</h1>
     {% if page.title %}<p class="person-title">{{ page.title }}</p>{% endif %}
-    <div class="person-links">
-      {% if page.website %}<a href="{{ page.website }}" class="person-link" target="_blank" rel="noopener">Website</a>{%
-      endif %}
-      {% if page.twitter %}<a href="https://twitter.com/{{ page.twitter }}" class="person-link" target="_blank"
-        rel="noopener">@{{ page.twitter }}</a>{% endif %}
-      {% if page.instagram %}<a href="https://instagram.com/{{ page.instagram }}" class="person-link" target="_blank"
-        rel="noopener">Instagram</a>{% endif %}
-    </div>
+    {% include person-links.html links=page.links %}
   </div>
 
   {% if content != "" %}

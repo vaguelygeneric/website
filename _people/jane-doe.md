@@ -7,6 +7,7 @@ pronouns: "she/her"
 links:
     - website: "https://janedoe.example.com"
     - twitter: "janedoe"
+    - onlyfans: "janedoecams"
 photo: ""
 ---
 
