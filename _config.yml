@@ -19,9 +19,9 @@ collections:
   posts:
     output: true
     permalink: /blog/:year/:month/:day/:title/
-  guests:
+  people:
     output: true
-    permalink: /guests/:slug/
+    permalink: /person/:slug/
   comics:
     output: true
     permalink: /comics/:slug/
@@ -53,9 +53,9 @@ defaults:
       layout: "post"
   - scope:
       path: ""
-      type: "guests"
+      type: "people"
     values:
-      layout: "guest"
+      layout: "person"
   - scope:
       path: ""
       type: "stories"

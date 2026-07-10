@@ -1,0 +1,24 @@
+{% comment %}
+  Renders one person card for a role section on /people/.
+
+    {% include person-card.html person=person count=credits.size count_label="episode" %}
+
+  - `count_label` is singular; an "s" is appended unless count == 1.
+{% endcomment %}
+{% assign has_photo = include.person.photo | strip %}
+<a href="{{ include.person.url | relative_url }}" class="person-card">
+  {% if has_photo != "" and has_photo %}
+  <div class="person-card-photo">
+    <img src="{{ include.person.photo | relative_url }}" alt="{{ include.person.name }}" />
+  </div>
+  {% else %}
+  <div class="person-card-photo person-card-photo--placeholder">
+    <img src="{{ '/assets/images/person-placeholder.svg' | relative_url }}" alt="{{ include.person.name }}" />
+  </div>
+  {% endif %}
+  <div class="person-card-body">
+    <div class="person-card-name">{{ include.person.name }}</div>
+    {% if include.person.title %}<div class="person-card-title">{{ include.person.title }}</div>{% endif %}
+    <div class="person-card-count">{{ include.count }} {{ include.count_label }}{% if include.count != 1 %}s{% endif %}</div>
+  </div>
+</a>

@@ -29,8 +29,8 @@
             {% endfor %}
           </ul>
         </li>
-        <li><a href="{{ '/guests/' | relative_url }}"
-            class="nav-link {% if page.url contains '/guests' %}active{% endif %}">Guests</a></li>
+        <li><a href="{{ '/people/' | relative_url }}"
+            class="nav-link {% if page.url contains '/people' or page.url contains '/person' %}active{% endif %}">People</a></li>
         <li><a href="{{ '/blog/' | relative_url }}"
             class="nav-link {% if page.url contains '/blog' %}active{% endif %}">Blog</a></li>
         <li><a href="{{ '/about/' | relative_url }}"

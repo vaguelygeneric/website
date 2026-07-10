@@ -10,7 +10,7 @@ The Jekyll source for [vaguelygeneric.website](https://vaguelygeneric.website) -
 - **Webcomics** with individual strip pages (reading order) and prev/next navigation
 - **Serialized stories** with individual chapter pages (reading order) and prev/next navigation
 - **Blog** for updates and behind-the-scenes posts
-- **Guest directory** with individual guest profiles that auto-populate with their episode appearances
+- **People directory** with individual person profiles that auto-populate with their episode appearances
 - **Scheduled publishing** - content can be drafted, dated in the future, and gated from feeds/listings until it's meant to go public
 - **Light/dark mode** that follows OS preference by default, overridable per-visitor
 - **Responsive layout** down to mobile
@@ -104,7 +104,7 @@ vaguelygeneric/
 │   ├── comic-strip.html         # Individual comic strip page
 │   ├── story.html               # Story property index page
 │   ├── story-chapter.html       # Individual story chapter page
-│   ├── guest.html               # Individual guest profile page
+│   ├── person.html              # Individual person profile page
 │   ├── page.html                # Generic content page
 │   ├── post.html                # Blog post
 │   └── feed.html                # RSS feed template (per show)
@@ -112,6 +112,7 @@ vaguelygeneric/
 │   ├── header.html              # Site header + nav (Podcasts dropdown only, see note above)
 │   ├── footer.html              # Site footer + RSS link
 │   ├── show-badge.html          # Shared show lookup + accent-colored badge
+│   ├── people-credit.html       # Shared role credit line (host/guests/artist/author/contributors)
 │   ├── subscribe-links.html     # Platform subscribe links (RSS, Apple, Spotify, etc.)
 │   ├── daily-logo.svg           # Show-specific cover art referenced via cover_svg
 │   └── lighthouse.svg
@@ -121,7 +122,7 @@ vaguelygeneric/
 ├── _comic/{slug}/               # Webcomic strip files, per comic
 ├── _stories/                    # Story property files
 ├── _story/{slug}/               # Story chapter files, per story
-├── _guests/                     # Guest profile markdown files
+├── _people/                     # Person profile markdown files
 ├── _posts/                      # Blog posts
 ├── _plugins/
 │   ├── generate_feeds.rb        # RSS feed generation only (podcast shows)
@@ -130,7 +131,7 @@ vaguelygeneric/
 ├── comics.html                  # All webcomics landing page
 ├── stories.html                 # All stories landing page (served at /stories/)
 ├── blog/index.html              # Blog listing
-├── guests/index.html            # Guest directory
+├── people/index.html            # People directory
 ├── about.md                     # About page
 ├── index.html                   # Home page
 ├── 404.html                     # 404 page
@@ -183,8 +184,12 @@ audio_url: "https://your-audio-host.com/episode-0037.mp3"
 audio_size: "6100000"          # bytes - run: du -b yourfile.mp3
 audio_type: "audio/mp3"
 permalink: /podcast/daily/0037/
+host:
+  - jane-doe                   # optional - co-host(s)/guest-host(s), same slug rules as guests:
 guests:
-  - jane-doe                   # must match a filename slug in _guests/
+  - jane-doe                   # must match a filename slug in _people/
+contributors:
+  - jane-doe                   # optional - thanks/credits not covered by host or guests
 thumbnail: "/assets/images/daily/ep37.png"   # optional - see below
 thumbnail_alt: "Description of the image for accessibility."
 ---
@@ -215,12 +220,12 @@ things:
 - Episode appears on the show index page once its publish gate opens
 - Episode appears in Latest Episodes on the home page if it's among the most recent (by `publish_date`) across all shows
 - Episode is added to the show's RSS feed
-- If guests are listed, the episode appears on each guest's profile page
+- If host, guests, or contributors are listed, the episode appears on each credited person's profile page
 
 **What you do manually:**
 - Host the audio file and paste the URL
 - Get the file size in bytes (`du -b yourfile.mp3`)
-- Create a guest file first if it's someone new
+- Create a person file first if it's someone new
 
 ---
 
@@ -280,6 +285,12 @@ arc: "Optional arc/chapter name"
 image: "/assets/images/comics/wanderlines/0003.png"
 alt_text: "Description of the strip for accessibility."
 permalink: /comics/wanderlines/0003/
+artist:
+  - jane-doe                   # optional - must match a filename slug in _people/
+guests:
+  - jane-doe                   # optional - for a guest-collab strip
+contributors:
+  - jane-doe                   # optional - thanks/credits
 ---
 
 Optional caption/notes in Markdown, shown below the image.
@@ -305,6 +316,10 @@ publish_date: 2026-07-10
 status: scheduled
 arc: "Optional book/arc name"
 permalink: /story/lighthouse-keepers/0003/
+author:
+  - jane-doe                   # optional - must match a filename slug in _people/
+contributors:
+  - jane-doe                   # optional - thanks/credits
 ---
 
 Chapter content in Markdown here.
@@ -312,17 +327,17 @@ Chapter content in Markdown here.
 
 ---
 
-## Adding a Guest
+## Adding a Person
 
-Create a Markdown file in `_guests/`:
+Create a Markdown file in `_people/`:
 
 ```
-_guests/first-last.md
+_people/first-last.md
 ```
 
 ```yaml
 ---
-layout: guest
+layout: person
 name: "First Last"
 slug: first-last
 title: "Their Title or Descriptor"
@@ -335,7 +350,32 @@ photo:                         # leave blank for silhouette placeholder
 A short bio in Markdown.
 ```
 
-The `slug` must match exactly what you list under `guests:` in episode front matter. Episode appearances populate automatically on the guest's page.
+The `slug` must match exactly what you list under `host:`/`guests:`/`artist:`/`author:`/`contributors:` in installment or post front matter. Appearances populate automatically on the person's page.
+
+**Credit fields, in general:**
+
+`host`, `guests`, `artist`, `author`, and `contributors` all work the
+same way wherever they're used - each is a list of person slugs, and
+each is rendered by the shared `_includes/people-credit.html` include
+(which fields apply depends on the content type: episodes get
+`host`/`guests`, comics get `artist`/`guests`, stories and posts get
+`author`, and `contributors` is available everywhere for a quick
+thanks). A slug with no matching `_people/` file still displays as
+plain text rather than breaking the build - useful for a one-off
+mention you don't want to make a full profile for, though creating
+the profile is what makes it a link and lets it show up on `/people/`.
+
+**How people are displayed:**
+
+Both `/people/` and each person's own page are broken into sections
+by collection + role rather than one flat list: Podcast Hosts,
+Podcast Guests, Comic Artists, Story Authors, Blog Authors, and a
+single merged Contributors section (contributions aren't scoped to
+one role the way hosting or writing are, so that section pools
+credits from every content type). A person only appears in the
+sections they actually have credits in, and a person with several
+roles - a podcast guest who's also drawn a comic, say - shows up in
+each relevant section rather than once with a single combined count.
 
 ---
 
@@ -354,6 +394,10 @@ description: "One sentence shown on the blog listing and home page preview."
 date: 2026-07-10
 status: published
 tags: [updates, behind-the-scenes]
+author:
+  - jane-doe                   # optional - must match a filename slug in _people/
+contributors:
+  - jane-doe                   # optional - thanks/credits
 ---
 
 Post content in Markdown.
@@ -442,7 +486,7 @@ Key fields in `_config.yml`:
 | `baseurl` | Leave blank for apex domain; use `/repo-name` for project sites |
 | `timezone` | `UTC` - anchors the publish gate and RSS `pubDate` |
 | `youtube_channel` | YouTube channel URL - used in nav and home page |
-| `collections` | Registers `shows`/`podcast`, `comics`/`comic`, `stories`/`story`, `posts`, `guests` |
+| `collections` | Registers `shows`/`podcast`, `comics`/`comic`, `stories`/`story`, `posts`, `people` |
 
 Show/comic/story metadata itself lives in the collections (`_shows/*.md`, etc.), not in `_config.yml`.
 

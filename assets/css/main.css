@@ -1452,26 +1452,26 @@ li { margin-bottom: 0.4rem; }
 .blog-preview-card .blog-card-title { font-size: 1.1rem; margin: 0; }
 .blog-preview-card .blog-card-desc { font-size: 0.875rem; flex: 1; margin: 0; }
 
-/* ── Guest Pages ── */
-.guests-page {
+/* ── People Pages ── */
+.people-page {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 4rem 1.5rem;
 }
-.guests-header {
+.people-header {
   margin-bottom: 3rem;
   padding-bottom: 2.5rem;
   border-bottom: 1px solid var(--border);
 }
-.guests-header h1 { margin-bottom: 0.5rem; }
-.guests-header p { color: var(--text-muted); font-size: 1.1rem; margin: 0; }
+.people-header h1 { margin-bottom: 0.5rem; }
+.people-header p { color: var(--text-muted); font-size: 1.1rem; margin: 0; }
 
-.guests-grid {
+.people-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.25rem;
 }
-.guest-card {
+.person-card {
   display: flex;
   flex-direction: column;
   background: var(--surface);
@@ -1482,41 +1482,41 @@ li { margin-bottom: 0.4rem; }
   color: inherit;
   transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
-.guest-card:hover {
+.person-card:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
   border-color: var(--accent);
   text-decoration: none;
   color: inherit;
 }
-.guest-card-photo {
+.person-card-photo {
   aspect-ratio: 1;
   overflow: hidden;
   background: var(--bg-alt);
 }
-.guest-card-photo img { width: 100%; height: 100%; object-fit: cover; }
-.guest-card-photo--placeholder {
+.person-card-photo img { width: 100%; height: 100%; object-fit: cover; }
+.person-card-photo--placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-alt);
-  background-image: url('/assets/images/guest-placeholder.svg');
+  background-image: url('/assets/images/person-placeholder.svg');
   background-size: cover;
   background-position: center;
 }
-.guest-card-body { padding: 1rem; }
-.guest-card-name {
+.person-card-body { padding: 1rem; }
+.person-card-name {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1rem;
   margin-bottom: 0.2rem;
 }
-.guest-card-title {
+.person-card-title {
   font-size: 0.8rem;
   color: var(--text-muted);
   margin-bottom: 0.4rem;
 }
-.guest-card-count {
+.person-card-count {
   font-family: var(--font-display);
   font-size: 0.7rem;
   font-weight: 700;
@@ -1525,19 +1525,19 @@ li { margin-bottom: 0.4rem; }
   color: var(--accent);
 }
 
-/* Guest detail page */
-.guest-wrapper {
+/* Person detail page */
+.person-wrapper {
   max-width: var(--content-width);
   margin: 0 auto;
   padding: 4rem 1.5rem;
 }
-.guest-header {
+.person-header {
   margin-bottom: 3rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--border);
   text-align: center;
 }
-.guest-photo {
+.person-photo {
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -1545,27 +1545,27 @@ li { margin-bottom: 0.4rem; }
   margin: 1rem auto;
   border: 3px solid var(--border);
 }
-.guest-photo img { width: 100%; height: 100%; object-fit: cover; }
-.guest-photo--placeholder img {
+.person-photo img { width: 100%; height: 100%; object-fit: cover; }
+.person-photo--placeholder img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0.6;
 }
-.guest-name { margin-bottom: 0.4rem; }
-.guest-title {
+.person-name { margin-bottom: 0.4rem; }
+.person-title {
   font-size: 1rem;
   color: var(--text-muted);
   font-style: italic;
   margin-bottom: 1rem;
 }
-.guest-links {
+.person-links {
   display: flex;
   gap: 0.75rem;
   justify-content: center;
   flex-wrap: wrap;
 }
-.guest-link {
+.person-link {
   font-family: var(--font-display);
   font-size: 0.75rem;
   font-weight: 700;
@@ -1579,28 +1579,48 @@ li { margin-bottom: 0.4rem; }
   border-radius: 100px;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
-.guest-link:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+.person-link:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
 
-.guest-bio {
+.person-bio {
   margin-bottom: 3rem;
   line-height: 1.85;
 }
-.guest-bio p { margin-bottom: 1.25rem; }
+.person-bio p { margin-bottom: 1.25rem; }
 
-.guest-episodes h2 {
+.person-credits {
+  margin-bottom: 3rem;
+}
+.person-credits:last-child {
+  margin-bottom: 0;
+}
+.person-credits h2 {
   font-size: 1.35rem;
   margin-bottom: 1.5rem;
 }
 
-/* Episode guest display */
-.episode-guests {
+/* People directory - role sections */
+.people-section {
+  margin-bottom: 3rem;
+}
+.people-section:last-child {
+  margin-bottom: 0;
+}
+.people-section h2 {
+  font-size: 1.35rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Shared credit line (host/guests/artist/author/contributors) --
+   used on episode, comic strip, story chapter, and post layouts via
+   the people-credit.html include */
+.credit-line {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
   margin-top: 1rem;
 }
-.episode-guests-label {
+.credit-label {
   font-family: var(--font-display);
   font-size: 0.75rem;
   font-weight: 700;
@@ -1608,7 +1628,7 @@ li { margin-bottom: 0.4rem; }
   letter-spacing: 0.08em;
   color: var(--text-muted);
 }
-.episode-guest-link {
+.credit-link {
   font-family: var(--font-display);
   font-size: 0.85rem;
   font-weight: 600;
@@ -1620,7 +1640,7 @@ li { margin-bottom: 0.4rem; }
   border-radius: 100px;
   transition: border-color 0.15s ease;
 }
-.episode-guest-link:hover { border-color: var(--accent); text-decoration: none; }
+.credit-link:hover { border-color: var(--accent); text-decoration: none; }
 /* ── Subscribe links overflow / "more" toggle ── */
 .subscribe-link--more {
   display: none;
