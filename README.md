@@ -355,7 +355,11 @@ photo:                         # leave blank for silhouette placeholder
 A short bio in Markdown.
 ```
 
-Supported `links:` platforms: `website`, `twitter`, `facebook`, `instagram`, `github`, `substack`, `twitch`, `tiktok`. Each is rendered via the shared `_includes/person-links.html` include, which looks up the matching icon in `_includes/icon.html` and builds the profile URL from the handle (or uses the value directly if it's already a full URL - handy for a Substack on a custom domain, or any platform not in the list above). Order in the list is the order they're displayed in.
+Supported `links:` platforms: `website`, `twitter`, `facebook`, `instagram`, `github`, `substack`, `twitch`, `tiktok`, `bluesky`, `threads`, `linkedin`, `discord`, `letterboxd`, `goodreads`, `lemmy`, `mastodon`, `onlyfans`. Each is rendered via the shared `_includes/person-links.html` include, which looks up the matching icon in `_includes/icon.html` and builds the profile URL from the handle - or uses the value directly if it's already a full URL, which also works for any platform not in the list above (there's no template for it, so it just needs the whole URL). Order in the list is the order they're displayed in.
+
+The link text follows the same handle-vs-URL split: a bare handle is shown as-is (`janedoe`), while a full URL falls back to showing the platform name (`Website`) since there's no handle to show. Hovering an icon shows the platform name as a native tooltip either way.
+
+`mastodon` and `lemmy` are federated, so a plain handle isn't enough to build a URL - there's no single domain to point at. Give either as `user@instance` (or `@user@instance`, matching how Mastodon/Lemmy usually display them) and it'll build `https://instance/@user` or `https://instance/u/user`. A bare handle with no `@instance` falls back to assuming `mastodon.social` or `lemmy.world`, which will be wrong for anyone on a different instance - safest to always include the instance for these two.
 
 The `slug` must match exactly what you list under `host:`/`guests:`/`artist:`/`author:`/`contributors:` in installment or post front matter. Appearances populate automatically on the person's page.
 
