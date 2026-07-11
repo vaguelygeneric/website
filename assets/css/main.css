@@ -1599,8 +1599,8 @@ li { margin-bottom: 0.4rem; }
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 .person-link svg {
-  width: 14px;
-  height: 14px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
 }
 .person-link:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }

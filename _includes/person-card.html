@@ -20,7 +20,7 @@
   </div>
   {% endif %}
   <div class="person-card-body">
-    <div class="person-card-name">{{ include.person.name }}</div>
+    <div class="person-card-name">{{ include.person.name }}{% if person.pronouns %} <span class="person-pronouns">({{ person.pronouns }})</span>{% endif %}</div>
     {% if include.person.title %}<div class="person-card-title">{{ include.person.title }}</div>{% endif %}
     <div class="person-card-badges">
       {% if is_host.size > 0 %}<span class="role-pill">Host</span>{% endif %}

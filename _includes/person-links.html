@@ -1,24 +1,25 @@
 {% if include.links and include.links.size > 0 %}
 <div class="person-links">
   {% for link in include.links %}
-  {% for pair in link %}
-  {% assign platform = pair[0] %}
-  {% assign value = pair[1] %}
+  {% for kvp in link %}
+    {% assign platform = kvp[0] %}
+    {% assign value = kvp[1] %}
   {% endfor %}
   {% assign url = value %}
+  {% assign label = value | capitalize %}
   {% unless value contains "http" %}
-  {% case platform %}
-  {% when "twitter" %}{% assign url = "https://twitter.com/" | append: value %}
-  {% when "facebook" %}{% assign url = "https://facebook.com/" | append: value %}
-  {% when "instagram" %}{% assign url = "https://instagram.com/" | append: value %}
-  {% when "github" %}{% assign url = "https://github.com/" | append: value %}
-  {% when "twitch" %}{% assign url = "https://twitch.tv/" | append: value %}
-  {% when "tiktok" %}{% assign url = "https://tiktok.com/@" | append: value %}
-  {% when "substack" %}{% assign url = "https://" | append: value | append: ".substack.com" %}
-  {% when "onlyfans" %}{% assign url = "https://" | append: value | append: ".substack.com" %}
-  {% endcase %}
+    {% assign label = platform | capitalize %}
+    {% case platform %}
+      {% when "twitter" %}{% assign url = "https://twitter.com/" | append: value %}
+      {% when "facebook" %}{% assign url = "https://facebook.com/" | append: value %}
+      {% when "instagram" %}{% assign url = "https://instagram.com/" | append: value %}
+      {% when "github" %}{% assign url = "https://github.com/" | append: value %}
+      {% when "twitch" %}{% assign url = "https://twitch.tv/" | append: value %}
+      {% when "tiktok" %}{% assign url = "https://tiktok.com/@" | append: value %}
+      {% when "onlyfans" %}{% assign url = "https://onlyfans.com/" | append: value %}
+      {% when "substack" %}{% assign url = "https://" | append: value | append: ".substack.com" %}
+    {% endcase %}
   {% endunless %}
-  {% assign label = platform | capitalize %}
   <a href="{{ url }}" class="person-link" target="_blank" rel="noopener" aria-label="{{ label }}">
     {% include icon.html name=platform %}
     <span>{{ label }}</span>
