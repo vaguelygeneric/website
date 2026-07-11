@@ -5,7 +5,6 @@ description: "A quick share of the audio that Daily uses towards the end"
 date: 2025-05-09
 tags: [Daily, podcast]
 status: published
-author: Daily Host
 audio_url: https://archive.org/download/morning-silence/MorningSilence.mp3
 ---
 

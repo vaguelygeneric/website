@@ -17,20 +17,9 @@ layout: default
     <h1 class="episode-title">{{ page.title }}</h1>
     {% if page.description %}<p class="episode-description">{{ page.description }}</p>{% endif %}
 
-    {% if page.guests %}
-    <div class="episode-guests">
-      <span class="episode-guests-label">Featuring:</span>
-      {% for guest_slug in page.guests %}
-      {% assign guest = site.guests | where: "slug", guest_slug | first %}
-      {% if guest %}
-      <a href="{{ guest.url | relative_url }}" class="episode-guest-link">{{ guest.name }}</a>{% unless forloop.last %},
-      {% endunless %}
-      {% else %}
-      <span class="episode-guest-link">{{ guest_slug }}</span>{% unless forloop.last %}, {% endunless %}
-      {% endif %}
-      {% endfor %}
-    </div>
-    {% endif %}
+    {% include people-credit.html label="Hosted by" slugs=page.host %}
+    {% include people-credit.html label="Featuring" slugs=page.guests %}
+    {% include people-credit.html label="Thanks to" slugs=page.contributors %}
   </div>
 
   {% if page.thumbnail %}

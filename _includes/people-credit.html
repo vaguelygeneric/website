@@ -1,0 +1,15 @@
+
+{% if include.slugs and include.slugs.size > 0 %}
+<div class="credit-line">
+  <span class="credit-label">{{ include.label }}:</span>
+  {% for person_slug in include.slugs %}
+  {% assign person = site.people | where: "slug", person_slug | first %}
+  {% if person %}
+  <a href="{{ person.url | relative_url }}" class="credit-link">{{ person.name }}</a>{% unless forloop.last %}, {%
+    endunless %}
+  {% else %}
+  <span class="credit-link">{{ person_slug }}</span>{% unless forloop.last %}, {% endunless %}
+  {% endif %}
+  {% endfor %}
+</div>
+{% endif %}

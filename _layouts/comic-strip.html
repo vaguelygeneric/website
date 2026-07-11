@@ -13,6 +13,9 @@ layout: default
       {% if page.arc %}<span class="post-tag">{{ page.arc }}</span>{% endif %}
     </div>
     <h1 class="episode-title">{{ page.title }}</h1>
+    {% include people-credit.html label="Art by" slugs=page.artist %}
+    {% include people-credit.html label="Featuring" slugs=page.guests %}
+    {% include people-credit.html label="Thanks to" slugs=page.contributors %}
   </div>
 
   {% if page.image %}

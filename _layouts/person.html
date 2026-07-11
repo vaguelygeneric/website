@@ -1,0 +1,178 @@
+---
+layout: default
+---
+
+<div class="person-wrapper">
+  <div class="person-header">
+    <a href="{{ '/people/' | relative_url }}" class="back-link">← All People</a>
+    {% assign has_photo = page.photo | strip %}
+    {% if has_photo != "" and has_photo %}
+    <div class="person-photo">
+      <img src="{{ page.photo | relative_url }}" alt="{{ page.name }}" />
+    </div>
+    {% else %}
+    <div class="person-photo person-photo--placeholder">
+      <img src="{{ '/assets/images/person-placeholder.svg' | relative_url }}" alt="Person placeholder" />
+    </div>
+    {% endif %}
+    <h1 class="person-name">{{ page.name }}{% if page.pronouns %} <span class="person-pronouns">({{ page.pronouns }})</span>{% endif %}</h1>
+    {% if page.title %}<p class="person-title">{{ page.title }}</p>{% endif %}
+    {% include person-links.html links=page.links %}
+  </div>
+
+  {% if content != "" %}
+  <div class="person-bio">
+    {{ content }}
+  </div>
+  {% endif %}
+
+  {% assign hosting = site.podcast | listed_installments: "host", page.slug | sort: "publish_date" | reverse %}
+  {% if hosting.size > 0 %}
+  <div class="person-credits">
+    <h2>Hosting</h2>
+    <div class="episodes-list">
+      {% for episode in hosting %}
+      <a href="{{ episode.url | relative_url }}" class="episode-list-item">
+        <div class="episode-list-num">{{ episode.episode_number | prepend: '00' | slice: -2, 2 }}</div>
+        <div class="episode-list-body">
+          <div class="episode-list-title">{{ episode.title }}</div>
+          <div class="episode-list-desc">{{ episode.description }}</div>
+        </div>
+        <div class="episode-list-meta">
+          {% include show-badge.html show=episode.show %}
+          <span class="episode-list-date">{{ episode.created | date: "%b %-d, %Y" }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% assign guesting = site.podcast | listed_installments: "guests", page.slug | sort: "publish_date" | reverse %}
+  {% if guesting.size > 0 %}
+  <div class="person-credits">
+    <h2>Guest Appearances</h2>
+    <div class="episodes-list">
+      {% for episode in guesting %}
+      <a href="{{ episode.url | relative_url }}" class="episode-list-item">
+        <div class="episode-list-num">{{ episode.episode_number | prepend: '00' | slice: -2, 2 }}</div>
+        <div class="episode-list-body">
+          <div class="episode-list-title">{{ episode.title }}</div>
+          <div class="episode-list-desc">{{ episode.description }}</div>
+        </div>
+        <div class="episode-list-meta">
+          {% include show-badge.html show=episode.show %}
+          <span class="episode-list-date">{{ episode.created | date: "%b %-d, %Y" }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% assign artist_credits = site.comic | listed_installments: "artist", page.slug | sort: "publish_date" | reverse %}
+  {% if artist_credits.size > 0 %}
+  <div class="person-credits">
+    <h2>Comics</h2>
+    <div class="episodes-list">
+      {% for strip in artist_credits %}
+      <a href="{{ strip.url | relative_url }}" class="episode-list-item">
+        <div class="episode-list-num">{{ strip.strip_number | prepend: '00' | slice: -2, 2 }}</div>
+        <div class="episode-list-body">
+          <div class="episode-list-title">{{ strip.title }}</div>
+          {% if strip.arc %}<div class="episode-list-desc">{{ strip.arc }}</div>{% endif %}
+        </div>
+        <div class="episode-list-meta">
+          <span class="episode-list-date">{{ strip.created | date: "%b %-d, %Y" }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% assign author_credits = site.story | listed_installments: "author", page.slug | sort: "publish_date" | reverse %}
+  {% if author_credits.size > 0 %}
+  <div class="person-credits">
+    <h2>Stories</h2>
+    <div class="episodes-list">
+      {% for chapter in author_credits %}
+      <a href="{{ chapter.url | relative_url }}" class="episode-list-item">
+        <div class="episode-list-num">{{ chapter.chapter_number | prepend: '00' | slice: -2, 2 }}</div>
+        <div class="episode-list-body">
+          <div class="episode-list-title">{{ chapter.title }}</div>
+          {% if chapter.arc %}<div class="episode-list-desc">{{ chapter.arc }}</div>{% endif %}
+        </div>
+        <div class="episode-list-meta">
+          <span class="episode-list-date">{{ chapter.created | date: "%b %-d, %Y" }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% assign posts_written = site.posts | listed_installments: "author", page.slug | sort: "date" | reverse %}
+  {% if posts_written.size > 0 %}
+  <div class="person-credits">
+    <h2>Blog Posts</h2>
+    <div class="episodes-list">
+      {% for post in posts_written %}
+      <a href="{{ post.url | relative_url }}" class="episode-list-item">
+        <div class="episode-list-body">
+          <div class="episode-list-title">{{ post.title }}</div>
+          {% if post.description %}<div class="episode-list-desc">{{ post.description }}</div>{% endif %}
+        </div>
+        <div class="episode-list-meta">
+          <span class="episode-list-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% assign thanks_podcast = site.podcast | listed_installments: "contributors", page.slug | sort: "publish_date" | reverse %}
+  {% assign thanks_comic = site.comic | listed_installments: "contributors", page.slug | sort: "publish_date" | reverse %}
+  {% assign thanks_story = site.story | listed_installments: "contributors", page.slug | sort: "publish_date" | reverse %}
+  {% assign thanks_posts = site.posts | listed_installments: "contributors", page.slug | sort: "date" | reverse %}
+  {% if thanks_podcast.size > 0 or thanks_comic.size > 0 or thanks_story.size > 0 or thanks_posts.size > 0 %}
+  <div class="person-credits">
+    <h2>Contributions</h2>
+    <div class="episodes-list">
+      {% for episode in thanks_podcast %}
+      <a href="{{ episode.url | relative_url }}" class="episode-list-item">
+        <div class="episode-list-body">
+          <div class="episode-list-title">{{ episode.title }}</div>
+        </div>
+        <div class="episode-list-meta"><span class="post-tag">Podcast</span></div>
+      </a>
+      {% endfor %}
+      {% for strip in thanks_comic %}
+      <a href="{{ strip.url | relative_url }}" class="episode-list-item">
+        <div class="episode-list-body">
+          <div class="episode-list-title">{{ strip.title }}</div>
+        </div>
+        <div class="episode-list-meta"><span class="post-tag">Comic</span></div>
+      </a>
+      {% endfor %}
+      {% for chapter in thanks_story %}
+      <a href="{{ chapter.url | relative_url }}" class="episode-list-item">
+        <div class="episode-list-body">
+          <div class="episode-list-title">{{ chapter.title }}</div>
+        </div>
+        <div class="episode-list-meta"><span class="post-tag">Story</span></div>
+      </a>
+      {% endfor %}
+      {% for post in thanks_posts %}
+      <a href="{{ post.url | relative_url }}" class="episode-list-item">
+        <div class="episode-list-body">
+          <div class="episode-list-title">{{ post.title }}</div>
+        </div>
+        <div class="episode-list-meta"><span class="post-tag">Blog</span></div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
