@@ -1,0 +1,49 @@
+{% if include.links and include.links.size > 0 %}
+<div class="person-links">
+  {% for link in include.links %}
+  {% for kvp in link %}
+    {% assign platform = kvp[0] %}
+    {% assign value = kvp[1] %}
+  {% endfor %}
+  {% assign url = value %}
+  {% assign label = platform | capitalize %}
+  {% unless value contains "http" %}
+    {% assign label = value %}
+    {% case platform %}
+      {% when "twitter" %}{% assign url = "https://twitter.com/" | append: value %}
+      {% when "facebook" %}{% assign url = "https://facebook.com/" | append: value %}
+      {% when "instagram" %}{% assign url = "https://instagram.com/" | append: value %}
+      {% when "github" %}{% assign url = "https://github.com/" | append: value %}
+      {% when "twitch" %}{% assign url = "https://twitch.tv/" | append: value %}
+      {% when "tiktok" %}{% assign url = "https://tiktok.com/@" | append: value %}
+      {% when "onlyfans" %}{% assign url = "https://onlyfans.com/" | append: value %}
+      {% when "substack" %}{% assign url = "https://" | append: value | append: ".substack.com" %}
+      {% when "bluesky" %}{% assign url = "https://bsky.app/profile/" | append: value %}
+      {% when "threads" %}{% assign url = "https://threads.net/@" | append: value %}
+      {% when "linkedin" %}{% assign url = "https://linkedin.com/in/" | append: value %}
+      {% when "discord" %}{% assign url = "https://discord.com/users/" | append: value %}
+      {% when "letterboxd" %}{% assign url = "https://letterboxd.com/" | append: value %}
+      {% when "goodreads" %}{% assign url = "https://goodreads.com/" | append: value %}
+      {% when "lemmy" %}
+        {% if value contains "@" %}
+          {% assign parts = value | remove_first: "@" | split: "@" %}
+          {% assign url = "https://" | append: parts[1] | append: "/u/" | append: parts[0] %}
+        {% else %}
+          {% assign url = "https://lemmy.world/u/" | append: value %}
+        {% endif %}
+      {% when "mastodon" %}
+        {% if value contains "@" %}
+          {% assign parts = value | remove_first: "@" | split: "@" %}
+          {% assign url = "https://" | append: parts[1] | append: "/@" | append: parts[0] %}
+        {% else %}
+          {% assign url = "https://mastodon.social/@" | append: value %}
+        {% endif %}
+    {% endcase %}
+  {% endunless %}
+  <a href="{{ url }}" class="person-link" target="_blank" rel="noopener" aria-label="{{ label }}">
+    {% include icon.html name=platform %}
+    <span>{{ label }}</span>
+  </a>
+  {% endfor %}
+</div>
+{% endif %}

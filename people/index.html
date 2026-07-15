@@ -1,0 +1,21 @@
+---
+layout: default
+title: People
+description: "People who've written, hosted, drawn, or guested across VaguelyGeneric shows."
+permalink: /people/
+---
+
+<div class="people-page">
+  <div class="people-header">
+    <h1>People</h1>
+    <p>People who've joined us in the media here.</p>
+  </div>
+  <div class="people-grid">
+    {% assign people = site.people | sort: "name" %}
+    {% for person in people %}
+    {% include person-card.html person=person %}
+    {% else %}
+    <p style="color: var(--text-muted);">No people yet.</p>
+    {% endfor %}
+  </div>
+</div>
