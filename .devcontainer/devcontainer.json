@@ -22,7 +22,7 @@
     }
   },
 
-"postStartCommand": "bundle check || bundle install && bundle exec jekyll serve --host 0.0.0.0 --port 4001 --livereload --livereload-port 35730  --force_polling",
+"postStartCommand": "bundle check || bundle install && bundle exec jekyll serve --host 0.0.0.0 --livereload --force_polling",
   "customizations": {
     "vscode": {
       "extensions": [
