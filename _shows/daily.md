@@ -16,7 +16,7 @@ feed_image: "/assets/images/daily-feed-logo.png"
 
 spotify_url: "https://open.spotify.com/show/6GMPJP4JzN4qFCzygDcQlB"
 iheart_url: "https://iheart.com/podcast/331048832/"
-#apple_url: "https://podcasts.apple.com/podcast/id1895034401"
+apple_url: "https://podcasts.apple.com/us/podcast/daily/id6801337396"
 pocketcast_url: "https://pocketcasts.com/podcast/daily/61c5e950-25ee-013f-2ec2-0e872f6a2b21"
 #podcast_index_url: "https://podcastindex.org/podcast/7840297"
 podcast_addict_url: "https://podcastaddict.com/podcast/daily/6958859"
