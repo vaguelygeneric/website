@@ -24,7 +24,7 @@ layout: default
 
   {% if page.thumbnail %}
   <div class="episode-thumbnail">
-    <img src="{{ page.thumbnail | relative_url }}" alt="{{ page.thumbnail_alt | default: page.title }}" loading="lazy">
+    <img src="{{ page.thumbnail | relative_url }}" alt="{{ page.thumbnail_alt | default: page.title }}" title="{{ page.thumbnail_alt | default: page.title }}" loading="lazy">
   </div>
   {% endif %}
 
